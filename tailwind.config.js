@@ -7,27 +7,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Hextech Gold palette
-        hextech: {
-          gold: '#C8AA6E',
-          'gold-light': '#F0E6D2',
-          'gold-dark': '#785A28',
-        },
-        // Dark theme colors
-        lol: {
-          dark: '#010A13',
-          'dark-lighter': '#0A1428',
-          'dark-card': '#1E2328',
-          'dark-border': '#1E282D',
-          blue: '#0AC8B9',
-          'blue-dark': '#005A82',
-          red: '#FF4444',
-          green: '#00FF00',
-        }
+        // Hextech theme colors
+        'hextech-gold': '#C89B3C',
+        'hextech-blue': '#0BC6E3',
+        'slate-dark': '#010A13',
+        'slate-medium': '#1E2328',
+        'error-red': '#D13639',
+        'success-green': '#0BDA51',
+      },
+      boxShadow: {
+        'hextech': '0 0 10px rgba(11, 198, 227, 0.5), 0 0 20px rgba(11, 198, 227, 0.3)',
+        'gold': '0 0 10px rgba(200, 155, 60, 0.5), 0 0 20px rgba(200, 155, 60, 0.3)',
       },
       fontFamily: {
         'beaufort': ['Beaufort for LOL', 'serif'],
-        'spiegel': ['Spiegel', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
       },
       animation: {
         'pulse-gold': 'pulse-gold 2s ease-in-out infinite',

@@ -5,3 +5,4 @@
 
 export { Timer } from './Timer';
 export { LivesDisplay } from './LivesDisplay';
+export { ItemShopGrid } from './ItemShopGrid';

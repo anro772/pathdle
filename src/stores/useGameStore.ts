@@ -4,7 +4,7 @@
  */
 
 import { create } from 'zustand';
-import type { ComponentNode } from '../types/items';
+import type { ComponentNode, ItemData } from '../types/items';
 import { getItems } from '../services/RiotService';
 import { filterItems, getRandomLegendaryId } from '../utils/itemFilters';
 import { buildComponentTree } from '../utils/recipeEngine';
@@ -142,6 +142,19 @@ export interface GameState {
   isTransitioning: boolean;
 
   // ============================================================================
+  // Data pools for UI components
+  // ============================================================================
+
+  /** Complete item database for lookups and tree building (null before game starts) */
+  allItems: Record<string, ItemData> | null;
+
+  /** Filtered basic items for shop grid generation (null before game starts) */
+  basicComponents: Record<string, ItemData> | null;
+
+  /** DataDragon version for constructing image URLs (null before game starts) */
+  dataVersion: string | null;
+
+  // ============================================================================
   // Actions (Placeholder definitions - implemented in Task 2)
   // ============================================================================
 
@@ -253,6 +266,11 @@ export const useGameStore = create<GameState>((set) => ({
   awaitingFinalGold: false,
   isTransitioning: false,
 
+  // Data pools for UI components
+  allItems: null,
+  basicComponents: null,
+  dataVersion: null,
+
   // ============================================================================
   // Action Implementations
   // ============================================================================
@@ -265,7 +283,7 @@ export const useGameStore = create<GameState>((set) => ({
     try {
       // Fetch and filter item data
       const itemsResponse = await getItems();
-      const { legendaries } = filterItems(itemsResponse.data);
+      const { legendaries, basicComponents } = filterItems(itemsResponse.data);
       const legendaryId = getRandomLegendaryId(legendaries);
       const tree = buildComponentTree(legendaryId, itemsResponse.data);
 
@@ -287,6 +305,10 @@ export const useGameStore = create<GameState>((set) => ({
         // Reset transition flags
         awaitingFinalGold: false,
         isTransitioning: false,
+        // Expose filtered data for UI components
+        allItems: itemsResponse.data,
+        basicComponents: basicComponents,
+        dataVersion: itemsResponse.version,
       });
     } catch (error) {
       console.error('Failed to start game:', error);
@@ -554,7 +576,7 @@ export const useGameStore = create<GameState>((set) => ({
     try {
       // Fetch and filter item data
       const itemsResponse = await getItems();
-      const { legendaries } = filterItems(itemsResponse.data);
+      const { legendaries, basicComponents } = filterItems(itemsResponse.data);
       const legendaryId = getRandomLegendaryId(legendaries);
       const tree = buildComponentTree(legendaryId, itemsResponse.data);
 
@@ -583,6 +605,10 @@ export const useGameStore = create<GameState>((set) => ({
         isTransitioning: false,
         // Update best level
         bestLevelReached: newBest,
+        // Update data pools (in case patch changed)
+        allItems: itemsResponse.data,
+        basicComponents: basicComponents,
+        dataVersion: itemsResponse.version,
         // livesRemaining stays the same!
       });
     } catch (error) {
@@ -614,6 +640,10 @@ export const useGameStore = create<GameState>((set) => ({
       // Reset transition flags
       awaitingFinalGold: false,
       isTransitioning: false,
+      // Reset data pools (will be refetched on next startGame)
+      allItems: null,
+      basicComponents: null,
+      dataVersion: null,
       // bestLevelReached stays the same (persisted)
       bestLevelReached: state.bestLevelReached,
     }));

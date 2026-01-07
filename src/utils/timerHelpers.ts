@@ -1,23 +1,23 @@
 /**
  * Returns the Tailwind CSS color class for the timer based on urgency.
  *
- * Color scheme:
- * - 10-6s: Blue (calm)
+ * Color scheme (Hextech theme):
+ * - 10-6s: Hextech Blue (calm)
  * - 5-3s: Yellow (warning)
- * - 2-0s: Red (urgent)
+ * - 2-0s: Error Red (urgent)
  *
  * @param seconds - Seconds remaining on timer
  * @returns Tailwind color class string
  *
  * @example
- * getTimerColor(10); // "text-blue-400"
+ * getTimerColor(10); // "text-hextech-blue"
  * getTimerColor(5);  // "text-yellow-400"
- * getTimerColor(2);  // "text-red-500"
+ * getTimerColor(2);  // "text-error-red"
  */
 export function getTimerColor(seconds: number): string {
-  if (seconds > 5) return 'text-blue-400';
+  if (seconds > 5) return 'text-hextech-blue';
   if (seconds > 2) return 'text-yellow-400';
-  return 'text-red-500';
+  return 'text-error-red';
 }
 
 /**

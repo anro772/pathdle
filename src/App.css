@@ -1,42 +1,48 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+@import "tailwindcss";
+
+@theme {
+  /* Hextech theme colors */
+  --color-hextech-gold: #C89B3C;
+  --color-hextech-blue: #0BC6E3;
+  --color-slate-dark: #010A13;
+  --color-slate-medium: #1E2328;
+  --color-slate-light: #3C3C41;
+  --color-error-red: #D13639;
+  --color-success-green: #0BDA51;
+
+  /* Box shadows */
+  --shadow-hextech: 0 0 10px rgba(11, 198, 227, 0.5), 0 0 20px rgba(11, 198, 227, 0.3);
+  --shadow-gold: 0 0 10px rgba(200, 155, 60, 0.5), 0 0 20px rgba(200, 155, 60, 0.3);
+
+  /* Font families */
+  --font-family-beaufort: 'Beaufort for LOL', serif;
+  --font-family-inter: 'Inter', sans-serif;
+
+  /* Animations */
+  --animate-pulse-gold: pulse-gold 2s ease-in-out infinite;
+  --animate-bounce-select: bounce-select 0.3s ease-out;
+  --animate-shake: shake 0.5s ease-in-out;
+  --animate-glow: glow 1.5s ease-in-out infinite alternate;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 5px rgba(200, 155, 60, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(200, 155, 60, 0.8), 0 0 30px rgba(200, 155, 60, 0.6); }
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes bounce-select {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(11, 198, 227, 0.5); }
+  100% { box-shadow: 0 0 20px rgba(11, 198, 227, 0.8), 0 0 30px rgba(11, 198, 227, 0.6); }
 }

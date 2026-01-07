@@ -32,7 +32,7 @@ export function isValidLegendary(item: ItemData, id: string): boolean {
     item.gold.purchasable === true &&        // Can be bought
     !item.description?.includes('Ornn') &&   // Exclude Ornn items
     parseInt(id) < 7000 &&                   // Exclude Arena/TFT
-    item.from && item.from.length > 0        // Has components (Legendary)
+    !!(item.from && item.from.length > 0)    // Has components (Legendary)
   );
 }
 

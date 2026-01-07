@@ -8,6 +8,7 @@
 import { useGameStore } from '../stores/useGameStore';
 import { getItemImageUrl } from '../services/RiotService';
 import { formatGold } from '../utils/formatting';
+import { motion } from 'framer-motion';
 
 /**
  * ComponentTree Component
@@ -95,7 +96,17 @@ export function ComponentTree() {
               `}
             >
               {unlocked ? (
-                <>
+                <motion.div
+                  initial={{ scale: 0.8, rotate: 5 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 300,
+                    damping: 20,
+                    duration: 0.4,
+                  }}
+                  className="flex flex-col items-center gap-2"
+                >
                   <img
                     src={getItemImageUrl(child.itemId, dataVersion)}
                     alt={child.itemName}
@@ -105,7 +116,7 @@ export function ComponentTree() {
                     ✓
                   </span>
                   <p className="text-sm text-white text-center">{child.itemName}</p>
-                </>
+                </motion.div>
               ) : (
                 <div className="flex flex-col items-center gap-2">
                   <div className="w-16 h-16 bg-slate-dark border-2 border-slate-light rounded flex items-center justify-center">
@@ -149,7 +160,17 @@ export function ComponentTree() {
                   `}
                 >
                   {unlocked ? (
-                    <>
+                    <motion.div
+                      initial={{ scale: 0.8, rotate: 5 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 20,
+                        duration: 0.4,
+                      }}
+                      className="flex flex-col items-center gap-2"
+                    >
                       <img
                         src={getItemImageUrl(subChild.itemId, dataVersion)}
                         alt={subChild.itemName}
@@ -159,7 +180,7 @@ export function ComponentTree() {
                         ✓
                       </span>
                       <p className="text-xs text-white text-center">{subChild.itemName}</p>
-                    </>
+                    </motion.div>
                   ) : (
                     <div className="flex flex-col items-center gap-2">
                       <div className="w-12 h-12 bg-slate-dark border-2 border-slate-light rounded flex items-center justify-center">

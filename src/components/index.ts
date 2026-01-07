@@ -4,3 +4,4 @@
  */
 
 export { Timer } from './Timer';
+export { LivesDisplay } from './LivesDisplay';

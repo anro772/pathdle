@@ -311,7 +311,7 @@ export const useGameStore = create<GameState>((set) => ({
       let goldCorrect = true;
       if (state.requiresComponentGold) {
         const inputGold = parseInt(state.goldInput);
-        goldCorrect = inputGold === focusedNode.goldCost;
+        goldCorrect = !isNaN(inputGold) && inputGold === focusedNode.goldCost;
       }
 
       // Check if answer is correct

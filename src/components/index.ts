@@ -7,3 +7,4 @@ export { Timer } from './Timer';
 export { LivesDisplay } from './LivesDisplay';
 export { ItemShopGrid } from './ItemShopGrid';
 export { ComponentTree } from './ComponentTree';
+export { GameOverScreen } from './GameOverScreen';

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useGameStore } from './stores/useGameStore';
 import { Timer } from './components/Timer';
 import { LivesDisplay } from './components/LivesDisplay';
@@ -9,6 +9,7 @@ import './App.css';
 
 function App() {
   const { gameStatus, startGame, timerActive, decrementTimer, handleTimerExpire } = useGameStore();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Timer countdown effect
   useEffect(() => {
@@ -27,6 +28,13 @@ function App() {
     return () => clearInterval(interval);
   }, [timerActive, decrementTimer, handleTimerExpire]);
 
+  // Handle game start with loading state
+  const handleStartGame = async () => {
+    setIsLoading(true);
+    await startGame();
+    setIsLoading(false);
+  };
+
   // Menu Screen
   if (gameStatus === 'menu') {
     return (
@@ -38,12 +46,19 @@ function App() {
           <p className="text-xl text-gray-400 mb-8 max-w-md">
             Build League of Legends items from memory before the timer runs out!
           </p>
-          <button
-            onClick={startGame}
-            className="px-8 py-4 bg-hextech-gold text-slate-dark text-xl font-bold rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105"
-          >
-            START GAME
-          </button>
+          {isLoading ? (
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-16 h-16 border-4 border-hextech-gold border-t-transparent rounded-full animate-spin"></div>
+              <p className="text-xl text-hextech-gold font-bold">Loading...</p>
+            </div>
+          ) : (
+            <button
+              onClick={handleStartGame}
+              className="px-8 py-4 bg-hextech-gold text-slate-dark text-xl font-bold rounded-lg hover:bg-opacity-90 transition-all transform hover:scale-105"
+            >
+              START GAME
+            </button>
+          )}
           <div className="mt-12 text-sm text-gray-500">
             <p>• Click components to reveal what you need to build</p>
             <p>• Select items from the shop grid</p>

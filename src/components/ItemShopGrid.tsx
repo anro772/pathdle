@@ -11,6 +11,7 @@ import type { ComponentNode } from '../types/items';
 import { getItemImageUrl } from '../services/RiotService';
 import { formatItemName, formatGold } from '../utils/formatting';
 import { generateShopGrid } from '../utils/shopGridGenerator';
+import { motion } from 'framer-motion';
 
 /**
  * Traverses a component tree by following a path array.
@@ -71,7 +72,6 @@ export function ItemShopGrid() {
 
   // Build cart display with quantities
   const cartSize = focusedNode.children.length;
-  const cartDisplay: string[] = [];
 
   // Count occurrences of each item in selectedItems
   const itemCounts: Record<string, number> = {};
@@ -80,22 +80,19 @@ export function ItemShopGrid() {
   }
 
   // Build cart entries with quantities
+  const cartItems: Array<{ itemId: string; count: number } | null> = [];
   const processedItems = new Set<string>();
   for (const itemId of selectedItems) {
     if (!processedItems.has(itemId)) {
       const count = itemCounts[itemId];
-      const item = allItems[itemId];
-      if (item) {
-        const displayText = count > 1 ? `${item.name} x${count}` : item.name;
-        cartDisplay.push(displayText);
-      }
+      cartItems.push({ itemId, count });
       processedItems.add(itemId);
     }
   }
 
-  // Fill remaining slots with "-"
-  while (cartDisplay.length < cartSize) {
-    cartDisplay.push('-');
+  // Fill remaining slots with null
+  while (cartItems.length < cartSize) {
+    cartItems.push(null);
   }
 
   return (
@@ -118,10 +115,11 @@ export function ItemShopGrid() {
           if (!item) return null;
 
           return (
-            <button
+            <motion.button
               key={`${itemId}-${index}`}
               onClick={() => selectShopItem(itemId)}
-              className="flex flex-col items-center gap-2 p-3 bg-hextech-dark border-2 border-hextech-gold rounded-lg hover:scale-105 active:scale-95 transition-transform cursor-pointer"
+              whileTap={{ scale: 0.95 }}
+              className="flex flex-col items-center gap-2 p-3 bg-hextech-dark border-2 border-hextech-gold rounded-lg hover:scale-105 transition-transform cursor-pointer"
             >
               <img
                 src={getItemImageUrl(itemId, dataVersion)}
@@ -134,7 +132,7 @@ export function ItemShopGrid() {
               <span className="text-sm text-hextech-gold">
                 {formatGold(item.gold.total)}
               </span>
-            </button>
+            </motion.button>
           );
         })}
       </div>
@@ -142,10 +140,30 @@ export function ItemShopGrid() {
       {/* Cart Display */}
       <div className="bg-hextech-dark border-2 border-hextech-gold rounded-lg p-4">
         <h3 className="text-lg font-bold text-hextech-gold mb-3">SELECTED ITEMS:</h3>
-        <div className="space-y-2">
-          {cartDisplay.map((entry, index) => (
-            <div key={index} className="text-white">
-              {entry}
+        <div className="grid grid-cols-3 gap-3">
+          {cartItems.map((cartItem, index) => (
+            <div key={index} className="relative">
+              {cartItem ? (
+                <div className="relative flex flex-col items-center gap-1 p-2 bg-slate-medium border border-hextech-gold rounded">
+                  <img
+                    src={getItemImageUrl(cartItem.itemId, dataVersion)}
+                    alt={allItems[cartItem.itemId]?.name || ''}
+                    className="w-12 h-12"
+                  />
+                  <span className="text-xs text-white text-center">
+                    {formatItemName(allItems[cartItem.itemId]?.name || '', 12)}
+                  </span>
+                  {cartItem.count > 1 && (
+                    <span className="absolute top-1 right-1 bg-hextech-dark border border-hextech-gold rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold text-hextech-gold">
+                      x{cartItem.count}
+                    </span>
+                  )}
+                </div>
+              ) : (
+                <div className="flex items-center justify-center p-2 bg-slate-dark border border-slate-light rounded h-full min-h-[80px]">
+                  <span className="text-slate-light">-</span>
+                </div>
+              )}
             </div>
           ))}
         </div>

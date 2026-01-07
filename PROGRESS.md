@@ -372,16 +372,127 @@ src/
 
 ---
 
-## Next Phase: Phase 4 - Game Logic Integration
+---
+
+## Phase 4: Game Logic Integration ✅ COMPLETE
+
+**Objective:** Create the main App component and integrate all UI components with game logic.
+
+### Completed Tasks
+
+#### Main App Component
+- **Location:** `src/App.tsx`
+- **Features:**
+  - Three-state rendering (menu, playing, gameover)
+  - Timer countdown system with useEffect + setInterval
+  - Full component integration
+  - Responsive layout (mobile-friendly with lg: breakpoints)
+
+#### Game States Implemented:
+
+**1. Menu Screen (gameStatus === 'menu')**
+- Buildle title with Hextech gold styling
+- Game description and instructions
+- START GAME button calling `startGame()`
+- Hover effects and animations
+
+**2. Playing Screen (gameStatus === 'playing')**
+- **Header Section:**
+  - LivesDisplay component (left)
+  - Timer component (center)
+  - Current level display (right)
+- **Main Game Area:**
+  - Two-column responsive grid
+  - Left: ComponentTree with "Target Item" heading
+  - Right: ItemShopGrid with "Shop" heading
+  - Slate-medium backgrounds with borders
+
+**3. Game Over Screen (gameStatus === 'gameover')**
+- Renders GameOverScreen component
+- Shows stats, best level, new record badge
+- PLAY AGAIN button
+
+#### Timer System Integration
+- **Location:** Lines 14-28 in App.tsx
+- **Implementation:**
+  ```typescript
+  useEffect(() => {
+    if (!timerActive) return;
+
+    const interval = setInterval(() => {
+      const state = useGameStore.getState();
+
+      if (state.timeRemaining <= 0) {
+        handleTimerExpire();
+      } else {
+        decrementTimer();
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timerActive, decrementTimer, handleTimerExpire]);
+  ```
+- Countdown runs every 1 second
+- Checks timeRemaining and calls appropriate action
+- Properly cleans up on unmount
+- Pauses when timerActive is false (wrong answer flow)
+
+#### All Store Actions Integrated:
+1. ✅ `startGame()` - Menu START button
+2. ✅ `decrementTimer()` - Timer countdown
+3. ✅ `handleTimerExpire()` - Time expiration
+4. ✅ `focusComponent(path)` - ComponentTree slot clicks
+5. ✅ `selectShopItem(itemId)` - ItemShopGrid item clicks
+6. ✅ `submitPurchase()` - ItemShopGrid BUY button
+7. ✅ `submitFinalGold()` - Level 11+ final validation
+8. ✅ `resetGame()` - GameOverScreen PLAY AGAIN button
+9. ✅ `loseLife()` - Called by wrong answer/timer expiration
+10. ✅ `autoCompleteComponent()` - Wrong answer auto-unlock
+11. ✅ `advanceLevel()` - Level progression
+
+### Game Loop Validation
+
+**The complete game flow is now functional:**
+
+1. **Level Start:**
+   - Player clicks START GAME
+   - `startGame()` fetches items, builds tree, initializes state
+   - Timer starts automatically (timerActive = true)
+
+2. **Gameplay:**
+   - Player clicks component slot → `focusComponent()`
+   - Shop grid appears with randomized items
+   - Player selects items → `selectShopItem()`
+   - Player enters gold (Level 6+)
+   - Player clicks BUY → `submitPurchase()`
+
+3. **Success Path:**
+   - Correct items + gold → Component unlocks
+   - All components unlocked → Level completion
+   - Level 11+: Prompt for final gold → `submitFinalGold()`
+   - Advance to next level → `advanceLevel()`
+
+4. **Failure Path:**
+   - Wrong items/gold → Life lost, component auto-completes
+   - Timer expires → Life lost, component auto-completes
+   - Lives reach 0 → Game over screen
+
+### Rate Limit Solution (Bonus)
+- **Implemented:** Static asset bundling for items data
+- **Script:** `scripts/fetch-items.js`
+- **Storage:** `public/items-data.json` (745KB, 640 items)
+- **Benefits:** Zero API calls at runtime, instant loading, no rate limits
+
+---
+
+## Next Phase: Phase 5 - Animations & Polish
 
 **Upcoming Tasks:**
-1. Create main game App.tsx layout
-2. Wire up timer countdown system
-3. Implement level generation flow
-4. Add purchase validation
-5. Implement wrong answer flow with animations
-6. Add level completion flow
-7. Integrate all UI components
-8. Add keyboard shortcuts (optional)
+1. Add Framer Motion animations (item clicks, slot unlocks, shake)
+2. Implement visual feedback (checkmarks, flashes, glows)
+3. Polish UI (loading states, transitions, error messages)
+4. Add sound effects (optional)
+5. Implement keyboard shortcuts (optional)
+6. Final testing and bug fixes
 
 **Status:** Ready to begin ✨

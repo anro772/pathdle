@@ -103,7 +103,6 @@ export function ComponentTree() {
                     type: 'spring',
                     stiffness: 300,
                     damping: 20,
-                    duration: 0.4,
                   }}
                   className="flex flex-col items-center gap-2"
                 >
@@ -167,7 +166,6 @@ export function ComponentTree() {
                         type: 'spring',
                         stiffness: 300,
                         damping: 20,
-                        duration: 0.4,
                       }}
                       className="flex flex-col items-center gap-2"
                     >

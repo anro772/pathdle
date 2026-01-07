@@ -10,6 +10,13 @@ import { filterItems, getRandomLegendaryId } from '../utils/itemFilters';
 import { buildComponentTree } from '../utils/recipeEngine';
 
 // ============================================================================
+// Constants
+// ============================================================================
+
+/** localStorage key for persisting best level reached */
+const STORAGE_KEY_BEST_LEVEL = 'buildle-best-level';
+
+// ============================================================================
 // Helper Functions
 // ============================================================================
 
@@ -236,7 +243,7 @@ export const useGameStore = create<GameState>((set) => ({
   timerActive: false,
 
   // Progression
-  bestLevelReached: parseInt(localStorage.getItem('buildle-best-level') || '0'),
+  bestLevelReached: parseInt(localStorage.getItem(STORAGE_KEY_BEST_LEVEL) || '0'),
 
   // Difficulty Gates
   requiresComponentGold: false,
@@ -367,6 +374,9 @@ export const useGameStore = create<GameState>((set) => ({
             };
           } else {
             // For levels < 11, advance after a short delay
+            // Set transition flag IMMEDIATELY before setTimeout
+            useGameStore.setState({ isTransitioning: true });
+
             setTimeout(async () => {
               try {
                 await useGameStore.getState().advanceLevel();
@@ -381,7 +391,7 @@ export const useGameStore = create<GameState>((set) => ({
               focusedComponentPath: [],
               selectedItems: [],
               goldInput: '',
-              isTransitioning: true,
+              // Don't set isTransitioning here - already set above
             };
           }
         }
@@ -404,7 +414,7 @@ export const useGameStore = create<GameState>((set) => ({
         if (isGameOver) {
           const newBest = Math.max(state.bestLevelReached, state.currentLevel);
           // Persist to localStorage
-          localStorage.setItem('buildle-best-level', newBest.toString());
+          localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
 
           return {
             livesRemaining: 0,
@@ -449,6 +459,9 @@ export const useGameStore = create<GameState>((set) => ({
 
       if (isCorrect) {
         // Correct! Advance to next level after delay
+        // Set transition flag IMMEDIATELY before setTimeout
+        useGameStore.setState({ isTransitioning: true });
+
         setTimeout(async () => {
           try {
             await useGameStore.getState().advanceLevel();
@@ -461,7 +474,7 @@ export const useGameStore = create<GameState>((set) => ({
         return {
           goldInput: '',
           awaitingFinalGold: false,
-          isTransitioning: true,
+          // Don't set isTransitioning here - already set above
         };
       } else {
         // Wrong! Lose a life
@@ -471,7 +484,7 @@ export const useGameStore = create<GameState>((set) => ({
         if (isGameOver) {
           const newBest = Math.max(state.bestLevelReached, state.currentLevel);
           // Persist to localStorage
-          localStorage.setItem('buildle-best-level', newBest.toString());
+          localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
 
           return {
             livesRemaining: 0,
@@ -504,7 +517,7 @@ export const useGameStore = create<GameState>((set) => ({
         // Game over - update best level if needed
         const newBest = Math.max(state.bestLevelReached, state.currentLevel);
         // Persist to localStorage
-        localStorage.setItem('buildle-best-level', newBest.toString());
+        localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
 
         return {
           livesRemaining: 0,
@@ -549,7 +562,7 @@ export const useGameStore = create<GameState>((set) => ({
       const currentBest = useGameStore.getState().bestLevelReached;
       const newBest = Math.max(currentBest, newLevel);
       if (newBest > currentBest) {
-        localStorage.setItem('buildle-best-level', newBest.toString());
+        localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
       }
 
       // Reset level-specific state, preserve lives
@@ -574,7 +587,8 @@ export const useGameStore = create<GameState>((set) => ({
       });
     } catch (error) {
       console.error('Failed to advance level:', error);
-      // On error, stay in current state
+      // Reset transition flag on error to prevent stuck state
+      set({ isTransitioning: false });
       return;
     }
   },
@@ -649,7 +663,7 @@ export const useGameStore = create<GameState>((set) => ({
         // Game over
         const newBest = Math.max(state.bestLevelReached, state.currentLevel);
         // Persist to localStorage
-        localStorage.setItem('buildle-best-level', newBest.toString());
+        localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
 
         return {
           livesRemaining: 0,
@@ -660,6 +674,9 @@ export const useGameStore = create<GameState>((set) => ({
         };
       } else {
         // Advance to next level after showing auto-completed components
+        // Set transition flag IMMEDIATELY before setTimeout
+        useGameStore.setState({ isTransitioning: true });
+
         setTimeout(async () => {
           try {
             await useGameStore.getState().advanceLevel();
@@ -673,7 +690,7 @@ export const useGameStore = create<GameState>((set) => ({
           livesRemaining: newLives,
           timerActive: false,
           unlockedComponents: newUnlockedSet,
-          isTransitioning: true,
+          // Don't set isTransitioning here - already set above
         };
       }
     });

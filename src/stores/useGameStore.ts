@@ -125,6 +125,16 @@ export interface GameState {
   requiresFinalGold: boolean;
 
   // ============================================================================
+  // Level Transition State
+  // ============================================================================
+
+  /** If true, awaiting final gold input for Level 11+ after all components unlocked */
+  awaitingFinalGold: boolean;
+
+  /** If true, currently transitioning between levels (disables interactions) */
+  isTransitioning: boolean;
+
+  // ============================================================================
   // Actions (Placeholder definitions - implemented in Task 2)
   // ============================================================================
 
@@ -151,6 +161,12 @@ export interface GameState {
    * Checks if selected items + gold match the focused component.
    */
   submitPurchase: () => void;
+
+  /**
+   * Submit and validate final gold cost for Level 11+ completion.
+   * Called after all components are unlocked to validate total item cost.
+   */
+  submitFinalGold: () => void;
 
   /**
    * Deduct a life from the player.
@@ -220,11 +236,15 @@ export const useGameStore = create<GameState>((set) => ({
   timerActive: false,
 
   // Progression
-  bestLevelReached: 0,
+  bestLevelReached: parseInt(localStorage.getItem('buildle-best-level') || '0'),
 
   // Difficulty Gates
   requiresComponentGold: false,
   requiresFinalGold: false,
+
+  // Level Transition State
+  awaitingFinalGold: false,
+  isTransitioning: false,
 
   // ============================================================================
   // Action Implementations
@@ -257,6 +277,9 @@ export const useGameStore = create<GameState>((set) => ({
         // Difficulty gates for level 1
         requiresComponentGold: false,
         requiresFinalGold: false,
+        // Reset transition flags
+        awaitingFinalGold: false,
+        isTransitioning: false,
       });
     } catch (error) {
       console.error('Failed to start game:', error);
@@ -293,6 +316,9 @@ export const useGameStore = create<GameState>((set) => ({
    */
   submitPurchase: () => {
     set((state) => {
+      // Guard against interactions during level transitions
+      if (state.isTransitioning) return state;
+
       // Get the focused component node
       const focusedNode = getNodeAtPath(state.targetItem, state.focusedComponentPath);
 
@@ -310,7 +336,7 @@ export const useGameStore = create<GameState>((set) => ({
       // Validate gold input (if required by difficulty)
       let goldCorrect = true;
       if (state.requiresComponentGold) {
-        const inputGold = parseInt(state.goldInput);
+        const inputGold = parseInt(state.goldInput.trim());
         goldCorrect = !isNaN(inputGold) && inputGold === focusedNode.goldCost;
       }
 
@@ -328,10 +354,36 @@ export const useGameStore = create<GameState>((set) => ({
         );
 
         if (allChildrenUnlocked) {
-          // Level complete! Advance after a short delay
-          setTimeout(() => {
-            useGameStore.getState().advanceLevel();
-          }, 500);
+          // Level complete! Check if final gold is required (Level 11+)
+          if (state.currentLevel >= 11 && state.requiresFinalGold) {
+            // For Level 11+, enter final gold validation phase
+            return {
+              unlockedComponents: newUnlockedSet,
+              focusedComponentPath: [],
+              selectedItems: [],
+              goldInput: '',
+              awaitingFinalGold: true,
+              timerActive: false,
+            };
+          } else {
+            // For levels < 11, advance after a short delay
+            setTimeout(async () => {
+              try {
+                await useGameStore.getState().advanceLevel();
+              } catch (error) {
+                console.error('Failed to advance level:', error);
+                useGameStore.setState({ isTransitioning: false });
+              }
+            }, 500);
+
+            return {
+              unlockedComponents: newUnlockedSet,
+              focusedComponentPath: [],
+              selectedItems: [],
+              goldInput: '',
+              isTransitioning: true,
+            };
+          }
         }
 
         return {
@@ -351,6 +403,9 @@ export const useGameStore = create<GameState>((set) => ({
 
         if (isGameOver) {
           const newBest = Math.max(state.bestLevelReached, state.currentLevel);
+          // Persist to localStorage
+          localStorage.setItem('buildle-best-level', newBest.toString());
+
           return {
             livesRemaining: 0,
             gameStatus: 'gameover' as const,
@@ -375,6 +430,69 @@ export const useGameStore = create<GameState>((set) => ({
   },
 
   /**
+   * Submit and validate final gold cost for Level 11+ completion.
+   * Called after all components are unlocked to validate total item cost.
+   */
+  submitFinalGold: () => {
+    set((state) => {
+      // Only valid when awaiting final gold
+      if (!state.awaitingFinalGold || !state.targetItem) {
+        return state;
+      }
+
+      // Guard against interactions during transitions
+      if (state.isTransitioning) return state;
+
+      // Parse and validate gold input
+      const inputGold = parseInt(state.goldInput.trim());
+      const isCorrect = !isNaN(inputGold) && inputGold === state.targetItem.totalCost;
+
+      if (isCorrect) {
+        // Correct! Advance to next level after delay
+        setTimeout(async () => {
+          try {
+            await useGameStore.getState().advanceLevel();
+          } catch (error) {
+            console.error('Failed to advance level:', error);
+            useGameStore.setState({ isTransitioning: false });
+          }
+        }, 500);
+
+        return {
+          goldInput: '',
+          awaitingFinalGold: false,
+          isTransitioning: true,
+        };
+      } else {
+        // Wrong! Lose a life
+        const newLives = Math.max(0, state.livesRemaining - 1) as 3 | 2 | 1 | 0;
+        const isGameOver = newLives === 0;
+
+        if (isGameOver) {
+          const newBest = Math.max(state.bestLevelReached, state.currentLevel);
+          // Persist to localStorage
+          localStorage.setItem('buildle-best-level', newBest.toString());
+
+          return {
+            livesRemaining: 0,
+            gameStatus: 'gameover' as const,
+            timerActive: false,
+            bestLevelReached: newBest,
+            goldInput: '',
+            awaitingFinalGold: false,
+          };
+        }
+
+        // Clear input and remain in final gold state
+        return {
+          livesRemaining: newLives,
+          goldInput: '',
+        };
+      }
+    });
+  },
+
+  /**
    * Deduct a life from the player.
    * Triggers game over if lives reach 0.
    */
@@ -385,6 +503,8 @@ export const useGameStore = create<GameState>((set) => ({
       if (newLives === 0) {
         // Game over - update best level if needed
         const newBest = Math.max(state.bestLevelReached, state.currentLevel);
+        // Persist to localStorage
+        localStorage.setItem('buildle-best-level', newBest.toString());
 
         return {
           livesRemaining: 0,
@@ -425,6 +545,13 @@ export const useGameStore = create<GameState>((set) => ({
       const legendaryId = getRandomLegendaryId(legendaries);
       const tree = buildComponentTree(legendaryId, itemsResponse.data);
 
+      // Update best level reached if this is a new record
+      const currentBest = useGameStore.getState().bestLevelReached;
+      const newBest = Math.max(currentBest, newLevel);
+      if (newBest > currentBest) {
+        localStorage.setItem('buildle-best-level', newBest.toString());
+      }
+
       // Reset level-specific state, preserve lives
       set({
         currentLevel: newLevel,
@@ -438,6 +565,11 @@ export const useGameStore = create<GameState>((set) => ({
         // Update difficulty gates based on new level
         requiresComponentGold: newLevel >= 6,
         requiresFinalGold: newLevel >= 11,
+        // Reset transition flags
+        awaitingFinalGold: false,
+        isTransitioning: false,
+        // Update best level
+        bestLevelReached: newBest,
         // livesRemaining stays the same!
       });
     } catch (error) {
@@ -465,6 +597,9 @@ export const useGameStore = create<GameState>((set) => ({
       timerActive: false,
       requiresComponentGold: false,
       requiresFinalGold: false,
+      // Reset transition flags
+      awaitingFinalGold: false,
+      isTransitioning: false,
       // bestLevelReached stays the same (persisted)
       bestLevelReached: state.bestLevelReached,
     }));
@@ -513,6 +648,9 @@ export const useGameStore = create<GameState>((set) => ({
       if (newLives === 0) {
         // Game over
         const newBest = Math.max(state.bestLevelReached, state.currentLevel);
+        // Persist to localStorage
+        localStorage.setItem('buildle-best-level', newBest.toString());
+
         return {
           livesRemaining: 0,
           gameStatus: 'gameover' as const,
@@ -522,14 +660,20 @@ export const useGameStore = create<GameState>((set) => ({
         };
       } else {
         // Advance to next level after showing auto-completed components
-        setTimeout(() => {
-          useGameStore.getState().advanceLevel();
+        setTimeout(async () => {
+          try {
+            await useGameStore.getState().advanceLevel();
+          } catch (error) {
+            console.error('Failed to advance level:', error);
+            useGameStore.setState({ isTransitioning: false });
+          }
         }, 1500);
 
         return {
           livesRemaining: newLives,
           timerActive: false,
           unlockedComponents: newUnlockedSet,
+          isTransitioning: true,
         };
       }
     });

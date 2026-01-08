@@ -11,6 +11,7 @@
     "fetch-items": "node scripts/fetch-items.js"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.90.1",
     "framer-motion": "^12.24.7",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

@@ -54,6 +54,7 @@ export function ItemShopGrid() {
   const {
     focusedComponentPath,
     selectedItems,
+    lockedCartItems,
     goldInput,
     requiresComponentGold,
     basicComponents,
@@ -127,27 +128,22 @@ export function ItemShopGrid() {
     return null;
   }
 
-  // Build cart display with quantities
+  // Build cart display with individual slots (no quantity badges)
   // cartSize is how many items need to be selected
   // For basic items (no children), the player must find the item itself (1 item)
   const isBasicItem = focusedNode.children.length === 0;
   const cartSize = isBasicItem ? 1 : focusedNode.children.length;
 
-  const itemCounts: Record<string, number> = {};
-  for (const itemId of selectedItems) {
-    itemCounts[itemId] = (itemCounts[itemId] || 0) + 1;
-  }
+  // Each selected item gets its own slot (duplicates show separately)
+  // cartSlots is an array of { itemId, isLocked } or null for empty slots
+  const cartSlots: Array<{ itemId: string; isLocked: boolean } | null> = selectedItems.map((itemId, idx) => ({
+    itemId,
+    isLocked: idx < lockedCartItems.length && lockedCartItems[idx] === itemId,
+  }));
 
-  const cartItems: Array<{ itemId: string; count: number } | null> = [];
-  const processedItems = new Set<string>();
-  for (const itemId of selectedItems) {
-    if (!processedItems.has(itemId)) {
-      cartItems.push({ itemId, count: itemCounts[itemId] });
-      processedItems.add(itemId);
-    }
-  }
-  while (cartItems.length < cartSize) {
-    cartItems.push(null);
+  // Fill remaining slots with null (empty)
+  while (cartSlots.length < cartSize) {
+    cartSlots.push(null);
   }
 
   // Check if cart is full
@@ -160,13 +156,20 @@ export function ItemShopGrid() {
     }
   };
 
-  // Handle removing item from cart
-  const handleRemoveItem = (itemId: string) => {
+  // Handle removing item from cart (only non-locked items)
+  const handleRemoveItem = (slotIndex: number) => {
     const currentItems = useGameStore.getState().selectedItems;
-    const lastIndex = currentItems.lastIndexOf(itemId);
-    if (lastIndex !== -1) {
+    const lockedItems = useGameStore.getState().lockedCartItems;
+
+    // Don't allow removing locked items
+    if (slotIndex < lockedItems.length) {
+      return;
+    }
+
+    // Remove the item at this specific index
+    if (slotIndex < currentItems.length) {
       const newItems = [...currentItems];
-      newItems.splice(lastIndex, 1);
+      newItems.splice(slotIndex, 1);
       useGameStore.setState({ selectedItems: newItems });
     }
   };
@@ -218,7 +221,7 @@ export function ItemShopGrid() {
                 alt={item.name}
                 className="w-12 h-12 mb-1"
               />
-              <span className="font-ui text-[10px] text-hextech-gold-light/80 text-center leading-tight line-clamp-2 min-h-[24px] w-full">
+              <span className="font-ui text-[10px] text-hextech-gold-light/80 text-center leading-tight line-clamp-2 min-h-6 w-full">
                 {item.name}
               </span>
               <span className="font-ui text-[11px] text-hextech-gold font-semibold">
@@ -239,43 +242,51 @@ export function ItemShopGrid() {
           </span>
         </div>
 
-        {/* Cart Items - Clickable to remove */}
+        {/* Cart Items - Individual slots, locked items show lock icon */}
         <div className="flex gap-2 mb-3">
           <AnimatePresence mode="popLayout">
-            {cartItems.map((cartItem, index) => (
+            {cartSlots.map((slot, index) => (
               <motion.div
-                key={cartItem ? `${cartItem.itemId}-${index}` : `empty-${index}`}
+                key={slot ? `${slot.itemId}-${index}` : `empty-${index}`}
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ duration: 0.15 }}
                 className="flex-1"
               >
-                {cartItem ? (
+                {slot ? (
                   <button
-                    onClick={() => handleRemoveItem(cartItem.itemId)}
-                    className="item-slot relative flex flex-col items-center p-2 h-20 w-full cursor-pointer hover:border-error-red transition-colors group"
-                    title="Click to remove"
+                    onClick={() => !slot.isLocked && handleRemoveItem(index)}
+                    disabled={slot.isLocked}
+                    className={`
+                      item-slot relative flex flex-col items-center p-2 h-20 w-full transition-colors group
+                      ${slot.isLocked
+                        ? 'cursor-default border-yellow-500/50'
+                        : 'cursor-pointer hover:border-error-red'
+                      }
+                    `}
+                    title={slot.isLocked ? 'Hint item (locked)' : 'Click to remove'}
                   >
                     <img
-                      src={getItemImageUrl(cartItem.itemId, dataVersion)}
-                      alt={allItems[cartItem.itemId]?.name || ''}
+                      src={getItemImageUrl(slot.itemId, dataVersion)}
+                      alt={allItems[slot.itemId]?.name || ''}
                       className="w-10 h-10"
                     />
-                    <span className="font-ui text-[10px] text-hextech-gold-light/80 text-center leading-tight mt-1 line-clamp-1 w-full">
-                      {allItems[cartItem.itemId]?.name || ''}
+                    <span className={`font-ui text-[10px] text-center leading-tight mt-1 line-clamp-1 w-full ${slot.isLocked ? 'text-yellow-400/80' : 'text-hextech-gold-light/80'}`}>
+                      {allItems[slot.itemId]?.name || ''}
                     </span>
-                    {cartItem.count > 1 && (
-                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-hextech-blue rounded-full flex items-center justify-center">
-                        <span className="font-ui text-[10px] font-bold text-lol-black">
-                          {cartItem.count}
-                        </span>
+                    {/* Lock indicator for hint items */}
+                    {slot.isLocked && (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-lol-dark border-2 border-yellow-500 rounded-full flex items-center justify-center shadow-lg">
+                        <span className="text-yellow-400 text-[10px]">🔒</span>
                       </div>
                     )}
-                    {/* Remove indicator on hover */}
-                    <div className="absolute inset-0 bg-error-red/20 rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="text-error-red text-lg font-bold">×</span>
-                    </div>
+                    {/* Remove indicator on hover (only for non-locked) */}
+                    {!slot.isLocked && (
+                      <div className="absolute inset-0 bg-error-red/20 rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="text-error-red text-lg font-bold">×</span>
+                      </div>
+                    )}
                   </button>
                 ) : (
                   <div className="h-20 bg-lol-dark border-2 border-dashed border-lol-border rounded flex items-center justify-center">
@@ -299,11 +310,11 @@ export function ItemShopGrid() {
                   key={gold}
                   onClick={() => useGameStore.setState({ goldInput: gold.toString() })}
                   className={`
-                    flex-1 py-2 px-3 rounded border-2 font-ui text-sm font-semibold
+                    flex-1 py-2.5 px-3 rounded border-2 font-ui text-base font-bold
                     transition-all duration-150
                     ${goldInput === gold.toString()
-                      ? 'bg-hextech-gold/20 border-hextech-gold text-hextech-gold'
-                      : 'bg-lol-dark border-lol-border text-hextech-gold-light/70 hover:border-hextech-gold/50 hover:text-hextech-gold-light'
+                      ? 'bg-yellow-500/30 border-yellow-400 text-yellow-300 shadow-[0_0_10px_rgba(234,179,8,0.3)]'
+                      : 'bg-lol-black/60 border-lol-border text-hextech-gold-light/60 hover:border-yellow-500/50 hover:bg-lol-dark hover:text-yellow-400'
                     }
                   `}
                 >

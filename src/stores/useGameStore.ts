@@ -39,6 +39,43 @@ function getNodeAtPath(root: ComponentNode | null, path: number[]): ComponentNod
 }
 
 /**
+ * Generates hint reveals for a component tree.
+ * Rules:
+ * - For Row 2 components with 2+ sub-components: reveal 1 random sub-component
+ * - For Row 2 components with 1 sub-component: never reveal (too easy)
+ * - Maximum 2 hints total across all Row 2 components
+ *
+ * @param tree - The target item component tree
+ * @returns Map of Row 2 index to sub-component index to reveal
+ */
+function generateRevealedHints(tree: ComponentNode): Map<number, number> {
+  const hints = new Map<number, number>();
+
+  // Find all Row 2 components with 2+ sub-components (eligible for hints)
+  const eligibleIndices: number[] = [];
+  tree.children.forEach((child, index) => {
+    if (child.children.length >= 2) {
+      eligibleIndices.push(index);
+    }
+  });
+
+  // Shuffle eligible indices to randomize which get hints
+  const shuffled = [...eligibleIndices].sort(() => Math.random() - 0.5);
+
+  // Take at most 2 for hints
+  const toReveal = shuffled.slice(0, 2);
+
+  // For each selected Row 2 component, pick a random sub-component to reveal
+  for (const row2Index of toReveal) {
+    const numSubs = tree.children[row2Index].children.length;
+    const randomSubIndex = Math.floor(Math.random() * numSubs);
+    hints.set(row2Index, randomSubIndex);
+  }
+
+  return hints;
+}
+
+/**
  * Compares two arrays of item IDs accounting for duplicates.
  * Order doesn't matter, but quantities must match exactly.
  * @param arr1 - First array of item IDs
@@ -96,6 +133,19 @@ export interface GameState {
 
   /** Set of component paths that were answered incorrectly (for showing red X) */
   failedComponents: Set<string>;
+
+  /**
+   * Map of Row 2 component index to revealed sub-component index.
+   * Used to show hints in Row 3 for components with 2+ sub-components.
+   * Key: Row 2 index (e.g., "0", "1"), Value: sub-component index to reveal
+   */
+  revealedHints: Map<number, number>;
+
+  /**
+   * Array of item IDs that are pre-filled and locked in the cart.
+   * These are hint items that cannot be removed by the player.
+   */
+  lockedCartItems: string[];
 
   // ============================================================================
   // Player Input
@@ -259,6 +309,8 @@ export const useGameStore = create<GameState>((set) => ({
   focusedComponentPath: [],
   unlockedComponents: new Set<string>(),
   failedComponents: new Set<string>(),
+  revealedHints: new Map<number, number>(),
+  lockedCartItems: [],
 
   // Player Input
   selectedItems: [],
@@ -301,6 +353,9 @@ export const useGameStore = create<GameState>((set) => ({
       const legendaryId = getRandomLegendaryId(legendaries);
       const tree = buildComponentTree(legendaryId, itemsResponse.data);
 
+      // Generate hints for this level
+      const hints = generateRevealedHints(tree);
+
       // Initialize game state
       set({
         gameStatus: 'playing',
@@ -310,6 +365,8 @@ export const useGameStore = create<GameState>((set) => ({
         focusedComponentPath: [],
         unlockedComponents: new Set<string>(),
         failedComponents: new Set<string>(),
+        revealedHints: hints,
+        lockedCartItems: [],
         selectedItems: [],
         goldInput: '',
         timeRemaining: 20,
@@ -335,13 +392,38 @@ export const useGameStore = create<GameState>((set) => ({
 
   /**
    * Change the currently focused component slot.
-   * Clears any previous selections.
+   * Clears any previous selections and pre-fills locked hint items if applicable.
    */
   focusComponent: (path: number[]) => {
-    set({
-      focusedComponentPath: path,
-      selectedItems: [],
-      goldInput: '',
+    set((state) => {
+      // Check if this is a Row 2 component (path length 1) with a hint
+      if (path.length === 1) {
+        const row2Index = path[0];
+        const hintSubIndex = state.revealedHints.get(row2Index);
+
+        if (hintSubIndex !== undefined && state.targetItem) {
+          // Get the hint item ID from the sub-component
+          const row2Component = state.targetItem.children[row2Index];
+          if (row2Component && row2Component.children[hintSubIndex]) {
+            const hintItemId = row2Component.children[hintSubIndex].itemId;
+
+            return {
+              focusedComponentPath: path,
+              selectedItems: [hintItemId], // Pre-fill with hint item
+              lockedCartItems: [hintItemId], // Lock it in the cart
+              goldInput: '',
+            };
+          }
+        }
+      }
+
+      // Default: no hints, clear everything
+      return {
+        focusedComponentPath: path,
+        selectedItems: [],
+        lockedCartItems: [],
+        goldInput: '',
+      };
     });
   },
 
@@ -611,6 +693,9 @@ export const useGameStore = create<GameState>((set) => ({
       const legendaryId = getRandomLegendaryId(legendaries);
       const tree = buildComponentTree(legendaryId, itemsResponse.data);
 
+      // Generate hints for this level
+      const hints = generateRevealedHints(tree);
+
       // Update best level reached if this is a new record
       const currentBest = useGameStore.getState().bestLevelReached;
       const newBest = Math.max(currentBest, newLevel);
@@ -625,6 +710,8 @@ export const useGameStore = create<GameState>((set) => ({
         focusedComponentPath: [],
         unlockedComponents: new Set<string>(),
         failedComponents: new Set<string>(),
+        revealedHints: hints,
+        lockedCartItems: [],
         selectedItems: [],
         goldInput: '',
         timeRemaining: 20,
@@ -665,6 +752,8 @@ export const useGameStore = create<GameState>((set) => ({
       focusedComponentPath: [],
       unlockedComponents: new Set<string>(),
       failedComponents: new Set<string>(),
+      revealedHints: new Map<number, number>(),
+      lockedCartItems: [],
       selectedItems: [],
       goldInput: '',
       timeRemaining: 20,

@@ -23,6 +23,7 @@ export function ComponentTree() {
     focusedComponentPath,
     unlockedComponents,
     failedComponents,
+    revealedHints,
     requiresFinalGold,
     dataVersion,
     focusComponent,
@@ -279,43 +280,65 @@ export function ComponentTree() {
                   {/* Row 3: Sub-components (within column) */}
                   <div className="flex flex-col items-center">
                     <div className="flex justify-center items-start gap-2">
-                      {child.children.map((subChild, subIndex) => (
-                        <motion.div
-                          key={subIndex}
-                          initial={{ opacity: 0, scale: 0.9 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.2, delay: subIndex * 0.03 }}
-                          className={`
-                            item-slot relative flex flex-col items-center justify-center p-2 w-16 h-20 cursor-default
-                            ${focused ? 'border-hextech-blue/50' : ''}
-                            ${unlocked ? 'border-success-green/50' : ''}
-                          `}
-                        >
-                          {unlocked ? (
-                            // Show actual item when parent is unlocked
-                            <>
-                              <img
-                                src={getItemImageUrl(subChild.itemId, dataVersion)}
-                                alt={subChild.itemName}
-                                className="w-11 h-11"
-                              />
-                              <p className="font-ui text-[9px] text-hextech-gold-light/70 mt-1 text-center leading-tight line-clamp-1">
-                                {subChild.itemName}
-                              </p>
-                            </>
-                          ) : (
-                            // Show placeholder when parent is locked
-                            <>
-                              <div className="w-11 h-11 bg-lol-dark border-2 border-lol-border rounded flex items-center justify-center">
-                                <span className="font-display text-lg text-lol-muted">?</span>
-                              </div>
-                              <p className="font-ui text-[10px] text-lol-muted mt-1 text-center">
-                                {focused ? 'Need' : ''}
-                              </p>
-                            </>
-                          )}
-                        </motion.div>
-                      ))}
+                      {child.children.map((subChild, subIndex) => {
+                        // Check if this sub-component is a revealed hint
+                        const isHintRevealed = revealedHints.get(index) === subIndex;
+
+                        return (
+                          <motion.div
+                            key={subIndex}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.2, delay: subIndex * 0.03 }}
+                            className={`
+                              item-slot relative flex flex-col items-center justify-center p-2 w-16 h-20 cursor-default
+                              ${focused ? 'border-hextech-blue/50' : ''}
+                              ${unlocked ? 'border-success-green/50' : ''}
+                              ${isHintRevealed && !unlocked ? 'border-yellow-500/50' : ''}
+                            `}
+                          >
+                            {unlocked ? (
+                              // Show actual item when parent is unlocked
+                              <>
+                                <img
+                                  src={getItemImageUrl(subChild.itemId, dataVersion)}
+                                  alt={subChild.itemName}
+                                  className="w-11 h-11"
+                                />
+                                <p className="font-ui text-[9px] text-hextech-gold-light/70 mt-1 text-center leading-tight line-clamp-1">
+                                  {subChild.itemName}
+                                </p>
+                              </>
+                            ) : isHintRevealed ? (
+                              // Show revealed hint item with hint indicator
+                              <>
+                                <img
+                                  src={getItemImageUrl(subChild.itemId, dataVersion)}
+                                  alt={subChild.itemName}
+                                  className="w-11 h-11"
+                                />
+                                <p className="font-ui text-[9px] text-yellow-400/80 mt-1 text-center leading-tight line-clamp-1">
+                                  {subChild.itemName}
+                                </p>
+                                {/* Hint lock badge */}
+                                <div className="absolute -top-1 -right-1 w-5 h-5 bg-lol-dark border-2 border-yellow-500 rounded-full flex items-center justify-center shadow-lg">
+                                  <span className="text-yellow-400 text-[10px]">🔒</span>
+                                </div>
+                              </>
+                            ) : (
+                              // Show placeholder when parent is locked and not a hint
+                              <>
+                                <div className="w-11 h-11 bg-lol-dark border-2 border-lol-border rounded flex items-center justify-center">
+                                  <span className="font-display text-lg text-lol-muted">?</span>
+                                </div>
+                                <p className="font-ui text-[10px] text-lol-muted mt-1 text-center">
+                                  {focused ? 'Need' : ''}
+                                </p>
+                              </>
+                            )}
+                          </motion.div>
+                        );
+                      })}
                     </div>
                     {/* Gold cost as simple text below sub-components */}
                     {child.goldCost > 0 && (

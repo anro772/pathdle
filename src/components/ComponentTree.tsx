@@ -22,6 +22,7 @@ export function ComponentTree() {
     targetItem,
     focusedComponentPath,
     unlockedComponents,
+    failedComponents,
     requiresFinalGold,
     dataVersion,
     focusComponent,
@@ -33,6 +34,10 @@ export function ComponentTree() {
 
   const isUnlocked = (path: number[]): boolean => {
     return unlockedComponents.has(path.join(','));
+  };
+
+  const isFailed = (path: number[]): boolean => {
+    return failedComponents.has(path.join(','));
   };
 
   const isFocused = (path: number[]): boolean => {
@@ -107,10 +112,11 @@ export function ComponentTree() {
               {targetItem.children.map((_, index) => {
                 const columnCenterX = index * columnWidth + columnWidth / 2;
                 const isChildUnlocked = isUnlocked([index]);
+                const isChildFailed = isFailed([index]);
                 const isChildFocused = isFocused([index]);
 
                 const strokeCol = isChildUnlocked
-                  ? '#0BDA51'
+                  ? (isChildFailed ? '#EF4444' : '#0BDA51')
                   : isChildFocused
                     ? '#0AC8B9'
                     : '#785A28';
@@ -150,11 +156,12 @@ export function ComponentTree() {
       <div className="flex justify-center items-start gap-6">
         {targetItem.children.map((child, index) => {
           const unlocked = isUnlocked([index]);
+          const failed = isFailed([index]);
           const focused = isFocused([index]);
           const hasSubChildren = child.children.length > 0;
 
           const strokeColor = unlocked
-            ? '#0BDA51'
+            ? (failed ? '#EF4444' : '#0BDA51')
             : focused
               ? '#0AC8B9'
               : '#C8AA6E';
@@ -169,7 +176,7 @@ export function ComponentTree() {
                 className={`
                   item-slot relative flex flex-col items-center justify-center p-2 w-24 h-28
                   transition-all duration-200
-                  ${unlocked ? 'unlocked' : focused ? 'focused' : 'locked'}
+                  ${unlocked ? (failed ? 'border-error-red' : 'unlocked') : focused ? 'focused' : 'locked'}
                   ${!unlocked && !focused ? 'hover:scale-105 cursor-pointer' : ''}
                 `}
               >
@@ -185,9 +192,15 @@ export function ComponentTree() {
                       alt={child.itemName}
                       className="w-14 h-14"
                     />
-                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-success-green rounded-full flex items-center justify-center shadow-lg">
-                      <span className="text-white text-xs font-bold">✓</span>
-                    </div>
+                    {failed ? (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-error-red rounded-full flex items-center justify-center shadow-lg">
+                        <span className="text-white text-xs font-bold">✗</span>
+                      </div>
+                    ) : (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-success-green rounded-full flex items-center justify-center shadow-lg">
+                        <span className="text-white text-xs font-bold">✓</span>
+                      </div>
+                    )}
                     <p className="font-ui text-[10px] text-hextech-gold-light/80 mt-1 text-center leading-tight line-clamp-2 max-w-20">
                       {child.itemName}
                     </p>
@@ -217,7 +230,7 @@ export function ComponentTree() {
                       const totalWidth = numSubs * subSlotWidth + (numSubs - 1) * gap;
                       const centerX = totalWidth / 2;
                       const midY = 24; // Horizontal line Y position
-                      const strokeCol = focused ? '#0AC8B9' : unlocked ? '#0BDA51' : '#785A28';
+                      const strokeCol = focused ? '#0AC8B9' : unlocked ? (failed ? '#EF4444' : '#0BDA51') : '#785A28';
                       const opac = focused || unlocked ? 1 : 0.4;
 
                       return (

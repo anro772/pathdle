@@ -94,6 +94,9 @@ export interface GameState {
   /** Set of completed component paths stored as stringified paths (e.g., "0,1") */
   unlockedComponents: Set<string>;
 
+  /** Set of component paths that were answered incorrectly (for showing red X) */
+  failedComponents: Set<string>;
+
   // ============================================================================
   // Player Input
   // ============================================================================
@@ -255,6 +258,7 @@ export const useGameStore = create<GameState>((set) => ({
   targetItem: null,
   focusedComponentPath: [],
   unlockedComponents: new Set<string>(),
+  failedComponents: new Set<string>(),
 
   // Player Input
   selectedItems: [],
@@ -305,6 +309,7 @@ export const useGameStore = create<GameState>((set) => ({
         targetItem: tree,
         focusedComponentPath: [],
         unlockedComponents: new Set<string>(),
+        failedComponents: new Set<string>(),
         selectedItems: [],
         goldInput: '',
         timeRemaining: 20,
@@ -315,6 +320,7 @@ export const useGameStore = create<GameState>((set) => ({
         // Reset transition flags
         awaitingFinalGold: false,
         isTransitioning: false,
+        levelComplete: false,
         // Expose filtered data for UI components
         allItems: itemsResponse.data,
         basicComponents: basicComponents,
@@ -409,25 +415,14 @@ export const useGameStore = create<GameState>((set) => ({
               timerActive: false,
             };
           } else {
-            // For levels < 11, advance after a short delay
-            // Set transition flag IMMEDIATELY before setTimeout
-            useGameStore.setState({ isTransitioning: true });
-
-            setTimeout(async () => {
-              try {
-                await useGameStore.getState().advanceLevel();
-              } catch (error) {
-                console.error('Failed to advance level:', error);
-                useGameStore.setState({ isTransitioning: false });
-              }
-            }, 500);
-
+            // Level complete - show "Next Level" button
             return {
               unlockedComponents: newUnlockedSet,
               focusedComponentPath: [],
               selectedItems: [],
               goldInput: '',
-              // Don't set isTransitioning here - already set above
+              timerActive: false,
+              levelComplete: true,
             };
           }
         }
@@ -442,6 +437,7 @@ export const useGameStore = create<GameState>((set) => ({
         // WRONG: Lose life and auto-complete component
         const pathStr = state.focusedComponentPath.join(',');
         const newUnlockedSet = new Set([...state.unlockedComponents, pathStr]);
+        const newFailedSet = new Set([...state.failedComponents, pathStr]);
 
         // Lose a life (this will handle game over if needed)
         const newLives = Math.max(0, state.livesRemaining - 1) as 3 | 2 | 1 | 0;
@@ -458,6 +454,7 @@ export const useGameStore = create<GameState>((set) => ({
             timerActive: false,
             bestLevelReached: newBest,
             unlockedComponents: newUnlockedSet,
+            failedComponents: newFailedSet,
             focusedComponentPath: [],
             selectedItems: [],
             goldInput: '',
@@ -470,30 +467,23 @@ export const useGameStore = create<GameState>((set) => ({
         );
 
         if (allChildrenUnlocked) {
-          // Level complete! Advance after a short delay
-          useGameStore.setState({ isTransitioning: true });
-
-          setTimeout(async () => {
-            try {
-              await useGameStore.getState().advanceLevel();
-            } catch (error) {
-              console.error('Failed to advance level:', error);
-              useGameStore.setState({ isTransitioning: false });
-            }
-          }, 1000); // Slightly longer delay to show the wrong answer feedback
-
+          // Level complete - show "Next Level" button
           return {
             livesRemaining: newLives,
             unlockedComponents: newUnlockedSet,
+            failedComponents: newFailedSet,
             focusedComponentPath: [],
             selectedItems: [],
             goldInput: '',
+            timerActive: false,
+            levelComplete: true,
           };
         }
 
         return {
           livesRemaining: newLives,
           unlockedComponents: newUnlockedSet,
+          failedComponents: newFailedSet,
           focusedComponentPath: [],
           selectedItems: [],
           goldInput: '',
@@ -634,9 +624,10 @@ export const useGameStore = create<GameState>((set) => ({
         targetItem: tree,
         focusedComponentPath: [],
         unlockedComponents: new Set<string>(),
+        failedComponents: new Set<string>(),
         selectedItems: [],
         goldInput: '',
-        timeRemaining: 10,
+        timeRemaining: 20,
         timerActive: true,
         // Update difficulty gates based on new level
         requiresComponentGold: newLevel >= 6,
@@ -644,6 +635,7 @@ export const useGameStore = create<GameState>((set) => ({
         // Reset transition flags
         awaitingFinalGold: false,
         isTransitioning: false,
+        levelComplete: false,
         // Update best level
         bestLevelReached: newBest,
         // Update data pools (in case patch changed)
@@ -672,6 +664,7 @@ export const useGameStore = create<GameState>((set) => ({
       targetItem: null,
       focusedComponentPath: [],
       unlockedComponents: new Set<string>(),
+      failedComponents: new Set<string>(),
       selectedItems: [],
       goldInput: '',
       timeRemaining: 20,

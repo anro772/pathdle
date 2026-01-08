@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
 
 function App() {
-  const { gameStatus, startGame, timerActive, decrementTimer, handleTimerExpire, livesRemaining, currentLevel, levelComplete, proceedToNextLevel } = useGameStore();
+  const { gameStatus, startGame, timerActive, decrementTimer, handleTimerExpire, livesRemaining, currentLevel, levelComplete, proceedToNextLevel, timeRemaining } = useGameStore();
   const [isLoading, setIsLoading] = useState(false);
   const [showLifeLossFlash, setShowLifeLossFlash] = useState(false);
   const prevLivesRef = useRef(livesRemaining);
@@ -149,11 +149,14 @@ function App() {
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className="hextech-panel p-8 text-center"
               >
-                <h2 className="font-display text-3xl text-hextech-gold mb-2">
-                  TIME'S UP!
+                <h2 className={`font-display text-3xl mb-2 ${timeRemaining > 0 ? 'text-success-green' : 'text-hextech-gold'}`}>
+                  {timeRemaining > 0 ? 'LEVEL COMPLETE!' : "TIME'S UP!"}
                 </h2>
                 <p className="font-ui text-hextech-gold-light/70 mb-6">
-                  Level {currentLevel} complete
+                  {timeRemaining > 0
+                    ? `Level ${currentLevel} cleared with ${timeRemaining}s remaining`
+                    : `Level ${currentLevel} complete`
+                  }
                 </p>
                 <button
                   onClick={proceedToNextLevel}

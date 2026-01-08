@@ -39,6 +39,27 @@ function getNodeAtPath(root: ComponentNode | null, path: number[]): ComponentNod
 }
 
 /**
+ * Collects all base (leaf) component item IDs from a component tree.
+ * Used for "Buy All" mode where player selects all base components at once.
+ *
+ * @param node - The component node to traverse
+ * @returns Array of all base component item IDs (may contain duplicates)
+ */
+function collectAllBaseComponents(node: ComponentNode): string[] {
+  // Base case: this is a leaf node (no children) - it's a base component
+  if (node.children.length === 0) {
+    return [node.itemId];
+  }
+
+  // Recursive case: collect from all children
+  const baseComponents: string[] = [];
+  for (const child of node.children) {
+    baseComponents.push(...collectAllBaseComponents(child));
+  }
+  return baseComponents;
+}
+
+/**
  * Generates hint reveals for a component tree.
  * Rules:
  * - For Row 2 components with 2+ sub-components: reveal 1 random sub-component
@@ -146,6 +167,12 @@ export interface GameState {
    * These are hint items that cannot be removed by the player.
    */
   lockedCartItems: string[];
+
+  /**
+   * Whether the player is in "Buy All" mode (clicked the target item).
+   * In this mode, player must select ALL base components at once.
+   */
+  isBuyAllMode: boolean;
 
   // ============================================================================
   // Player Input
@@ -311,6 +338,7 @@ export const useGameStore = create<GameState>((set) => ({
   failedComponents: new Set<string>(),
   revealedHints: new Map<number, number>(),
   lockedCartItems: [],
+  isBuyAllMode: false,
 
   // Player Input
   selectedItems: [],
@@ -367,6 +395,7 @@ export const useGameStore = create<GameState>((set) => ({
         failedComponents: new Set<string>(),
         revealedHints: hints,
         lockedCartItems: [],
+        isBuyAllMode: false,
         selectedItems: [],
         goldInput: '',
         timeRemaining: 20,
@@ -393,9 +422,21 @@ export const useGameStore = create<GameState>((set) => ({
   /**
    * Change the currently focused component slot.
    * Clears any previous selections and pre-fills locked hint items if applicable.
+   * Pass empty path [] to enter "Buy All" mode (target item clicked).
    */
   focusComponent: (path: number[]) => {
     set((state) => {
+      // "Buy All" mode: path is empty (target item clicked)
+      if (path.length === 0) {
+        return {
+          focusedComponentPath: [],
+          selectedItems: [],
+          lockedCartItems: [],
+          goldInput: '',
+          isBuyAllMode: true,
+        };
+      }
+
       // Check if this is a Row 2 component (path length 1) with a hint
       if (path.length === 1) {
         const row2Index = path[0];
@@ -412,6 +453,7 @@ export const useGameStore = create<GameState>((set) => ({
               selectedItems: [hintItemId], // Pre-fill with hint item
               lockedCartItems: [hintItemId], // Lock it in the cart
               goldInput: '',
+              isBuyAllMode: false,
             };
           }
         }
@@ -423,6 +465,7 @@ export const useGameStore = create<GameState>((set) => ({
         selectedItems: [],
         lockedCartItems: [],
         goldInput: '',
+        isBuyAllMode: false,
       };
     });
   },
@@ -439,14 +482,102 @@ export const useGameStore = create<GameState>((set) => ({
 
   /**
    * Validate and process the current purchase attempt.
-   * Checks if selected items and gold match the focused component.
+   * Handles three modes:
+   * 1. Buy All mode: Player selected all base components for entire item
+   * 2. Basic item mode: Smart assignment - correct item fills any matching slot
+   * 3. Complex item mode: Must match the specific focused slot
    */
   submitPurchase: () => {
     set((state) => {
       // Guard against interactions during level transitions
-      if (state.isTransitioning) return state;
+      if (state.isTransitioning || !state.targetItem) return state;
 
-      // Get the focused component node
+      // ========================================================================
+      // MODE 1: Buy All mode - validate all base components at once
+      // ========================================================================
+      if (state.isBuyAllMode) {
+        const allBaseComponents = collectAllBaseComponents(state.targetItem);
+        const itemsCorrect = arraysEqualWithDuplicates(state.selectedItems, allBaseComponents);
+
+        // In Buy All mode, gold is the sum of ALL combine costs (not validated for now)
+        // For simplicity, we skip gold validation in Buy All mode
+
+        if (itemsCorrect) {
+          // CORRECT: Unlock ALL components at once
+          const newUnlockedSet = new Set(state.unlockedComponents);
+          state.targetItem.children.forEach((_, index) => {
+            newUnlockedSet.add([index].join(','));
+          });
+
+          // Level complete! Check if final gold is required (Level 11+)
+          if (state.currentLevel >= 11 && state.requiresFinalGold) {
+            return {
+              unlockedComponents: newUnlockedSet,
+              focusedComponentPath: [],
+              selectedItems: [],
+              goldInput: '',
+              awaitingFinalGold: true,
+              timerActive: false,
+              isBuyAllMode: false,
+            };
+          } else {
+            return {
+              unlockedComponents: newUnlockedSet,
+              focusedComponentPath: [],
+              selectedItems: [],
+              goldInput: '',
+              timerActive: false,
+              levelComplete: true,
+              isBuyAllMode: false,
+            };
+          }
+        } else {
+          // WRONG in Buy All mode: Lose life, unlock all as failed
+          const newUnlockedSet = new Set(state.unlockedComponents);
+          const newFailedSet = new Set(state.failedComponents);
+          state.targetItem.children.forEach((_, index) => {
+            const pathStr = [index].join(',');
+            newUnlockedSet.add(pathStr);
+            newFailedSet.add(pathStr);
+          });
+
+          const newLives = Math.max(0, state.livesRemaining - 1) as 3 | 2 | 1 | 0;
+          const isGameOver = newLives === 0;
+
+          if (isGameOver) {
+            const newBest = Math.max(state.bestLevelReached, state.currentLevel);
+            localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
+            return {
+              livesRemaining: 0,
+              gameStatus: 'gameover' as const,
+              timerActive: false,
+              bestLevelReached: newBest,
+              unlockedComponents: newUnlockedSet,
+              failedComponents: newFailedSet,
+              focusedComponentPath: [],
+              selectedItems: [],
+              goldInput: '',
+              isBuyAllMode: false,
+            };
+          }
+
+          return {
+            livesRemaining: newLives,
+            unlockedComponents: newUnlockedSet,
+            failedComponents: newFailedSet,
+            focusedComponentPath: [],
+            selectedItems: [],
+            goldInput: '',
+            timerActive: false,
+            levelComplete: true,
+            isBuyAllMode: false,
+          };
+        }
+      }
+
+      // ========================================================================
+      // MODE 2 & 3: Normal mode (focused on a specific slot)
+      // ========================================================================
       const focusedNode = getNodeAtPath(state.targetItem, state.focusedComponentPath);
 
       if (!focusedNode) {
@@ -454,40 +585,66 @@ export const useGameStore = create<GameState>((set) => ({
         return state;
       }
 
-      // Extract required item IDs from children
-      // For basic items (no children), the required item is the item itself
       const isBasicItem = focusedNode.children.length === 0;
       const requiredItems = isBasicItem
         ? [focusedNode.itemId]
         : focusedNode.children.map(child => child.itemId);
 
       // Validate item selection
-      const itemsCorrect = arraysEqualWithDuplicates(state.selectedItems, requiredItems);
+      let itemsCorrect = arraysEqualWithDuplicates(state.selectedItems, requiredItems);
+
+      // ========================================================================
+      // Smart slot assignment for basic items:
+      // If focused slot is basic AND selected item is wrong for this slot,
+      // check if it matches ANY other unfilled basic slot
+      // ========================================================================
+      let smartAssignPath: number[] | null = null;
+
+      if (!itemsCorrect && isBasicItem && state.selectedItems.length === 1) {
+        const selectedItem = state.selectedItems[0];
+
+        // Look for another unfilled basic slot that needs this item
+        for (let i = 0; i < state.targetItem.children.length; i++) {
+          const pathStr = [i].join(',');
+          if (state.unlockedComponents.has(pathStr)) continue; // Already unlocked
+
+          const child = state.targetItem.children[i];
+          // Check if this is a basic item slot that needs the selected item
+          if (child.children.length === 0 && child.itemId === selectedItem) {
+            // Found a matching slot!
+            smartAssignPath = [i];
+            itemsCorrect = true;
+            break;
+          }
+        }
+      }
 
       // Validate gold input (if required by difficulty)
       let goldCorrect = true;
       if (state.requiresComponentGold) {
         const inputGold = parseInt(state.goldInput.trim());
-        goldCorrect = !isNaN(inputGold) && inputGold === focusedNode.goldCost;
+        // Use the correct node for gold validation (might be smart-assigned)
+        const goldNode = smartAssignPath
+          ? getNodeAtPath(state.targetItem, smartAssignPath)
+          : focusedNode;
+        goldCorrect = !isNaN(inputGold) && inputGold === (goldNode?.goldCost ?? 0);
       }
 
-      // Check if answer is correct
       const isCorrect = itemsCorrect && goldCorrect;
 
       if (isCorrect) {
-        // CORRECT: Unlock the component
-        const pathStr = state.focusedComponentPath.join(',');
+        // CORRECT: Unlock the component (use smart-assigned path if applicable)
+        const pathToUnlock = smartAssignPath || state.focusedComponentPath;
+        const pathStr = pathToUnlock.join(',');
         const newUnlockedSet = new Set([...state.unlockedComponents, pathStr]);
 
         // Check if all direct children of root are unlocked
-        const allChildrenUnlocked = state.targetItem?.children.every((_, index) =>
+        const allChildrenUnlocked = state.targetItem.children.every((_, index) =>
           newUnlockedSet.has([index].join(','))
         );
 
         if (allChildrenUnlocked) {
-          // Level complete! Check if final gold is required (Level 11+)
           if (state.currentLevel >= 11 && state.requiresFinalGold) {
-            // For Level 11+, enter final gold validation phase
             return {
               unlockedComponents: newUnlockedSet,
               focusedComponentPath: [],
@@ -497,7 +654,6 @@ export const useGameStore = create<GameState>((set) => ({
               timerActive: false,
             };
           } else {
-            // Level complete - show "Next Level" button
             return {
               unlockedComponents: newUnlockedSet,
               focusedComponentPath: [],
@@ -521,13 +677,11 @@ export const useGameStore = create<GameState>((set) => ({
         const newUnlockedSet = new Set([...state.unlockedComponents, pathStr]);
         const newFailedSet = new Set([...state.failedComponents, pathStr]);
 
-        // Lose a life (this will handle game over if needed)
         const newLives = Math.max(0, state.livesRemaining - 1) as 3 | 2 | 1 | 0;
         const isGameOver = newLives === 0;
 
         if (isGameOver) {
           const newBest = Math.max(state.bestLevelReached, state.currentLevel);
-          // Persist to localStorage
           localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
 
           return {
@@ -543,13 +697,11 @@ export const useGameStore = create<GameState>((set) => ({
           };
         }
 
-        // Check if all direct children of root are now unlocked (even after wrong answer)
-        const allChildrenUnlocked = state.targetItem?.children.every((_, index) =>
+        const allChildrenUnlocked = state.targetItem.children.every((_, index) =>
           newUnlockedSet.has([index].join(','))
         );
 
         if (allChildrenUnlocked) {
-          // Level complete - show "Next Level" button
           return {
             livesRemaining: newLives,
             unlockedComponents: newUnlockedSet,
@@ -712,6 +864,7 @@ export const useGameStore = create<GameState>((set) => ({
         failedComponents: new Set<string>(),
         revealedHints: hints,
         lockedCartItems: [],
+        isBuyAllMode: false,
         selectedItems: [],
         goldInput: '',
         timeRemaining: 20,
@@ -754,6 +907,7 @@ export const useGameStore = create<GameState>((set) => ({
       failedComponents: new Set<string>(),
       revealedHints: new Map<number, number>(),
       lockedCartItems: [],
+      isBuyAllMode: false,
       selectedItems: [],
       goldInput: '',
       timeRemaining: 20,

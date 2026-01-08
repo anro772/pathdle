@@ -24,6 +24,7 @@ export function ComponentTree() {
     unlockedComponents,
     failedComponents,
     revealedHints,
+    isBuyAllMode,
     requiresFinalGold,
     dataVersion,
     focusComponent,
@@ -60,21 +61,34 @@ export function ComponentTree() {
 
   return (
     <div className="w-full max-w-6xl mx-auto flex flex-col items-center">
-      {/* Row 1: Target Item - FIXED AT TOP */}
+      {/* Row 1: Target Item - Clickable for "Buy All" mode */}
       <div className="flex flex-col items-center mb-4">
-        <div className="relative">
-          <div className="item-slot p-2 relative z-10">
+        <button
+          onClick={() => focusComponent([])}
+          className="relative group cursor-pointer"
+          title="Click to buy all base components at once"
+        >
+          <div className={`
+            item-slot p-2 relative z-10 transition-all duration-200
+            ${isBuyAllMode ? 'focused' : 'hover:scale-105'}
+          `}>
             <img
               src={getItemImageUrl(targetItem.itemId, dataVersion)}
               alt={targetItem.itemName}
               className="w-20 h-20"
             />
           </div>
-          <div className="absolute inset-0 bg-hextech-gold/20 blur-lg rounded-full scale-150 -z-10"></div>
-        </div>
+          <div className={`
+            absolute inset-0 blur-lg rounded-full scale-150 -z-10 transition-colors
+            ${isBuyAllMode ? 'bg-hextech-blue/30' : 'bg-hextech-gold/20 group-hover:bg-hextech-gold/30'}
+          `}></div>
+        </button>
         <h2 className="font-display text-xl text-hextech-gold mt-2 tracking-wide">
           {targetItem.itemName}
         </h2>
+        {isBuyAllMode && (
+          <p className="font-ui text-xs text-hextech-blue mt-1">BUY ALL MODE</p>
+        )}
         {/* Show combine cost and/or total cost below item name */}
         <div className="flex items-center gap-3 mt-1">
           {row2CombineCost > 0 && (

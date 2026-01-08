@@ -48,6 +48,20 @@ function getNodeAtPath(root: ComponentNode | null, path: number[]): ComponentNod
 }
 
 /**
+ * Collects all base (leaf) component item IDs from a component tree.
+ */
+function collectAllBaseComponents(node: ComponentNode): string[] {
+  if (node.children.length === 0) {
+    return [node.itemId];
+  }
+  const baseComponents: string[] = [];
+  for (const child of node.children) {
+    baseComponents.push(...collectAllBaseComponents(child));
+  }
+  return baseComponents;
+}
+
+/**
  * ItemShopGrid Component
  */
 export function ItemShopGrid() {
@@ -55,6 +69,7 @@ export function ItemShopGrid() {
     focusedComponentPath,
     selectedItems,
     lockedCartItems,
+    isBuyAllMode,
     goldInput,
     requiresComponentGold,
     basicComponents,
@@ -70,16 +85,22 @@ export function ItemShopGrid() {
 
   // Memoize the shop grid to prevent regeneration on every render (timer updates)
   // Sort by gold cost for easier readability
+  // In Buy All mode, generate grid based on the target item (all base components)
   const shopGridItems = useMemo(() => {
-    if (!focusedNode || !basicComponents || !allItems) return [];
-    const gridItems = generateShopGrid(focusedNode, basicComponents, 16);
+    if (!basicComponents || !allItems || !targetItem) return [];
+
+    // Determine which node to generate grid for
+    const nodeForGrid = isBuyAllMode ? targetItem : focusedNode;
+    if (!nodeForGrid) return [];
+
+    const gridItems = generateShopGrid(nodeForGrid, basicComponents, 16);
     // Sort by gold cost (ascending)
     return gridItems.sort((a, b) => {
       const goldA = allItems[a]?.gold.total ?? 0;
       const goldB = allItems[b]?.gold.total ?? 0;
       return goldA - goldB;
     });
-  }, [focusedComponentPath.join(','), focusedNode?.itemId, basicComponents, allItems]);
+  }, [focusedComponentPath.join(','), focusedNode?.itemId, isBuyAllMode, targetItem?.itemId, basicComponents, allItems]);
 
   // Generate gold options (1 correct + 2 wrong) - memoized to stay stable
   const goldOptions = useMemo(() => {
@@ -109,8 +130,8 @@ export function ItemShopGrid() {
     return options.sort(() => Math.random() - 0.5);
   }, [focusedComponentPath.join(','), focusedNode?.goldCost]);
 
-  // Don't render when no component is focused - show placeholder
-  if (focusedComponentPath.length === 0) {
+  // Don't render when no component is focused AND not in Buy All mode - show placeholder
+  if (focusedComponentPath.length === 0 && !isBuyAllMode) {
     return (
       <div className="h-full flex flex-col items-center justify-center text-center p-6">
         <div className="w-16 h-16 mb-4 rounded-lg bg-lol-dark border-2 border-lol-border flex items-center justify-center">
@@ -118,21 +139,34 @@ export function ItemShopGrid() {
         </div>
         <h3 className="font-display text-base text-hextech-gold mb-1.5">SELECT A COMPONENT</h3>
         <p className="font-ui text-sm text-hextech-gold-light/60 max-w-xs">
-          Click on a component slot in the build path to see which items you need
+          Click on a component slot in the build path, or click the target item to buy all at once
         </p>
       </div>
     );
   }
 
-  if (!focusedNode || !basicComponents || !allItems || !dataVersion) {
+  if (!basicComponents || !allItems || !dataVersion || !targetItem) {
+    return null;
+  }
+
+  // In Buy All mode, focusedNode is the target item itself
+  const activeNode = isBuyAllMode ? targetItem : focusedNode;
+  if (!activeNode) {
     return null;
   }
 
   // Build cart display with individual slots (no quantity badges)
   // cartSize is how many items need to be selected
-  // For basic items (no children), the player must find the item itself (1 item)
-  const isBasicItem = focusedNode.children.length === 0;
-  const cartSize = isBasicItem ? 1 : focusedNode.children.length;
+  // In Buy All mode: need ALL base components for the entire item
+  // For basic items (no children): the player must find the item itself (1 item)
+  // For complex items: need all direct children
+  let cartSize: number;
+  if (isBuyAllMode) {
+    cartSize = collectAllBaseComponents(targetItem).length;
+  } else {
+    const isBasicItem = activeNode.children.length === 0;
+    cartSize = isBasicItem ? 1 : activeNode.children.length;
+  }
 
   // Each selected item gets its own slot (duplicates show separately)
   // cartSlots is an array of { itemId, isLocked } or null for empty slots
@@ -180,16 +214,16 @@ export function ItemShopGrid() {
       <div className="flex items-center gap-2 mb-2 pb-2 border-b border-lol-border">
         <div className="item-slot p-1">
           <img
-            src={getItemImageUrl(focusedNode.itemId, dataVersion)}
-            alt={focusedNode.itemName}
+            src={getItemImageUrl(activeNode.itemId, dataVersion)}
+            alt={activeNode.itemName}
             className="w-7 h-7"
           />
         </div>
         <div>
           <p className="font-ui text-[9px] text-hextech-gold-light/60 uppercase tracking-wider">
-            {isBasicItem ? 'Find this item' : 'Building'}
+            {isBuyAllMode ? 'Buy all components for' : (activeNode.children.length === 0 ? 'Find this item' : 'Building')}
           </p>
-          <p className="font-display text-sm text-hextech-gold">{focusedNode.itemName}</p>
+          <p className="font-display text-sm text-hextech-gold">{activeNode.itemName}</p>
         </div>
       </div>
 
@@ -298,8 +332,8 @@ export function ItemShopGrid() {
           </AnimatePresence>
         </div>
 
-        {/* Gold Selection Buttons (conditional) */}
-        {requiresComponentGold && goldOptions.length > 0 && (
+        {/* Gold Selection Buttons (conditional) - hidden in Buy All mode */}
+        {!isBuyAllMode && requiresComponentGold && goldOptions.length > 0 && (
           <div className="mb-2">
             <label className="font-display text-[10px] text-hextech-gold tracking-wider block mb-1.5">
               COMBINE COST

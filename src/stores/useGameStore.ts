@@ -141,6 +141,9 @@ export interface GameState {
   /** If true, currently transitioning between levels (disables interactions) */
   isTransitioning: boolean;
 
+  /** If true, level is complete and waiting for player to click "Next Level" */
+  levelComplete: boolean;
+
   // ============================================================================
   // Data pools for UI components
   // ============================================================================
@@ -220,9 +223,15 @@ export interface GameState {
 
   /**
    * Handle timer expiration.
-   * Loses a life, auto-completes remaining components, and advances level or ends game.
+   * Loses a life, auto-completes remaining components, and sets level complete.
    */
   handleTimerExpire: () => void;
+
+  /**
+   * Proceed to the next level after player clicks "Next Level".
+   * Called when levelComplete is true and player wants to continue.
+   */
+  proceedToNextLevel: () => void;
 }
 
 /**
@@ -252,7 +261,7 @@ export const useGameStore = create<GameState>((set) => ({
   goldInput: '',
 
   // Timer
-  timeRemaining: 10,
+  timeRemaining: 20,
   timerActive: false,
 
   // Progression
@@ -265,6 +274,7 @@ export const useGameStore = create<GameState>((set) => ({
   // Level Transition State
   awaitingFinalGold: false,
   isTransitioning: false,
+  levelComplete: false,
 
   // Data pools for UI components
   allItems: null,
@@ -297,7 +307,7 @@ export const useGameStore = create<GameState>((set) => ({
         unlockedComponents: new Set<string>(),
         selectedItems: [],
         goldInput: '',
-        timeRemaining: 10,
+        timeRemaining: 20,
         timerActive: true,
         // Difficulty gates for level 1
         requiresComponentGold: false,
@@ -357,7 +367,11 @@ export const useGameStore = create<GameState>((set) => ({
       }
 
       // Extract required item IDs from children
-      const requiredItems = focusedNode.children.map(child => child.itemId);
+      // For basic items (no children), the required item is the item itself
+      const isBasicItem = focusedNode.children.length === 0;
+      const requiredItems = isBasicItem
+        ? [focusedNode.itemId]
+        : focusedNode.children.map(child => child.itemId);
 
       // Validate item selection
       const itemsCorrect = arraysEqualWithDuplicates(state.selectedItems, requiredItems);
@@ -443,6 +457,33 @@ export const useGameStore = create<GameState>((set) => ({
             gameStatus: 'gameover' as const,
             timerActive: false,
             bestLevelReached: newBest,
+            unlockedComponents: newUnlockedSet,
+            focusedComponentPath: [],
+            selectedItems: [],
+            goldInput: '',
+          };
+        }
+
+        // Check if all direct children of root are now unlocked (even after wrong answer)
+        const allChildrenUnlocked = state.targetItem?.children.every((_, index) =>
+          newUnlockedSet.has([index].join(','))
+        );
+
+        if (allChildrenUnlocked) {
+          // Level complete! Advance after a short delay
+          useGameStore.setState({ isTransitioning: true });
+
+          setTimeout(async () => {
+            try {
+              await useGameStore.getState().advanceLevel();
+            } catch (error) {
+              console.error('Failed to advance level:', error);
+              useGameStore.setState({ isTransitioning: false });
+            }
+          }, 1000); // Slightly longer delay to show the wrong answer feedback
+
+          return {
+            livesRemaining: newLives,
             unlockedComponents: newUnlockedSet,
             focusedComponentPath: [],
             selectedItems: [],
@@ -633,13 +674,14 @@ export const useGameStore = create<GameState>((set) => ({
       unlockedComponents: new Set<string>(),
       selectedItems: [],
       goldInput: '',
-      timeRemaining: 10,
+      timeRemaining: 20,
       timerActive: false,
       requiresComponentGold: false,
       requiresFinalGold: false,
       // Reset transition flags
       awaitingFinalGold: false,
       isTransitioning: false,
+      levelComplete: false,
       // Reset data pools (will be refetched on next startGame)
       allItems: null,
       basicComponents: null,
@@ -659,22 +701,21 @@ export const useGameStore = create<GameState>((set) => ({
 
       const newTime = state.timeRemaining - 1;
 
-      if (newTime <= 0) {
-        // Timer expired - stop timer but don't handle expiration here
-        // The Timer component will call handleTimerExpire()
-        return { timeRemaining: 0, timerActive: false };
-      }
-
+      // Just decrement - don't stop timer here
+      // App.tsx will check timeRemaining and call handleTimerExpire when it hits 0
       return { timeRemaining: newTime };
     });
   },
 
   /**
    * Handle timer expiration.
-   * Loses a life, auto-completes remaining components, and advances level or ends game.
+   * Loses a life, auto-completes remaining components, and sets level complete.
    */
   handleTimerExpire: () => {
     set((state) => {
+      // Guard: Only handle if timer is still active (prevents double-calling)
+      if (!state.timerActive) return state;
+
       // Lose a life
       const newLives = Math.max(0, state.livesRemaining - 1) as 3 | 2 | 1 | 0;
 
@@ -703,26 +744,27 @@ export const useGameStore = create<GameState>((set) => ({
           unlockedComponents: newUnlockedSet,
         };
       } else {
-        // Advance to next level after showing auto-completed components
-        // Set transition flag IMMEDIATELY before setTimeout
-        useGameStore.setState({ isTransitioning: true });
-
-        setTimeout(async () => {
-          try {
-            await useGameStore.getState().advanceLevel();
-          } catch (error) {
-            console.error('Failed to advance level:', error);
-            useGameStore.setState({ isTransitioning: false });
-          }
-        }, 1500);
-
+        // Set level complete - player must click "Next Level" to continue
         return {
           livesRemaining: newLives,
           timerActive: false,
           unlockedComponents: newUnlockedSet,
-          // Don't set isTransitioning here - already set above
+          levelComplete: true,
         };
       }
     });
+  },
+
+  /**
+   * Proceed to the next level after player clicks "Next Level".
+   */
+  proceedToNextLevel: async () => {
+    useGameStore.setState({ isTransitioning: true, levelComplete: false });
+    try {
+      await useGameStore.getState().advanceLevel();
+    } catch (error) {
+      console.error('Failed to advance level:', error);
+      useGameStore.setState({ isTransitioning: false });
+    }
   },
 }));

@@ -103,17 +103,25 @@ export function generateShopGrid(
   }
 
   // ============================================================================
-  // Edge Case: Focused node is atomic (no children)
+  // Edge Case: Focused node is atomic (no children) - player must find the item itself
   // ============================================================================
 
   if (requiredItems.length === 0) {
-    // No correct answers - just return random grid from basic components
-    const randomGrid: string[] = [];
-    for (let i = 0; i < gridSize; i++) {
-      const randomIndex = Math.floor(Math.random() * basicComponentIds.length);
-      randomGrid.push(basicComponentIds[randomIndex]);
+    // The correct answer is the item itself - player must find it in the shop
+    const targetItem = focusedNode.itemId;
+    const distractorsNeeded = gridSize - 1;
+
+    // Get distractors that are NOT the target item
+    const availableDistractors = basicComponentIds.filter(id => id !== targetItem);
+    const shuffledDistractors = shuffleArray([...availableDistractors]);
+
+    const distractors: string[] = [];
+    for (let i = 0; i < distractorsNeeded; i++) {
+      distractors.push(shuffledDistractors[i % shuffledDistractors.length]);
     }
-    return shuffleArray(randomGrid);
+
+    // Combine target item + distractors and shuffle
+    return shuffleArray([targetItem, ...distractors]);
   }
 
   // ============================================================================
@@ -159,10 +167,22 @@ export function generateShopGrid(
       distractors.push(basicComponentIds[randomIndex]);
     }
   } else {
-    // Randomly select distractors with replacement (can repeat)
+    // Shuffle available distractors and pick unique items (no repeats)
+    const shuffledDistractors = shuffleArray([...availableDistractors]);
+
+    // Pick unique distractors; if we need more than available, cycle through again
     for (let i = 0; i < distractorsNeeded; i++) {
-      const randomIndex = Math.floor(Math.random() * availableDistractors.length);
-      distractors.push(availableDistractors[randomIndex]);
+      // Use modulo to cycle if we need more items than available
+      distractors.push(shuffledDistractors[i % shuffledDistractors.length]);
+    }
+
+    // If we have enough unique distractors, ensure they're all different
+    // by only using shuffledDistractors.slice(0, distractorsNeeded) when possible
+    if (availableDistractors.length >= distractorsNeeded) {
+      distractors.length = 0; // Clear array
+      for (let i = 0; i < distractorsNeeded; i++) {
+        distractors.push(shuffledDistractors[i]);
+      }
     }
   }
 

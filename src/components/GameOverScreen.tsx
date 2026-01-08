@@ -1,10 +1,12 @@
 /**
  * GameOverScreen Component
- * Displays game over state with current run stats and best ever stats.
- * Shows a star emoji if player achieved a new record.
+ *
+ * Displays game over state with authentic Hextech styling.
+ * Shows current run stats, best ever stats, and new record celebration.
  */
 
 import { useGameStore } from '../stores/useGameStore';
+import { motion } from 'framer-motion';
 
 export function GameOverScreen() {
   const {
@@ -23,47 +25,104 @@ export function GameOverScreen() {
   const isNewRecord = currentLevel >= bestLevelReached;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-slate-medium border-2 border-hextech-gold rounded-lg p-8 max-w-md w-full mx-4 shadow-2xl">
-        {/* Header */}
-        <h1 className="text-4xl font-bold text-hextech-gold text-center mb-8">
-          GAME OVER
-        </h1>
+    <div className="hextech-bg min-h-screen flex items-center justify-center p-8">
+      {/* Backdrop overlay */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm"
+      />
 
-        {/* This Run Section */}
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-slate-light mb-2">
-            THIS RUN:
-          </h2>
-          <p className="text-2xl text-white">
-            Level Reached: <span className="font-bold text-hextech-gold">{currentLevel}</span>
-          </p>
+      {/* Modal */}
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, type: 'spring', stiffness: 200 }}
+        className="relative z-10 hextech-panel p-8 max-w-md w-full"
+      >
+        {/* Header */}
+        <div className="text-center mb-8">
+          <motion.h1
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="font-display text-4xl text-gold-gradient mb-2"
+          >
+            GAME OVER
+          </motion.h1>
+          <div className="h-px w-32 mx-auto bg-gradient-to-r from-transparent via-hextech-gold to-transparent"></div>
         </div>
 
-        {/* Best Ever Section */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-slate-light mb-2">
-            BEST EVER:
-          </h2>
-          <p className="text-2xl text-white">
-            Level Reached: <span className="font-bold text-hextech-gold">{bestLevelReached}</span>
-            {isNewRecord && <span className="ml-2">⭐</span>}
-          </p>
-          {isNewRecord && (
-            <p className="text-hextech-gold text-sm mt-2 font-semibold">
-              NEW RECORD!
+        {/* Stats */}
+        <div className="space-y-6 mb-8">
+          {/* This Run */}
+          <motion.div
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="bg-lol-dark/50 border border-lol-border rounded-lg p-4"
+          >
+            <p className="font-ui text-xs text-hextech-gold-light/50 uppercase tracking-wider mb-1">
+              This Run
             </p>
+            <div className="flex items-baseline gap-2">
+              <span className="font-display text-3xl text-hextech-gold">
+                Level {currentLevel}
+              </span>
+              {isNewRecord && (
+                <motion.span
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.6, type: 'spring', stiffness: 300 }}
+                  className="text-xl"
+                >
+                  ⭐
+                </motion.span>
+              )}
+            </div>
+          </motion.div>
+
+          {/* Best Ever */}
+          <motion.div
+            initial={{ x: 20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="bg-lol-dark/50 border border-lol-border rounded-lg p-4"
+          >
+            <p className="font-ui text-xs text-hextech-gold-light/50 uppercase tracking-wider mb-1">
+              Best Ever
+            </p>
+            <span className="font-display text-3xl text-hextech-blue">
+              Level {bestLevelReached}
+            </span>
+          </motion.div>
+
+          {/* New Record Badge */}
+          {isNewRecord && (
+            <motion.div
+              initial={{ scale: 0, rotate: -10 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ delay: 0.7, type: 'spring', stiffness: 200 }}
+              className="text-center"
+            >
+              <span className="inline-block px-4 py-2 bg-hextech-gold/20 border border-hextech-gold rounded-full font-display text-sm text-hextech-gold tracking-wider">
+                🏆 NEW RECORD!
+              </span>
+            </motion.div>
           )}
         </div>
 
         {/* Play Again Button */}
-        <button
+        <motion.button
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
           onClick={resetGame}
-          className="w-full bg-hextech-gold text-slate-dark font-bold text-xl py-4 px-6 rounded hover:bg-opacity-90 transition-opacity"
+          className="btn-hextech w-full py-4 text-lg"
         >
           PLAY AGAIN
-        </button>
-      </div>
+        </motion.button>
+      </motion.div>
     </div>
   );
 }

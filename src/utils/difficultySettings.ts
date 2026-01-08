@@ -20,7 +20,7 @@ import type { DifficultySettings } from '../types/items';
  */
 export function getDifficultySettings(level: number): DifficultySettings {
   return {
-    timerDuration: 10,
+    timerDuration: 20,
     requiresComponentGold: level >= 6,
     requiresFinalGold: level >= 11,
     shopGridSize: 16,

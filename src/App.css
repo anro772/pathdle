@@ -1,48 +1,454 @@
 @import "tailwindcss";
 
+/* ============================================================================
+   BUILDLE - Hextech Arcane Theme
+   Inspired by League of Legends Hextech aesthetic
+   Dark fantasy with luminous gold and cyan accents
+   ============================================================================ */
+
+/* Google Fonts - Cinzel for headers (arcane/fantasy), Rajdhani for UI */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
+
 @theme {
-  /* Hextech theme colors */
-  --color-hextech-gold: #C89B3C;
-  --color-hextech-blue: #0BC6E3;
-  --color-slate-dark: #010A13;
-  --color-slate-medium: #1E2328;
-  --color-slate-light: #3C3C41;
-  --color-error-red: #D13639;
+  /* Hextech Color Palette */
+  --color-hextech-gold: #C8AA6E;
+  --color-hextech-gold-light: #F0E6D2;
+  --color-hextech-gold-dark: #785A28;
+  --color-hextech-blue: #0AC8B9;
+  --color-hextech-blue-dark: #005A82;
+  --color-hextech-blue-glow: rgba(10, 200, 185, 0.6);
+
+  /* Dark Theme Palette */
+  --color-lol-black: #010A13;
+  --color-lol-dark: #0A1428;
+  --color-lol-medium: #0A323C;
+  --color-lol-light: #1E2328;
+  --color-lol-border: #1E3A5F;
+  --color-lol-muted: #3C3C41;
+
+  /* State Colors */
+  --color-error-red: #E84057;
+  --color-warning-yellow: #F0B232;
   --color-success-green: #0BDA51;
 
-  /* Box shadows */
-  --shadow-hextech: 0 0 10px rgba(11, 198, 227, 0.5), 0 0 20px rgba(11, 198, 227, 0.3);
-  --shadow-gold: 0 0 10px rgba(200, 155, 60, 0.5), 0 0 20px rgba(200, 155, 60, 0.3);
+  /* Box Shadows */
+  --shadow-hextech: 0 0 15px rgba(10, 200, 185, 0.4), 0 0 30px rgba(10, 200, 185, 0.2);
+  --shadow-gold: 0 0 15px rgba(200, 170, 110, 0.5), 0 0 30px rgba(200, 170, 110, 0.3);
+  --shadow-gold-intense: 0 0 20px rgba(200, 170, 110, 0.7), 0 0 40px rgba(200, 170, 110, 0.4), inset 0 0 20px rgba(200, 170, 110, 0.1);
+  --shadow-item-slot: inset 0 2px 4px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(200, 170, 110, 0.2);
 
-  /* Font families */
-  --font-family-beaufort: 'Beaufort for LOL', serif;
-  --font-family-inter: 'Inter', sans-serif;
+  /* Font Families */
+  --font-family-display: 'Cinzel', serif;
+  --font-family-ui: 'Rajdhani', sans-serif;
 
   /* Animations */
   --animate-pulse-gold: pulse-gold 2s ease-in-out infinite;
-  --animate-bounce-select: bounce-select 0.3s ease-out;
-  --animate-shake: shake 0.5s ease-in-out;
-  --animate-glow: glow 1.5s ease-in-out infinite alternate;
+  --animate-glow-blue: glow-blue 2s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 3s linear infinite;
+  --animate-float: float 3s ease-in-out infinite;
 }
+
+/* ============================================================================
+   Base Styles
+   ============================================================================ */
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family-ui);
+  background: var(--color-lol-black);
+  color: var(--color-hextech-gold-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================================
+   Background Pattern - Hextech Grid
+   ============================================================================ */
+
+.hextech-bg {
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(10, 200, 185, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(200, 170, 110, 0.05) 0%, transparent 40%),
+    radial-gradient(ellipse at 20% 80%, rgba(10, 200, 185, 0.05) 0%, transparent 40%),
+    linear-gradient(180deg, var(--color-lol-black) 0%, var(--color-lol-dark) 100%);
+  min-height: 100vh;
+}
+
+.hextech-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(200, 170, 110, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 170, 110, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* ============================================================================
+   Typography
+   ============================================================================ */
+
+.font-display {
+  font-family: var(--font-family-display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.font-ui {
+  font-family: var(--font-family-ui);
+  font-weight: 500;
+}
+
+/* Gold text gradient effect */
+.text-gold-gradient {
+  background: linear-gradient(180deg, #F0E6D2 0%, #C8AA6E 50%, #785A28 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* ============================================================================
+   Item Slot Styles - Authentic LoL Item Frames
+   ============================================================================ */
+
+.item-slot {
+  position: relative;
+  background: linear-gradient(180deg, #1E3A5F 0%, #0A1428 100%);
+  border: 2px solid #1E3A5F;
+  border-radius: 4px;
+  box-shadow: var(--shadow-item-slot);
+  transition: all 0.2s ease;
+}
+
+.item-slot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.item-slot:hover:not(:disabled) {
+  border-color: var(--color-hextech-gold);
+  box-shadow: var(--shadow-gold);
+}
+
+.item-slot.focused {
+  border-color: var(--color-hextech-gold);
+  box-shadow: var(--shadow-gold-intense);
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+.item-slot.unlocked {
+  border-color: var(--color-success-green);
+  background: linear-gradient(180deg, rgba(11, 218, 81, 0.15) 0%, #0A1428 100%);
+}
+
+.item-slot.locked {
+  opacity: 0.8;
+}
+
+.item-slot.locked:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* ============================================================================
+   Panel Styles - Hextech Frames
+   ============================================================================ */
+
+.hextech-panel {
+  position: relative;
+  background: linear-gradient(180deg, rgba(30, 58, 95, 0.6) 0%, rgba(10, 20, 40, 0.9) 100%);
+  border: 1px solid rgba(200, 170, 110, 0.3);
+  border-radius: 4px;
+  backdrop-filter: blur(10px);
+}
+
+.hextech-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-hextech-gold), transparent);
+}
+
+.hextech-panel::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 30%;
+  right: 30%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 170, 110, 0.5), transparent);
+}
+
+/* Corner accents for panels - removed, was conflicting with panel pseudo-elements */
+
+/* ============================================================================
+   Button Styles
+   ============================================================================ */
+
+.btn-hextech {
+  position: relative;
+  padding: 12px 32px;
+  font-family: var(--font-family-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-lol-black);
+  background: linear-gradient(180deg, #F0E6D2 0%, #C8AA6E 50%, #785A28 100%);
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  box-shadow:
+    0 4px 15px rgba(200, 170, 110, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-hextech::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-hextech:hover::before {
+  left: 100%;
+}
+
+.btn-hextech:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 6px 20px rgba(200, 170, 110, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btn-hextech:active {
+  transform: translateY(0);
+  box-shadow:
+    0 2px 10px rgba(200, 170, 110, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Secondary button style */
+.btn-hextech-secondary {
+  background: transparent;
+  border: 2px solid var(--color-hextech-gold);
+  color: var(--color-hextech-gold);
+  box-shadow: 0 0 10px rgba(200, 170, 110, 0.2);
+}
+
+.btn-hextech-secondary:hover {
+  background: rgba(200, 170, 110, 0.1);
+  box-shadow: var(--shadow-gold);
+}
+
+/* ============================================================================
+   Build Path Tree Lines (SVG)
+   ============================================================================ */
+
+.build-path-line {
+  stroke: var(--color-hextech-gold);
+  stroke-width: 2;
+  fill: none;
+  opacity: 0.6;
+  filter: drop-shadow(0 0 4px rgba(200, 170, 110, 0.5));
+}
+
+.build-path-line.active {
+  opacity: 1;
+  stroke: var(--color-hextech-blue);
+  filter: drop-shadow(0 0 8px var(--color-hextech-blue-glow));
+  animation: glow-blue 2s ease-in-out infinite alternate;
+}
+
+.build-path-connector {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ============================================================================
+   Timer Styles
+   ============================================================================ */
+
+.timer-display {
+  font-family: var(--font-family-display);
+  font-size: 4rem;
+  font-weight: 700;
+  text-shadow: 0 0 20px currentColor;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.timer-calm {
+  color: var(--color-hextech-blue);
+  text-shadow: 0 0 20px var(--color-hextech-blue-glow);
+}
+
+.timer-warning {
+  color: var(--color-warning-yellow);
+  text-shadow: 0 0 25px rgba(240, 178, 50, 0.6);
+}
+
+.timer-urgent {
+  color: var(--color-error-red);
+  text-shadow: 0 0 30px rgba(232, 64, 87, 0.8);
+  animation: pulse-urgent 0.5s ease-in-out infinite;
+}
+
+/* ============================================================================
+   Input Styles
+   ============================================================================ */
+
+.input-hextech {
+  padding: 12px 16px;
+  font-family: var(--font-family-ui);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-hextech-gold-light);
+  background: rgba(10, 20, 40, 0.8);
+  border: 2px solid var(--color-lol-border);
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input-hextech:focus {
+  border-color: var(--color-hextech-gold);
+  box-shadow: var(--shadow-gold);
+}
+
+.input-hextech::placeholder {
+  color: var(--color-lol-muted);
+  font-weight: 400;
+}
+
+/* ============================================================================
+   Animations
+   ============================================================================ */
 
 @keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 5px rgba(200, 155, 60, 0.5); }
-  50% { box-shadow: 0 0 20px rgba(200, 155, 60, 0.8), 0 0 30px rgba(200, 155, 60, 0.6); }
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(200, 170, 110, 0.4), inset 0 0 10px rgba(200, 170, 110, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(200, 170, 110, 0.7), 0 0 40px rgba(200, 170, 110, 0.4), inset 0 0 15px rgba(200, 170, 110, 0.1);
+  }
 }
 
-@keyframes bounce-select {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.15); }
-  100% { transform: scale(1); }
+@keyframes glow-blue {
+  0% {
+    filter: drop-shadow(0 0 4px rgba(10, 200, 185, 0.5));
+  }
+  100% {
+    filter: drop-shadow(0 0 12px rgba(10, 200, 185, 0.8));
+  }
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+@keyframes pulse-urgent {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
 }
 
-@keyframes glow {
-  0% { box-shadow: 0 0 5px rgba(11, 198, 227, 0.5); }
-  100% { box-shadow: 0 0 20px rgba(11, 198, 227, 0.8), 0 0 30px rgba(11, 198, 227, 0.6); }
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================================================
+   Utility Classes
+   ============================================================================ */
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-lol-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-hextech-gold-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-hextech-gold);
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(200, 170, 110, 0.3);
+  color: var(--color-hextech-gold-light);
 }

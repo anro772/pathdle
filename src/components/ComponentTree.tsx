@@ -69,8 +69,8 @@ export function ComponentTree() {
           title="Click to buy all base components at once"
         >
           <div className={`
-            item-slot p-2 relative z-10 transition-all duration-200
-            ${isBuyAllMode ? 'focused' : 'hover:scale-105'}
+            item-slot p-2 relative z-10 transition-colors duration-200
+            ${isBuyAllMode ? 'border-hextech-blue shadow-hextech' : 'hover:border-hextech-gold/50'}
           `}>
             <img
               src={getItemImageUrl(targetItem.itemId, dataVersion)}
@@ -86,9 +86,12 @@ export function ComponentTree() {
         <h2 className="font-display text-xl text-hextech-gold mt-2 tracking-wide">
           {targetItem.itemName}
         </h2>
-        {isBuyAllMode && (
-          <p className="font-ui text-xs text-hextech-blue mt-1">BUY ALL MODE</p>
-        )}
+        {/* Fixed height container for BUY ALL MODE text to prevent layout shift */}
+        <div className="h-5 flex items-center">
+          {isBuyAllMode && (
+            <p className="font-ui text-xs text-hextech-blue">BUY ALL MODE</p>
+          )}
+        </div>
         {/* Show combine cost and/or total cost below item name */}
         <div className="flex items-center gap-3 mt-1">
           {row2CombineCost > 0 && (

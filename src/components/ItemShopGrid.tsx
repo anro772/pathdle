@@ -85,15 +85,47 @@ export function ItemShopGrid() {
 
   // Memoize the shop grid to prevent regeneration on every render (timer updates)
   // Sort by gold cost for easier readability
-  // In Buy All mode, generate grid based on the target item (all base components)
+  // In Buy All mode: generate grid with ONLY base components (leaf nodes)
   const shopGridItems = useMemo(() => {
     if (!basicComponents || !allItems || !targetItem) return [];
 
-    // Determine which node to generate grid for
-    const nodeForGrid = isBuyAllMode ? targetItem : focusedNode;
-    if (!nodeForGrid) return [];
+    if (isBuyAllMode) {
+      // Buy All mode: need to show only base components (no tier 2 items)
+      // Get all required base components
+      const requiredBaseItems = collectAllBaseComponents(targetItem);
+      const basicComponentIds = Object.keys(basicComponents);
 
-    const gridItems = generateShopGrid(nodeForGrid, basicComponents, 16);
+      // Build frequency map of required items
+      const requiredFrequency: Record<string, number> = {};
+      for (const itemId of requiredBaseItems) {
+        requiredFrequency[itemId] = (requiredFrequency[itemId] || 0) + 1;
+      }
+
+      // Get distractors from basic components only (exclude required items)
+      const availableDistractors = basicComponentIds.filter(id => !requiredFrequency[id]);
+      const shuffledDistractors = [...availableDistractors].sort(() => Math.random() - 0.5);
+
+      const distractorsNeeded = 16 - requiredBaseItems.length;
+      const distractors: string[] = [];
+      for (let i = 0; i < distractorsNeeded; i++) {
+        distractors.push(shuffledDistractors[i % shuffledDistractors.length]);
+      }
+
+      // Combine and shuffle
+      const gridItems = [...requiredBaseItems, ...distractors].sort(() => Math.random() - 0.5);
+
+      // Sort by gold cost (ascending)
+      return gridItems.sort((a, b) => {
+        const goldA = allItems[a]?.gold.total ?? 0;
+        const goldB = allItems[b]?.gold.total ?? 0;
+        return goldA - goldB;
+      });
+    }
+
+    // Normal mode: use the standard grid generator
+    if (!focusedNode) return [];
+    const gridItems = generateShopGrid(focusedNode, basicComponents, 16);
+
     // Sort by gold cost (ascending)
     return gridItems.sort((a, b) => {
       const goldA = allItems[a]?.gold.total ?? 0;

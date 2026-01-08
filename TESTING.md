@@ -1,4 +1,4 @@
-# Buildle Testing Guide
+# Pathdle Testing Guide
 
 ## Quick Start Testing
 
@@ -14,7 +14,7 @@ npm run dev
 ### 1. Menu Screen ✅
 
 **Expected:**
-- [ ] "Buildle" title displays in Hextech gold
+- [ ] "Pathdle" title displays in Hextech gold
 - [ ] Game description shows
 - [ ] Instructions visible (3 bullet points)
 - [ ] START GAME button is clickable

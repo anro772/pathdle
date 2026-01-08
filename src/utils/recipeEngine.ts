@@ -10,7 +10,7 @@ import type { ItemData, ComponentNode } from '../types/items';
 /**
  * Recursively builds a component tree from DataDragon item data.
  *
- * This is the core algorithm that powers the Buildle game. It traverses the
+ * This is the core algorithm that powers the Pathdle game. It traverses the
  * item's `from` array to construct a nested tree structure, calculating gold
  * costs at each level.
  *

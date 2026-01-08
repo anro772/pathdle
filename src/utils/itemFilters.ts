@@ -1,5 +1,5 @@
 /**
- * Item filtering utilities for the Buildle game.
+ * Item filtering utilities for the Pathdle game.
  * Separates valid Legendary items from basic components in DataDragon data.
  *
  * Filtering ensures only valid Summoner's Rift items are used, excluding:

@@ -28,7 +28,7 @@ export function ComponentShowcase() {
   return (
     <div className="min-h-screen bg-slate-dark text-white p-8">
       <h1 className="text-4xl font-beaufort text-hextech-gold text-center mb-12">
-        Buildle Component Showcase
+        Pathdle Component Showcase
       </h1>
 
       {/* Timer Component */}

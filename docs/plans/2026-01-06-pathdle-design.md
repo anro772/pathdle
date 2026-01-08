@@ -1,4 +1,4 @@
-# Buildle - League of Legends Item Crafting Speedrun Game
+# Pathdle - League of Legends Item Crafting Speedrun Game
 
 **Design Document**
 *Date: 2026-01-06*
@@ -8,7 +8,7 @@
 
 ## 1. Project Overview
 
-**Name:** Buildle
+**Name:** Pathdle
 **Type:** Browser-based React minigame
 **Concept:** A speed-memory game where players build League of Legends Legendary items by progressively unlocking components in a nested tree structure before a timer expires.
 
@@ -37,7 +37,7 @@
 ### Project Structure
 
 ```
-buildle/
+pathdle/
 ├── src/
 │   ├── services/
 │   │   └── RiotService.ts          # DataDragon API + caching
@@ -57,7 +57,7 @@ buildle/
 │   └── App.tsx                     # Main game container
 ├── docs/
 │   └── plans/
-│       └── 2026-01-06-buildle-design.md
+│       └── 2026-01-06-pathdle-design.md
 └── package.json
 ```
 
@@ -80,7 +80,7 @@ buildle/
 2. Fetch latest version from DataDragon
 3. If cached version !== latest[0]:
    - Fetch new item.json
-   - Store in localStorage with version key: "buildle-items-{version}"
+   - Store in localStorage with version key: "pathdle-items-{version}"
 4. Use cached data for instant subsequent loads
 ```
 
@@ -377,9 +377,9 @@ interface SavedStats {
 }
 
 // On game over:
-const currentBest = parseInt(localStorage.getItem('buildle-best-level') || '0');
+const currentBest = parseInt(localStorage.getItem('pathdle-best-level') || '0');
 if (currentLevel > currentBest) {
-  localStorage.setItem('buildle-best-level', currentLevel.toString());
+  localStorage.setItem('pathdle-best-level', currentLevel.toString());
   // Show "NEW RECORD!" animation
 }
 ```
@@ -952,6 +952,6 @@ module.exports = {
 
 ## Conclusion
 
-Buildle is a unique League of Legends minigame that tests item crafting knowledge through progressive unlocking and timed pressure. The modular architecture (data layer → state → UI → logic → polish) ensures a solid foundation for future enhancements.
+Pathdle is a unique League of Legends minigame that tests item crafting knowledge through progressive unlocking and timed pressure. The modular architecture (data layer → state → UI → logic → polish) ensures a solid foundation for future enhancements.
 
 **Ready for implementation!** 🎮

@@ -14,7 +14,7 @@ import { buildComponentTree } from '../utils/recipeEngine';
 // ============================================================================
 
 /** localStorage key for persisting best level reached */
-const STORAGE_KEY_BEST_LEVEL = 'buildle-best-level';
+const STORAGE_KEY_BEST_LEVEL = 'pathdle-best-level';
 
 // ============================================================================
 // Helper Functions
@@ -65,7 +65,7 @@ function arraysEqualWithDuplicates(arr1: string[], arr2: string[]): boolean {
 
 /**
  * Complete game state interface.
- * This defines all state properties and action methods for the Buildle game.
+ * This defines all state properties and action methods for the Pathdle game.
  */
 export interface GameState {
   // ============================================================================

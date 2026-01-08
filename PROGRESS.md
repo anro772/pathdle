@@ -1,7 +1,7 @@
-# Buildle Implementation Progress
+# Pathdle Implementation Progress
 
 ## Overview
-This document tracks the implementation progress of Buildle, a League of Legends item-building memory game.
+This document tracks the implementation progress of Pathdle, a League of Legends item-building memory game.
 
 ---
 
@@ -391,7 +391,7 @@ src/
 #### Game States Implemented:
 
 **1. Menu Screen (gameStatus === 'menu')**
-- Buildle title with Hextech gold styling
+- Pathdle title with Hextech gold styling
 - Game description and instructions
 - START GAME button calling `startGame()`
 - Hover effects and animations

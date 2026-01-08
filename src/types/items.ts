@@ -1,5 +1,5 @@
 /**
- * TypeScript interfaces for the Buildle game.
+ * TypeScript interfaces for the Pathdle game.
  * These define all data structures used throughout the app.
  */
 

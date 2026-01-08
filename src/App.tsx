@@ -56,14 +56,14 @@ function App() {
           {/* Logo/Title */}
           <div className="mb-12 animate-fade-in-up">
             <h1 className="font-display text-7xl md:text-8xl text-gold-gradient mb-4 tracking-wider">
-              BUILDLE
+              PATHDLE
             </h1>
             <div className="h-px w-48 mx-auto bg-gradient-to-r from-transparent via-hextech-gold to-transparent opacity-60"></div>
           </div>
 
           {/* Description */}
           <p className="font-ui text-xl md:text-2xl text-hextech-gold-light/80 mb-12 leading-relaxed animate-fade-in-up stagger-1 opacity-0">
-            Test your knowledge of League of Legends item builds.
+            Test your knowledge of League of Legends item build paths.
             <br />
             <span className="text-hextech-blue">Assemble items from memory before time runs out.</span>
           </p>

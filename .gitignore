@@ -47,6 +47,5 @@ dist-ssr
 *.sw?
 public/items-data.json
 
-TESTING.md
-PROGRESS.md
+docs
 .claude/settings.local.json

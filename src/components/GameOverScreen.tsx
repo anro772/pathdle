@@ -25,7 +25,7 @@ export function GameOverScreen() {
   const isNewRecord = currentLevel >= bestLevelReached;
 
   return (
-    <div className="hextech-bg min-h-screen flex items-center justify-center p-8">
+    <div className="hextech-bg min-h-screen w-screen flex items-center justify-center p-8">
       {/* Backdrop overlay */}
       <motion.div
         initial={{ opacity: 0 }}

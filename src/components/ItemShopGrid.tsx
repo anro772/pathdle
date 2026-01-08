@@ -80,6 +80,34 @@ export function ItemShopGrid() {
     });
   }, [focusedComponentPath.join(','), focusedNode?.itemId, basicComponents, allItems]);
 
+  // Generate gold options (1 correct + 2 wrong) - memoized to stay stable
+  const goldOptions = useMemo(() => {
+    if (!focusedNode || focusedNode.goldCost === 0) return [];
+    const correctGold = focusedNode.goldCost;
+
+    // Generate two wrong values that are plausible
+    const variations = [50, 100, 150, 200, 250, 300];
+    const wrongValues: number[] = [];
+
+    // Pick random offsets for wrong answers
+    const shuffled = [...variations].sort(() => Math.random() - 0.5);
+    for (const offset of shuffled) {
+      const wrong1 = correctGold + offset;
+      const wrong2 = correctGold - offset;
+      if (wrong2 > 0 && !wrongValues.includes(wrong2) && wrong2 !== correctGold) {
+        wrongValues.push(wrong2);
+      }
+      if (!wrongValues.includes(wrong1) && wrong1 !== correctGold) {
+        wrongValues.push(wrong1);
+      }
+      if (wrongValues.length >= 2) break;
+    }
+
+    // Combine correct with wrong and shuffle
+    const options = [correctGold, ...wrongValues.slice(0, 2)];
+    return options.sort(() => Math.random() - 0.5);
+  }, [focusedComponentPath.join(','), focusedNode?.goldCost]);
+
   // Don't render when no component is focused - show placeholder
   if (focusedComponentPath.length === 0) {
     return (
@@ -212,7 +240,7 @@ export function ItemShopGrid() {
         </div>
 
         {/* Cart Items - Clickable to remove */}
-        <div className="flex gap-1 mb-2">
+        <div className="flex gap-2 mb-3">
           <AnimatePresence mode="popLayout">
             {cartItems.map((cartItem, index) => (
               <motion.div
@@ -226,32 +254,32 @@ export function ItemShopGrid() {
                 {cartItem ? (
                   <button
                     onClick={() => handleRemoveItem(cartItem.itemId)}
-                    className="item-slot relative flex flex-col items-center p-1 h-14 w-full cursor-pointer hover:border-error-red transition-colors group"
+                    className="item-slot relative flex flex-col items-center p-2 h-20 w-full cursor-pointer hover:border-error-red transition-colors group"
                     title="Click to remove"
                   >
                     <img
                       src={getItemImageUrl(cartItem.itemId, dataVersion)}
                       alt={allItems[cartItem.itemId]?.name || ''}
-                      className="w-7 h-7"
+                      className="w-10 h-10"
                     />
-                    <span className="font-ui text-[7px] text-hextech-gold-light/70 text-center leading-tight">
-                      {formatItemName(allItems[cartItem.itemId]?.name || '', 8)}
+                    <span className="font-ui text-[10px] text-hextech-gold-light/80 text-center leading-tight mt-1 line-clamp-1 w-full">
+                      {allItems[cartItem.itemId]?.name || ''}
                     </span>
                     {cartItem.count > 1 && (
-                      <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-hextech-blue rounded-full flex items-center justify-center">
-                        <span className="font-ui text-[9px] font-bold text-lol-black">
+                      <div className="absolute -top-1 -right-1 w-4 h-4 bg-hextech-blue rounded-full flex items-center justify-center">
+                        <span className="font-ui text-[10px] font-bold text-lol-black">
                           {cartItem.count}
                         </span>
                       </div>
                     )}
                     {/* Remove indicator on hover */}
                     <div className="absolute inset-0 bg-error-red/20 rounded opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="text-error-red text-sm font-bold">×</span>
+                      <span className="text-error-red text-lg font-bold">×</span>
                     </div>
                   </button>
                 ) : (
-                  <div className="h-14 bg-lol-dark border-2 border-dashed border-lol-border rounded flex items-center justify-center">
-                    <span className="font-display text-base text-lol-muted">+</span>
+                  <div className="h-20 bg-lol-dark border-2 border-dashed border-lol-border rounded flex items-center justify-center">
+                    <span className="font-display text-xl text-lol-muted">+</span>
                   </div>
                 )}
               </motion.div>
@@ -259,23 +287,29 @@ export function ItemShopGrid() {
           </AnimatePresence>
         </div>
 
-        {/* Gold Input (conditional) */}
-        {requiresComponentGold && (
+        {/* Gold Selection Buttons (conditional) */}
+        {requiresComponentGold && goldOptions.length > 0 && (
           <div className="mb-2">
-            <label className="font-display text-[10px] text-hextech-gold tracking-wider block mb-1">
+            <label className="font-display text-[10px] text-hextech-gold tracking-wider block mb-1.5">
               COMBINE COST
             </label>
-            <div className="relative">
-              <input
-                type="text"
-                value={goldInput}
-                onChange={(e) => useGameStore.setState({ goldInput: e.target.value })}
-                className="input-hextech w-full pl-7 py-1.5 text-sm"
-                placeholder="Enter gold..."
-              />
-              <div className="absolute left-2 top-1/2 -translate-y-1/2">
-                <GoldIcon className="w-3.5 h-3.5" />
-              </div>
+            <div className="flex gap-2">
+              {goldOptions.map((gold) => (
+                <button
+                  key={gold}
+                  onClick={() => useGameStore.setState({ goldInput: gold.toString() })}
+                  className={`
+                    flex-1 py-2 px-3 rounded border-2 font-ui text-sm font-semibold
+                    transition-all duration-150
+                    ${goldInput === gold.toString()
+                      ? 'bg-hextech-gold/20 border-hextech-gold text-hextech-gold'
+                      : 'bg-lol-dark border-lol-border text-hextech-gold-light/70 hover:border-hextech-gold/50 hover:text-hextech-gold-light'
+                    }
+                  `}
+                >
+                  {formatGold(gold)}
+                </button>
+              ))}
             </div>
           </div>
         )}

@@ -34,10 +34,10 @@ export function Timer() {
 
   return (
     <div className="flex flex-col items-center">
-      <span className="font-ui text-xs text-hextech-gold-light/50 uppercase tracking-widest mb-1">
+      <span className="font-ui text-[10px] text-hextech-gold-light/50 uppercase tracking-widest">
         {label}
       </span>
-      <div className={`timer-display tabular-nums ${colorClass}`}>
+      <div className={`font-display text-4xl tabular-nums ${colorClass}`}>
         {timeRemaining}
       </div>
     </div>

@@ -172,7 +172,7 @@ function App() {
         {/* Top Bar - Full width header */}
         <header className="relative z-10 shrink-0 w-full">
           <div className="hextech-panel border-t-0 rounded-t-none">
-            <div className="container mx-auto px-4 py-3">
+            <div className="container mx-auto px-4 py-1.5">
               <div className="flex items-center justify-between">
                 {/* Left: Lives */}
                 <div className="flex items-center gap-3 w-28">
@@ -186,8 +186,8 @@ function App() {
 
                 {/* Right: Level */}
                 <div className="text-right w-28">
-                  <p className="font-ui text-xs text-hextech-gold-light/60 uppercase tracking-wider">Level</p>
-                  <p className="font-display text-3xl text-gold-gradient">
+                  <p className="font-ui text-[10px] text-hextech-gold-light/60 uppercase tracking-wider">Level</p>
+                  <p className="font-display text-2xl text-gold-gradient">
                     {currentLevel}
                   </p>
                 </div>
@@ -197,12 +197,12 @@ function App() {
         </header>
 
         {/* Main Game Area - Full width with minimal margins */}
-        <main className="flex-1 w-full flex justify-center items-start px-6 py-4">
+        <main className="flex-1 w-full flex justify-center items-stretch px-6 py-4 overflow-hidden">
           <div className="flex gap-6 w-full max-w-[1800px]">
             {/* Left Panel: Component Tree (Build Path) */}
-            <section className="flex-1">
-              <div className="hextech-panel p-5 h-[780px] flex flex-col">
-                <h2 className="font-display text-base text-hextech-gold mb-4 tracking-wider flex items-center gap-2">
+            <section className="flex-1 h-full">
+              <div className="hextech-panel p-5 h-full flex flex-col">
+                <h2 className="font-display text-base text-hextech-gold mb-4 tracking-wider flex items-center justify-center gap-2">
                   <span className="w-5 h-px bg-gradient-to-r from-hextech-gold to-transparent"></span>
                   BUILD PATH
                   <span className="w-5 h-px bg-gradient-to-l from-hextech-gold to-transparent"></span>
@@ -214,9 +214,9 @@ function App() {
             </section>
 
             {/* Right Panel: Item Shop */}
-            <section className="flex-1">
-              <div className="hextech-panel p-5 h-[780px] flex flex-col">
-                <h2 className="font-display text-base text-hextech-gold mb-4 tracking-wider flex items-center gap-2">
+            <section className="flex-1 h-full">
+              <div className="hextech-panel p-5 h-full flex flex-col">
+                <h2 className="font-display text-base text-hextech-gold mb-4 tracking-wider flex items-center justify-center gap-2">
                   <span className="w-5 h-px bg-gradient-to-r from-hextech-gold to-transparent"></span>
                   ITEM SHOP
                   <span className="w-5 h-px bg-gradient-to-l from-hextech-gold to-transparent"></span>

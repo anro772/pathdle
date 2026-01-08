@@ -178,12 +178,6 @@ export function ComponentTree() {
           const focused = isFocused([index]);
           const hasSubChildren = child.children.length > 0;
 
-          const strokeColor = unlocked
-            ? (failed ? '#EF4444' : '#0BDA51')
-            : focused
-              ? '#0AC8B9'
-              : '#C8AA6E';
-
           return (
             <div key={index} className="flex flex-col items-center" style={{ minWidth: '200px' }}>
 
@@ -325,6 +319,16 @@ export function ComponentTree() {
                                 <p className="font-ui text-[9px] text-hextech-gold-light/70 mt-1 text-center leading-tight line-clamp-1">
                                   {subChild.itemName}
                                 </p>
+                                {/* Success/Failed badge - matches parent's status */}
+                                {failed ? (
+                                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-error-red rounded-full flex items-center justify-center shadow-lg">
+                                    <span className="text-white text-[9px] font-bold">✗</span>
+                                  </div>
+                                ) : (
+                                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-success-green rounded-full flex items-center justify-center shadow-lg">
+                                    <span className="text-white text-[9px] font-bold">✓</span>
+                                  </div>
+                                )}
                               </>
                             ) : isHintRevealed ? (
                               // Show revealed hint item with hint indicator

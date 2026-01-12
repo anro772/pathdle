@@ -5,11 +5,26 @@ import { LivesDisplay } from './components/LivesDisplay';
 import { ItemShopGrid } from './components/ItemShopGrid';
 import { ComponentTree } from './components/ComponentTree';
 import { GameOverScreen } from './components/GameOverScreen';
+import { GoldCheckModal } from './components/GoldCheckModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import './App.css';
 
 function App() {
-  const { gameStatus, startGame, timerActive, decrementTimer, handleTimerExpire, livesRemaining, currentLevel, levelComplete, proceedToNextLevel, timeRemaining } = useGameStore();
+  const {
+    gameStatus,
+    startGame,
+    timerActive,
+    decrementTimer,
+    handleTimerExpire,
+    livesRemaining,
+    currentLevel,
+    levelComplete,
+    proceedToNextLevel,
+    timeRemaining,
+    goldCheckState,
+    decrementGoldCheckTimer,
+    handleGoldCheckTimerExpire,
+  } = useGameStore();
   const [isLoading, setIsLoading] = useState(false);
   const [showLifeLossFlash, setShowLifeLossFlash] = useState(false);
   const prevLivesRef = useRef(livesRemaining);
@@ -40,6 +55,23 @@ function App() {
 
     return () => clearInterval(interval);
   }, [timerActive, decrementTimer, handleTimerExpire]);
+
+  // Gold check modal timer effect
+  useEffect(() => {
+    if (!goldCheckState.timerActive) return;
+
+    const interval = setInterval(() => {
+      const state = useGameStore.getState();
+
+      if (state.goldCheckState.timeRemaining <= 0) {
+        handleGoldCheckTimerExpire();
+      } else {
+        decrementGoldCheckTimer();
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [goldCheckState.timerActive, decrementGoldCheckTimer, handleGoldCheckTimerExpire]);
 
   // Handle game start with loading state
   const handleStartGame = async () => {
@@ -167,6 +199,11 @@ function App() {
               </motion.div>
             </motion.div>
           )}
+        </AnimatePresence>
+
+        {/* Gold Check Modal (Level 6+) */}
+        <AnimatePresence>
+          {goldCheckState.isActive && <GoldCheckModal />}
         </AnimatePresence>
 
         {/* Top Bar - Full width header */}

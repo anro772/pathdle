@@ -121,6 +121,50 @@ function arraysEqualWithDuplicates(arr1: string[], arr2: string[]): boolean {
          Object.keys(freq1).every(key => freq1[key] === freq2[key]);
 }
 
+// ============================================================================
+// Gold Check Types
+// ============================================================================
+
+/**
+ * Represents a single gold check item in the modal.
+ * Each item corresponds to a Row 2 component with non-zero goldCost.
+ */
+export interface GoldCheckItem {
+  /** Index in Row 2 (targetItem.children) */
+  componentIndex: number;
+  /** DataDragon item ID */
+  itemId: string;
+  /** Display name of the item */
+  itemName: string;
+  /** Correct gold cost (ComponentNode.goldCost) */
+  correctGold: number;
+  /** Two options: [correct, wrong] shuffled */
+  options: [number, number];
+  /** Player's selected answer (null if not answered) */
+  selectedAnswer: number | null;
+}
+
+/**
+ * State for the gold check modal that appears after purchasing all components.
+ * Active at Level 6+ after completing all Row 2 components.
+ */
+export interface GoldCheckState {
+  /** Whether the gold check modal is currently active */
+  isActive: boolean;
+  /** Array of gold check items (Row 2 components) */
+  items: GoldCheckItem[];
+  /** Final item gold check for Level 10+ (uses totalCost) */
+  finalItemCheck: {
+    correctGold: number;
+    options: [number, number];
+    selectedAnswer: number | null;
+  } | null;
+  /** Seconds remaining (starts at 10) */
+  timeRemaining: number;
+  /** Whether the modal timer is actively counting down */
+  timerActive: boolean;
+}
+
 /**
  * Complete game state interface.
  * This defines all state properties and action methods for the Pathdle game.
@@ -225,6 +269,13 @@ export interface GameState {
   levelComplete: boolean;
 
   // ============================================================================
+  // Gold Check Modal State
+  // ============================================================================
+
+  /** State for the gold check modal (Level 6+) */
+  goldCheckState: GoldCheckState;
+
+  // ============================================================================
   // Data pools for UI components
   // ============================================================================
 
@@ -312,6 +363,46 @@ export interface GameState {
    * Called when levelComplete is true and player wants to continue.
    */
   proceedToNextLevel: () => void;
+
+  // ============================================================================
+  // Gold Check Modal Actions
+  // ============================================================================
+
+  /**
+   * Initialize the gold check modal after all components are purchased.
+   * Called at Level 6+ when all Row 2 components are unlocked.
+   */
+  initiateGoldCheck: () => void;
+
+  /**
+   * Select a gold answer for a component in the gold check modal.
+   * @param componentIndex - The Row 2 component index
+   * @param selectedGold - The gold value selected by the player
+   */
+  selectGoldCheckAnswer: (componentIndex: number, selectedGold: number) => void;
+
+  /**
+   * Select a gold answer for the final item (Level 10+).
+   * @param selectedGold - The gold value selected by the player
+   */
+  selectFinalGoldAnswer: (selectedGold: number) => void;
+
+  /**
+   * Submit all gold check answers and validate.
+   * Loses 1 life if any answer is wrong.
+   */
+  submitGoldCheck: () => void;
+
+  /**
+   * Decrement the gold check modal timer by one second.
+   */
+  decrementGoldCheckTimer: () => void;
+
+  /**
+   * Handle gold check timer expiration.
+   * Auto-submits answers (unanswered count as wrong).
+   */
+  handleGoldCheckTimerExpire: () => void;
 }
 
 /**
@@ -360,6 +451,15 @@ export const useGameStore = create<GameState>((set) => ({
   isTransitioning: false,
   levelComplete: false,
 
+  // Gold Check Modal State
+  goldCheckState: {
+    isActive: false,
+    items: [],
+    finalItemCheck: null,
+    timeRemaining: 10,
+    timerActive: false,
+  },
+
   // Data pools for UI components
   allItems: null,
   basicComponents: null,
@@ -385,9 +485,11 @@ export const useGameStore = create<GameState>((set) => ({
       const hints = generateRevealedHints(tree);
 
       // Initialize game state
+      // TEMP: Start at level 6 for testing
+      const testStartLevel = 6;
       set({
         gameStatus: 'playing',
-        currentLevel: 1,
+        currentLevel: testStartLevel,
         livesRemaining: 3,
         targetItem: tree,
         focusedComponentPath: [],
@@ -400,13 +502,21 @@ export const useGameStore = create<GameState>((set) => ({
         goldInput: '',
         timeRemaining: 20,
         timerActive: true,
-        // Difficulty gates for level 1
-        requiresComponentGold: false,
-        requiresFinalGold: false,
+        // Difficulty gates (adjusted for test start level)
+        requiresComponentGold: testStartLevel >= 6,
+        requiresFinalGold: testStartLevel >= 11,
         // Reset transition flags
         awaitingFinalGold: false,
         isTransitioning: false,
         levelComplete: false,
+        // Reset gold check modal state
+        goldCheckState: {
+          isActive: false,
+          items: [],
+          finalItemCheck: null,
+          timeRemaining: 10,
+          timerActive: false,
+        },
         // Expose filtered data for UI components
         allItems: itemsResponse.data,
         basicComponents: basicComponents,
@@ -486,196 +596,64 @@ export const useGameStore = create<GameState>((set) => ({
    * 1. Buy All mode: Player selected all base components for entire item
    * 2. Basic item mode: Smart assignment - correct item fills any matching slot
    * 3. Complex item mode: Must match the specific focused slot
+   *
+   * At Level 6+, successful completion triggers gold check modal instead of levelComplete.
    */
   submitPurchase: () => {
-    set((state) => {
-      // Guard against interactions during level transitions
-      if (state.isTransitioning || !state.targetItem) return state;
+    const state = useGameStore.getState();
 
-      // ========================================================================
-      // MODE 1: Buy All mode - validate all base components at once
-      // ========================================================================
-      if (state.isBuyAllMode) {
-        const allBaseComponents = collectAllBaseComponents(state.targetItem);
-        const itemsCorrect = arraysEqualWithDuplicates(state.selectedItems, allBaseComponents);
+    // Guard against interactions during level transitions
+    if (state.isTransitioning || !state.targetItem) return;
 
-        // In Buy All mode, gold is the sum of ALL combine costs (not validated for now)
-        // For simplicity, we skip gold validation in Buy All mode
+    // ========================================================================
+    // MODE 1: Buy All mode - validate all base components at once
+    // ========================================================================
+    if (state.isBuyAllMode) {
+      const allBaseComponents = collectAllBaseComponents(state.targetItem);
+      const itemsCorrect = arraysEqualWithDuplicates(state.selectedItems, allBaseComponents);
 
-        if (itemsCorrect) {
-          // CORRECT: Unlock ALL components at once
-          const newUnlockedSet = new Set(state.unlockedComponents);
-          state.targetItem.children.forEach((_, index) => {
-            newUnlockedSet.add([index].join(','));
-          });
+      if (itemsCorrect) {
+        // CORRECT: Unlock ALL components at once
+        const newUnlockedSet = new Set(state.unlockedComponents);
+        state.targetItem.children.forEach((_, index) => {
+          newUnlockedSet.add([index].join(','));
+        });
 
-          // Level complete! Check if final gold is required (Level 11+)
-          if (state.currentLevel >= 11 && state.requiresFinalGold) {
-            return {
-              unlockedComponents: newUnlockedSet,
-              focusedComponentPath: [],
-              selectedItems: [],
-              goldInput: '',
-              awaitingFinalGold: true,
-              timerActive: false,
-              isBuyAllMode: false,
-            };
-          } else {
-            return {
-              unlockedComponents: newUnlockedSet,
-              focusedComponentPath: [],
-              selectedItems: [],
-              goldInput: '',
-              timerActive: false,
-              levelComplete: true,
-              isBuyAllMode: false,
-            };
-          }
-        } else {
-          // WRONG in Buy All mode: Lose life, unlock all as failed
-          const newUnlockedSet = new Set(state.unlockedComponents);
-          const newFailedSet = new Set(state.failedComponents);
-          state.targetItem.children.forEach((_, index) => {
-            const pathStr = [index].join(',');
-            newUnlockedSet.add(pathStr);
-            newFailedSet.add(pathStr);
-          });
-
-          const newLives = Math.max(0, state.livesRemaining - 1) as 3 | 2 | 1 | 0;
-          const isGameOver = newLives === 0;
-
-          if (isGameOver) {
-            const newBest = Math.max(state.bestLevelReached, state.currentLevel);
-            localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
-            return {
-              livesRemaining: 0,
-              gameStatus: 'gameover' as const,
-              timerActive: false,
-              bestLevelReached: newBest,
-              unlockedComponents: newUnlockedSet,
-              failedComponents: newFailedSet,
-              focusedComponentPath: [],
-              selectedItems: [],
-              goldInput: '',
-              isBuyAllMode: false,
-            };
-          }
-
-          return {
-            livesRemaining: newLives,
+        // At Level 6+, trigger gold check modal instead of levelComplete
+        if (state.currentLevel >= 6) {
+          set({
             unlockedComponents: newUnlockedSet,
-            failedComponents: newFailedSet,
             focusedComponentPath: [],
             selectedItems: [],
             goldInput: '',
             timerActive: false,
-            levelComplete: true,
             isBuyAllMode: false,
-          };
-        }
-      }
-
-      // ========================================================================
-      // MODE 2 & 3: Normal mode (focused on a specific slot)
-      // ========================================================================
-      const focusedNode = getNodeAtPath(state.targetItem, state.focusedComponentPath);
-
-      if (!focusedNode) {
-        console.error('No focused component found');
-        return state;
-      }
-
-      const isBasicItem = focusedNode.children.length === 0;
-      const requiredItems = isBasicItem
-        ? [focusedNode.itemId]
-        : focusedNode.children.map(child => child.itemId);
-
-      // Validate item selection
-      let itemsCorrect = arraysEqualWithDuplicates(state.selectedItems, requiredItems);
-
-      // ========================================================================
-      // Smart slot assignment for basic items:
-      // If focused slot is basic AND selected item is wrong for this slot,
-      // check if it matches ANY other unfilled basic slot
-      // ========================================================================
-      let smartAssignPath: number[] | null = null;
-
-      if (!itemsCorrect && isBasicItem && state.selectedItems.length === 1) {
-        const selectedItem = state.selectedItems[0];
-
-        // Look for another unfilled basic slot that needs this item
-        for (let i = 0; i < state.targetItem.children.length; i++) {
-          const pathStr = [i].join(',');
-          if (state.unlockedComponents.has(pathStr)) continue; // Already unlocked
-
-          const child = state.targetItem.children[i];
-          // Check if this is a basic item slot that needs the selected item
-          if (child.children.length === 0 && child.itemId === selectedItem) {
-            // Found a matching slot!
-            smartAssignPath = [i];
-            itemsCorrect = true;
-            break;
-          }
-        }
-      }
-
-      // Validate gold input (if required by difficulty)
-      let goldCorrect = true;
-      if (state.requiresComponentGold) {
-        const inputGold = parseInt(state.goldInput.trim());
-        // Use the correct node for gold validation (might be smart-assigned)
-        const goldNode = smartAssignPath
-          ? getNodeAtPath(state.targetItem, smartAssignPath)
-          : focusedNode;
-        goldCorrect = !isNaN(inputGold) && inputGold === (goldNode?.goldCost ?? 0);
-      }
-
-      const isCorrect = itemsCorrect && goldCorrect;
-
-      if (isCorrect) {
-        // CORRECT: Unlock the component (use smart-assigned path if applicable)
-        const pathToUnlock = smartAssignPath || state.focusedComponentPath;
-        const pathStr = pathToUnlock.join(',');
-        const newUnlockedSet = new Set([...state.unlockedComponents, pathStr]);
-
-        // Check if all direct children of root are unlocked
-        const allChildrenUnlocked = state.targetItem.children.every((_, index) =>
-          newUnlockedSet.has([index].join(','))
-        );
-
-        if (allChildrenUnlocked) {
-          if (state.currentLevel >= 11 && state.requiresFinalGold) {
-            return {
-              unlockedComponents: newUnlockedSet,
-              focusedComponentPath: [],
-              selectedItems: [],
-              goldInput: '',
-              awaitingFinalGold: true,
-              timerActive: false,
-            };
-          } else {
-            return {
-              unlockedComponents: newUnlockedSet,
-              focusedComponentPath: [],
-              selectedItems: [],
-              goldInput: '',
-              timerActive: false,
-              levelComplete: true,
-            };
-          }
+          });
+          // Trigger gold check modal
+          useGameStore.getState().initiateGoldCheck();
+          return;
         }
 
-        return {
+        // Level 1-5: Just complete the level
+        set({
           unlockedComponents: newUnlockedSet,
           focusedComponentPath: [],
           selectedItems: [],
           goldInput: '',
-        };
+          timerActive: false,
+          levelComplete: true,
+          isBuyAllMode: false,
+        });
+        return;
       } else {
-        // WRONG: Lose life and auto-complete component
-        const pathStr = state.focusedComponentPath.join(',');
-        const newUnlockedSet = new Set([...state.unlockedComponents, pathStr]);
-        const newFailedSet = new Set([...state.failedComponents, pathStr]);
+        // WRONG in Buy All mode: Lose life, unlock all as failed
+        const newUnlockedSet = new Set(state.unlockedComponents);
+        const newFailedSet = new Set(state.failedComponents);
+        state.targetItem.children.forEach((_, index) => {
+          const pathStr = [index].join(',');
+          newUnlockedSet.add(pathStr);
+          newFailedSet.add(pathStr);
+        });
 
         const newLives = Math.max(0, state.livesRemaining - 1) as 3 | 2 | 1 | 0;
         const isGameOver = newLives === 0;
@@ -683,8 +661,7 @@ export const useGameStore = create<GameState>((set) => ({
         if (isGameOver) {
           const newBest = Math.max(state.bestLevelReached, state.currentLevel);
           localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
-
-          return {
+          set({
             livesRemaining: 0,
             gameStatus: 'gameover' as const,
             timerActive: false,
@@ -694,36 +671,174 @@ export const useGameStore = create<GameState>((set) => ({
             focusedComponentPath: [],
             selectedItems: [],
             goldInput: '',
-          };
+            isBuyAllMode: false,
+          });
+          return;
         }
 
-        const allChildrenUnlocked = state.targetItem.children.every((_, index) =>
-          newUnlockedSet.has([index].join(','))
-        );
-
-        if (allChildrenUnlocked) {
-          return {
-            livesRemaining: newLives,
-            unlockedComponents: newUnlockedSet,
-            failedComponents: newFailedSet,
-            focusedComponentPath: [],
-            selectedItems: [],
-            goldInput: '',
-            timerActive: false,
-            levelComplete: true,
-          };
-        }
-
-        return {
+        set({
           livesRemaining: newLives,
           unlockedComponents: newUnlockedSet,
           failedComponents: newFailedSet,
           focusedComponentPath: [],
           selectedItems: [],
           goldInput: '',
-        };
+          timerActive: false,
+          levelComplete: true,
+          isBuyAllMode: false,
+        });
+        return;
       }
-    });
+    }
+
+    // ========================================================================
+    // MODE 2 & 3: Normal mode (focused on a specific slot)
+    // ========================================================================
+    const focusedNode = getNodeAtPath(state.targetItem, state.focusedComponentPath);
+
+    if (!focusedNode) {
+      console.error('No focused component found');
+      return;
+    }
+
+    const isBasicItem = focusedNode.children.length === 0;
+    const requiredItems = isBasicItem
+      ? [focusedNode.itemId]
+      : focusedNode.children.map(child => child.itemId);
+
+    // Validate item selection
+    let itemsCorrect = arraysEqualWithDuplicates(state.selectedItems, requiredItems);
+
+    // ========================================================================
+    // Smart slot assignment for basic items:
+    // If focused slot is basic AND selected item is wrong for this slot,
+    // check if it matches ANY other unfilled basic slot
+    // ========================================================================
+    let smartAssignPath: number[] | null = null;
+
+    if (!itemsCorrect && isBasicItem && state.selectedItems.length === 1) {
+      const selectedItem = state.selectedItems[0];
+
+      // Look for another unfilled basic slot that needs this item
+      for (let i = 0; i < state.targetItem.children.length; i++) {
+        const pathStr = [i].join(',');
+        if (state.unlockedComponents.has(pathStr)) continue; // Already unlocked
+
+        const child = state.targetItem.children[i];
+        // Check if this is a basic item slot that needs the selected item
+        if (child.children.length === 0 && child.itemId === selectedItem) {
+          // Found a matching slot!
+          smartAssignPath = [i];
+          itemsCorrect = true;
+          break;
+        }
+      }
+    }
+
+    // Gold validation moved to GoldCheckModal (Level 6+)
+    // Items just need to be correct here
+    const isCorrect = itemsCorrect;
+
+    if (isCorrect) {
+      // CORRECT: Unlock the component (use smart-assigned path if applicable)
+      const pathToUnlock = smartAssignPath || state.focusedComponentPath;
+      const pathStr = pathToUnlock.join(',');
+      const newUnlockedSet = new Set([...state.unlockedComponents, pathStr]);
+
+      // Check if all direct children of root are unlocked
+      const allChildrenUnlocked = state.targetItem.children.every((_, index) =>
+        newUnlockedSet.has([index].join(','))
+      );
+
+      if (allChildrenUnlocked) {
+        // At Level 6+, trigger gold check modal instead of levelComplete
+        if (state.currentLevel >= 6) {
+          set({
+            unlockedComponents: newUnlockedSet,
+            focusedComponentPath: [],
+            selectedItems: [],
+            goldInput: '',
+            timerActive: false,
+          });
+          // Trigger gold check modal
+          useGameStore.getState().initiateGoldCheck();
+          return;
+        }
+
+        // Level 1-5: Just complete the level
+        set({
+          unlockedComponents: newUnlockedSet,
+          focusedComponentPath: [],
+          selectedItems: [],
+          goldInput: '',
+          timerActive: false,
+          levelComplete: true,
+        });
+        return;
+      }
+
+      // Not all children unlocked yet, just update state
+      set({
+        unlockedComponents: newUnlockedSet,
+        focusedComponentPath: [],
+        selectedItems: [],
+        goldInput: '',
+      });
+      return;
+    } else {
+      // WRONG: Lose life and auto-complete component
+      const pathStr = state.focusedComponentPath.join(',');
+      const newUnlockedSet = new Set([...state.unlockedComponents, pathStr]);
+      const newFailedSet = new Set([...state.failedComponents, pathStr]);
+
+      const newLives = Math.max(0, state.livesRemaining - 1) as 3 | 2 | 1 | 0;
+      const isGameOver = newLives === 0;
+
+      if (isGameOver) {
+        const newBest = Math.max(state.bestLevelReached, state.currentLevel);
+        localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
+
+        set({
+          livesRemaining: 0,
+          gameStatus: 'gameover' as const,
+          timerActive: false,
+          bestLevelReached: newBest,
+          unlockedComponents: newUnlockedSet,
+          failedComponents: newFailedSet,
+          focusedComponentPath: [],
+          selectedItems: [],
+          goldInput: '',
+        });
+        return;
+      }
+
+      const allChildrenUnlocked = state.targetItem.children.every((_, index) =>
+        newUnlockedSet.has([index].join(','))
+      );
+
+      if (allChildrenUnlocked) {
+        set({
+          livesRemaining: newLives,
+          unlockedComponents: newUnlockedSet,
+          failedComponents: newFailedSet,
+          focusedComponentPath: [],
+          selectedItems: [],
+          goldInput: '',
+          timerActive: false,
+          levelComplete: true,
+        });
+        return;
+      }
+
+      set({
+        livesRemaining: newLives,
+        unlockedComponents: newUnlockedSet,
+        failedComponents: newFailedSet,
+        focusedComponentPath: [],
+        selectedItems: [],
+        goldInput: '',
+      });
+    }
   },
 
   /**
@@ -876,6 +991,14 @@ export const useGameStore = create<GameState>((set) => ({
         awaitingFinalGold: false,
         isTransitioning: false,
         levelComplete: false,
+        // Reset gold check modal state
+        goldCheckState: {
+          isActive: false,
+          items: [],
+          finalItemCheck: null,
+          timeRemaining: 10,
+          timerActive: false,
+        },
         // Update best level
         bestLevelReached: newBest,
         // Update data pools (in case patch changed)
@@ -918,6 +1041,14 @@ export const useGameStore = create<GameState>((set) => ({
       awaitingFinalGold: false,
       isTransitioning: false,
       levelComplete: false,
+      // Reset gold check modal state
+      goldCheckState: {
+        isActive: false,
+        items: [],
+        finalItemCheck: null,
+        timeRemaining: 10,
+        timerActive: false,
+      },
       // Reset data pools (will be refetched on next startGame)
       allItems: null,
       basicComponents: null,
@@ -1002,5 +1133,243 @@ export const useGameStore = create<GameState>((set) => ({
       console.error('Failed to advance level:', error);
       useGameStore.setState({ isTransitioning: false });
     }
+  },
+
+  // ============================================================================
+  // Gold Check Modal Action Implementations
+  // ============================================================================
+
+  /**
+   * Initialize the gold check modal after all components are purchased.
+   * Selects random Row 2 components based on level difficulty.
+   */
+  initiateGoldCheck: () => {
+    set((state) => {
+      if (!state.targetItem) return state;
+
+      // Determine how many gold checks based on level
+      // Level 6-7: 1 check, Level 8-9: 2 checks, Level 10+: 3 checks + final item
+      let numChecks: number;
+      if (state.currentLevel <= 7) {
+        numChecks = 1;
+      } else if (state.currentLevel <= 9) {
+        numChecks = 2;
+      } else {
+        numChecks = 3;
+      }
+
+      // Find eligible Row 2 components (non-zero goldCost)
+      const eligibleComponents: Array<{ index: number; node: ComponentNode }> = [];
+      state.targetItem.children.forEach((child, index) => {
+        if (child.goldCost > 0) {
+          eligibleComponents.push({ index, node: child });
+        }
+      });
+
+      // If no eligible components, skip gold check entirely
+      if (eligibleComponents.length === 0) {
+        return {
+          timerActive: false,
+          levelComplete: true,
+        };
+      }
+
+      // Cap numChecks at available components
+      numChecks = Math.min(numChecks, eligibleComponents.length);
+
+      // Shuffle and select components
+      const shuffled = [...eligibleComponents].sort(() => Math.random() - 0.5);
+      const selected = shuffled.slice(0, numChecks);
+
+      // Build GoldCheckItems
+      const items: GoldCheckItem[] = selected.map(({ index, node }) => {
+        const correctGold = node.goldCost;
+        // Generate one wrong value (random offset between 50-300)
+        const offsets = [50, 100, 150, 200, 250, 300];
+        const offset = offsets[Math.floor(Math.random() * offsets.length)];
+        const wrongGold = Math.random() > 0.5
+          ? correctGold + offset
+          : Math.max(50, correctGold - offset); // Ensure positive
+
+        // Shuffle the two options
+        const options: [number, number] = Math.random() > 0.5
+          ? [correctGold, wrongGold]
+          : [wrongGold, correctGold];
+
+        return {
+          componentIndex: index,
+          itemId: node.itemId,
+          itemName: node.itemName,
+          correctGold,
+          options,
+          selectedAnswer: null,
+        };
+      });
+
+      // Final item check for Level 10+
+      let finalItemCheck: GoldCheckState['finalItemCheck'] = null;
+      if (state.currentLevel >= 10) {
+        const correctGold = state.targetItem.totalCost;
+        const offsets = [100, 200, 300, 400, 500];
+        const offset = offsets[Math.floor(Math.random() * offsets.length)];
+        const wrongGold = Math.random() > 0.5
+          ? correctGold + offset
+          : Math.max(100, correctGold - offset);
+
+        const options: [number, number] = Math.random() > 0.5
+          ? [correctGold, wrongGold]
+          : [wrongGold, correctGold];
+
+        finalItemCheck = {
+          correctGold,
+          options,
+          selectedAnswer: null,
+        };
+      }
+
+      return {
+        timerActive: false, // Freeze main timer
+        goldCheckState: {
+          isActive: true,
+          items,
+          finalItemCheck,
+          timeRemaining: 10,
+          timerActive: true,
+        },
+      };
+    });
+  },
+
+  /**
+   * Select a gold answer for a component in the gold check modal.
+   */
+  selectGoldCheckAnswer: (componentIndex: number, selectedGold: number) => {
+    set((state) => {
+      const newItems = state.goldCheckState.items.map((item) =>
+        item.componentIndex === componentIndex
+          ? { ...item, selectedAnswer: selectedGold }
+          : item
+      );
+
+      return {
+        goldCheckState: {
+          ...state.goldCheckState,
+          items: newItems,
+        },
+      };
+    });
+  },
+
+  /**
+   * Select a gold answer for the final item (Level 10+).
+   */
+  selectFinalGoldAnswer: (selectedGold: number) => {
+    set((state) => {
+      if (!state.goldCheckState.finalItemCheck) return state;
+
+      return {
+        goldCheckState: {
+          ...state.goldCheckState,
+          finalItemCheck: {
+            ...state.goldCheckState.finalItemCheck,
+            selectedAnswer: selectedGold,
+          },
+        },
+      };
+    });
+  },
+
+  /**
+   * Submit all gold check answers and validate.
+   * Loses 1 life if any answer is wrong or unanswered.
+   */
+  submitGoldCheck: () => {
+    set((state) => {
+      if (!state.goldCheckState.isActive) return state;
+
+      // Check all component answers
+      let anyWrong = false;
+      for (const item of state.goldCheckState.items) {
+        if (item.selectedAnswer === null || item.selectedAnswer !== item.correctGold) {
+          anyWrong = true;
+          break;
+        }
+      }
+
+      // Check final item answer if applicable
+      if (!anyWrong && state.goldCheckState.finalItemCheck) {
+        const final = state.goldCheckState.finalItemCheck;
+        if (final.selectedAnswer === null || final.selectedAnswer !== final.correctGold) {
+          anyWrong = true;
+        }
+      }
+
+      // Reset gold check state
+      const resetGoldCheckState: GoldCheckState = {
+        isActive: false,
+        items: [],
+        finalItemCheck: null,
+        timeRemaining: 10,
+        timerActive: false,
+      };
+
+      if (anyWrong) {
+        // Lose 1 life
+        const newLives = Math.max(0, state.livesRemaining - 1) as 3 | 2 | 1 | 0;
+
+        if (newLives === 0) {
+          // Game over
+          const newBest = Math.max(state.bestLevelReached, state.currentLevel);
+          localStorage.setItem(STORAGE_KEY_BEST_LEVEL, newBest.toString());
+
+          return {
+            livesRemaining: 0,
+            gameStatus: 'gameover' as const,
+            bestLevelReached: newBest,
+            goldCheckState: resetGoldCheckState,
+          };
+        }
+
+        // Continue but lost a life
+        return {
+          livesRemaining: newLives,
+          levelComplete: true,
+          goldCheckState: resetGoldCheckState,
+        };
+      }
+
+      // All correct!
+      return {
+        levelComplete: true,
+        goldCheckState: resetGoldCheckState,
+      };
+    });
+  },
+
+  /**
+   * Decrement the gold check modal timer by one second.
+   */
+  decrementGoldCheckTimer: () => {
+    set((state) => {
+      if (!state.goldCheckState.timerActive || state.goldCheckState.timeRemaining <= 0) {
+        return state;
+      }
+
+      return {
+        goldCheckState: {
+          ...state.goldCheckState,
+          timeRemaining: state.goldCheckState.timeRemaining - 1,
+        },
+      };
+    });
+  },
+
+  /**
+   * Handle gold check timer expiration.
+   * Auto-submits answers (unanswered count as wrong).
+   */
+  handleGoldCheckTimerExpire: () => {
+    // Just call submitGoldCheck - it handles unanswered as wrong
+    useGameStore.getState().submitGoldCheck();
   },
 }));

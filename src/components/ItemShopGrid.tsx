@@ -9,28 +9,9 @@ import { useMemo } from 'react';
 import { useGameStore } from '../stores/useGameStore';
 import type { ComponentNode } from '../types/items';
 import { getItemImageUrl } from '../services/RiotService';
-import { formatItemName, formatGold } from '../utils/formatting';
+import { formatGold } from '../utils/formatting';
 import { generateShopGrid } from '../utils/shopGridGenerator';
 import { motion, AnimatePresence } from 'framer-motion';
-
-/**
- * Gold coin SVG icon
- */
-function GoldIcon({ className = '' }: { className?: string }) {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      className={className}
-    >
-      <circle cx="8" cy="8" r="7" fill="#C8AA6E" stroke="#785A28" strokeWidth="1" />
-      <circle cx="8" cy="8" r="4" fill="#F0E6D2" opacity="0.3" />
-      <text x="8" y="11" textAnchor="middle" fill="#785A28" fontSize="8" fontWeight="bold">G</text>
-    </svg>
-  );
-}
 
 /**
  * Traverses a component tree by following a path array.
@@ -70,8 +51,6 @@ export function ItemShopGrid() {
     selectedItems,
     lockedCartItems,
     isBuyAllMode,
-    goldInput,
-    requiresComponentGold,
     basicComponents,
     allItems,
     dataVersion,
@@ -134,33 +113,7 @@ export function ItemShopGrid() {
     });
   }, [focusedComponentPath.join(','), focusedNode?.itemId, isBuyAllMode, targetItem?.itemId, basicComponents, allItems]);
 
-  // Generate gold options (1 correct + 2 wrong) - memoized to stay stable
-  const goldOptions = useMemo(() => {
-    if (!focusedNode || focusedNode.goldCost === 0) return [];
-    const correctGold = focusedNode.goldCost;
-
-    // Generate two wrong values that are plausible
-    const variations = [50, 100, 150, 200, 250, 300];
-    const wrongValues: number[] = [];
-
-    // Pick random offsets for wrong answers
-    const shuffled = [...variations].sort(() => Math.random() - 0.5);
-    for (const offset of shuffled) {
-      const wrong1 = correctGold + offset;
-      const wrong2 = correctGold - offset;
-      if (wrong2 > 0 && !wrongValues.includes(wrong2) && wrong2 !== correctGold) {
-        wrongValues.push(wrong2);
-      }
-      if (!wrongValues.includes(wrong1) && wrong1 !== correctGold) {
-        wrongValues.push(wrong1);
-      }
-      if (wrongValues.length >= 2) break;
-    }
-
-    // Combine correct with wrong and shuffle
-    const options = [correctGold, ...wrongValues.slice(0, 2)];
-    return options.sort(() => Math.random() - 0.5);
-  }, [focusedComponentPath.join(','), focusedNode?.goldCost]);
+  // Gold options removed - now handled by GoldCheckModal (Level 6+)
 
   // Don't render when no component is focused AND not in Buy All mode - show placeholder
   if (focusedComponentPath.length === 0 && !isBuyAllMode) {
@@ -364,32 +317,7 @@ export function ItemShopGrid() {
           </AnimatePresence>
         </div>
 
-        {/* Gold Selection Buttons (conditional) - hidden in Buy All mode */}
-        {!isBuyAllMode && requiresComponentGold && goldOptions.length > 0 && (
-          <div className="mb-2">
-            <label className="font-display text-[10px] text-hextech-gold tracking-wider block mb-1.5">
-              COMBINE COST
-            </label>
-            <div className="flex gap-2">
-              {goldOptions.map((gold) => (
-                <button
-                  key={gold}
-                  onClick={() => useGameStore.setState({ goldInput: gold.toString() })}
-                  className={`
-                    flex-1 py-2.5 px-3 rounded border-2 font-ui text-base font-bold
-                    transition-all duration-150
-                    ${goldInput === gold.toString()
-                      ? 'bg-yellow-500/30 border-yellow-400 text-yellow-300 shadow-[0_0_10px_rgba(234,179,8,0.3)]'
-                      : 'bg-lol-black/60 border-lol-border text-hextech-gold-light/60 hover:border-yellow-500/50 hover:bg-lol-dark hover:text-yellow-400'
-                    }
-                  `}
-                >
-                  {formatGold(gold)}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Gold validation moved to GoldCheckModal (Level 6+) */}
 
         {/* BUY Button */}
         <button

@@ -22,6 +22,7 @@ function App() {
     proceedToNextLevel,
     timeRemaining,
     goldCheckState,
+    goldCheckResult,
     decrementGoldCheckTimer,
     handleGoldCheckTimerExpire,
   } = useGameStore();
@@ -181,15 +182,38 @@ function App() {
                 transition={{ duration: 0.3, delay: 0.1 }}
                 className="hextech-panel p-8 text-center"
               >
-                <h2 className={`font-display text-3xl mb-2 ${timeRemaining > 0 ? 'text-success-green' : 'text-hextech-gold'}`}>
-                  {timeRemaining > 0 ? 'LEVEL COMPLETE!' : "TIME'S UP!"}
+                <h2 className={`font-display text-3xl mb-2 ${
+                  goldCheckResult === 'failed'
+                    ? 'text-error-red'
+                    : timeRemaining > 0
+                      ? 'text-success-green'
+                      : 'text-hextech-gold'
+                }`}>
+                  {goldCheckResult === 'failed'
+                    ? 'GOLD CHECK FAILED!'
+                    : timeRemaining > 0
+                      ? 'LEVEL COMPLETE!'
+                      : "TIME'S UP!"}
                 </h2>
-                <p className="font-ui text-hextech-gold-light/70 mb-6">
-                  {timeRemaining > 0
-                    ? `Level ${currentLevel} cleared with ${timeRemaining}s remaining`
-                    : `Level ${currentLevel} complete`
+                <p className="font-ui text-hextech-gold-light/70 mb-2">
+                  {goldCheckResult === 'failed'
+                    ? 'Wrong gold value selected - lost 1 life'
+                    : timeRemaining > 0
+                      ? `Level ${currentLevel} cleared with ${timeRemaining}s remaining`
+                      : `Level ${currentLevel} complete`
                   }
                 </p>
+                {goldCheckResult === 'passed' && currentLevel >= 6 && (
+                  <p className="font-ui text-success-green text-sm mb-4">
+                    Gold check passed!
+                  </p>
+                )}
+                {goldCheckResult === 'failed' && (
+                  <p className="font-ui text-hextech-gold-light/50 text-sm mb-4">
+                    Level {currentLevel} still cleared
+                  </p>
+                )}
+                {!goldCheckResult && <div className="mb-4" />}
                 <button
                   onClick={proceedToNextLevel}
                   className="btn-hextech text-lg px-8 py-3"

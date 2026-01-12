@@ -275,6 +275,9 @@ export interface GameState {
   /** State for the gold check modal (Level 6+) */
   goldCheckState: GoldCheckState;
 
+  /** Result of the last gold check: 'passed', 'failed', or null if no check occurred */
+  goldCheckResult: 'passed' | 'failed' | null;
+
   // ============================================================================
   // Data pools for UI components
   // ============================================================================
@@ -459,6 +462,7 @@ export const useGameStore = create<GameState>((set) => ({
     timeRemaining: 10,
     timerActive: false,
   },
+  goldCheckResult: null,
 
   // Data pools for UI components
   allItems: null,
@@ -517,6 +521,7 @@ export const useGameStore = create<GameState>((set) => ({
           timeRemaining: 10,
           timerActive: false,
         },
+        goldCheckResult: null,
         // Expose filtered data for UI components
         allItems: itemsResponse.data,
         basicComponents: basicComponents,
@@ -999,6 +1004,7 @@ export const useGameStore = create<GameState>((set) => ({
           timeRemaining: 10,
           timerActive: false,
         },
+        goldCheckResult: null,
         // Update best level
         bestLevelReached: newBest,
         // Update data pools (in case patch changed)
@@ -1049,6 +1055,7 @@ export const useGameStore = create<GameState>((set) => ({
         timeRemaining: 10,
         timerActive: false,
       },
+      goldCheckResult: null,
       // Reset data pools (will be refetched on next startGame)
       allItems: null,
       basicComponents: null,
@@ -1158,10 +1165,10 @@ export const useGameStore = create<GameState>((set) => ({
         numChecks = 3;
       }
 
-      // Find eligible Row 2 components (non-zero goldCost)
+      // Find eligible Row 2 components (non-zero totalCost)
       const eligibleComponents: Array<{ index: number; node: ComponentNode }> = [];
       state.targetItem.children.forEach((child, index) => {
-        if (child.goldCost > 0) {
+        if (child.totalCost > 0) {
           eligibleComponents.push({ index, node: child });
         }
       });
@@ -1327,6 +1334,7 @@ export const useGameStore = create<GameState>((set) => ({
             gameStatus: 'gameover' as const,
             bestLevelReached: newBest,
             goldCheckState: resetGoldCheckState,
+            goldCheckResult: 'failed' as const,
           };
         }
 
@@ -1335,6 +1343,7 @@ export const useGameStore = create<GameState>((set) => ({
           livesRemaining: newLives,
           levelComplete: true,
           goldCheckState: resetGoldCheckState,
+          goldCheckResult: 'failed' as const,
         };
       }
 
@@ -1342,6 +1351,7 @@ export const useGameStore = create<GameState>((set) => ({
       return {
         levelComplete: true,
         goldCheckState: resetGoldCheckState,
+        goldCheckResult: 'passed' as const,
       };
     });
   },

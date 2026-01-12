@@ -136,7 +136,7 @@ export interface GoldCheckItem {
   itemId: string;
   /** Display name of the item */
   itemName: string;
-  /** Correct gold cost (ComponentNode.goldCost) */
+  /** Correct total cost of the item (ComponentNode.totalCost) */
   correctGold: number;
   /** Two options: [correct, wrong] shuffled */
   options: [number, number];
@@ -1183,7 +1183,7 @@ export const useGameStore = create<GameState>((set) => ({
 
       // Build GoldCheckItems
       const items: GoldCheckItem[] = selected.map(({ index, node }) => {
-        const correctGold = node.goldCost;
+        const correctGold = node.totalCost; // Use total cost, not combine cost
         // Generate one wrong value (random offset between 50-300)
         const offsets = [50, 100, 150, 200, 250, 300];
         const offset = offsets[Math.floor(Math.random() * offsets.length)];

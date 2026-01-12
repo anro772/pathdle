@@ -20,7 +20,7 @@ function GoldCheckItemCard({ item }: { item: GoldCheckItem }) {
   if (!dataVersion) return null;
 
   return (
-    <div className="hextech-panel p-4 flex flex-col items-center">
+    <div className="hextech-panel p-4 flex flex-col items-center w-[180px]">
       {/* Item Icon and Name */}
       <div className="item-slot p-2 mb-3">
         <img
@@ -33,7 +33,7 @@ function GoldCheckItemCard({ item }: { item: GoldCheckItem }) {
         {item.itemName}
       </p>
       <p className="font-ui text-[10px] text-hextech-gold-light/60 uppercase tracking-wider mb-3">
-        Combine Cost
+        Item Cost
       </p>
 
       {/* Gold Options (2 buttons) */}
@@ -43,11 +43,11 @@ function GoldCheckItemCard({ item }: { item: GoldCheckItem }) {
             key={gold}
             onClick={() => selectGoldCheckAnswer(item.componentIndex, gold)}
             className={`
-              flex-1 py-2.5 px-3 rounded border-2 font-ui text-base font-bold
-              transition-all duration-150
+              flex-1 py-2.5 px-3 rounded-lg font-ui text-base font-bold
+              transition-all duration-200 relative overflow-hidden
               ${item.selectedAnswer === gold
-                ? 'bg-yellow-500/30 border-yellow-400 text-yellow-300 shadow-[0_0_10px_rgba(234,179,8,0.3)]'
-                : 'bg-lol-black/60 border-lol-border text-hextech-gold-light/60 hover:border-yellow-500/50 hover:bg-lol-dark hover:text-yellow-400'
+                ? 'bg-gradient-to-b from-yellow-600/50 to-yellow-800/50 border-2 border-yellow-400 text-yellow-200 shadow-[0_0_15px_rgba(234,179,8,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]'
+                : 'bg-gradient-to-b from-[#1e2328] to-[#0a0c0e] border-2 border-[#5c5b57]/60 text-hextech-gold-light/70 hover:border-hextech-gold/60 hover:text-hextech-gold hover:shadow-[0_0_8px_rgba(200,170,110,0.3)]'
               }
             `}
           >
@@ -93,11 +93,11 @@ function FinalGoldCheckCard() {
             key={gold}
             onClick={() => selectFinalGoldAnswer(gold)}
             className={`
-              flex-1 py-2.5 px-3 rounded border-2 font-ui text-base font-bold
-              transition-all duration-150
+              flex-1 py-2.5 px-3 rounded-lg font-ui text-base font-bold
+              transition-all duration-200 relative overflow-hidden
               ${selectedAnswer === gold
-                ? 'bg-yellow-500/30 border-yellow-400 text-yellow-300 shadow-[0_0_10px_rgba(234,179,8,0.3)]'
-                : 'bg-lol-black/60 border-lol-border text-hextech-gold-light/60 hover:border-yellow-500/50 hover:bg-lol-dark hover:text-yellow-400'
+                ? 'bg-gradient-to-b from-yellow-600/50 to-yellow-800/50 border-2 border-yellow-400 text-yellow-200 shadow-[0_0_15px_rgba(234,179,8,0.4),inset_0_1px_0_rgba(255,255,255,0.1)]'
+                : 'bg-gradient-to-b from-[#1e2328] to-[#0a0c0e] border-2 border-[#5c5b57]/60 text-hextech-gold-light/70 hover:border-hextech-gold/60 hover:text-hextech-gold hover:shadow-[0_0_8px_rgba(200,170,110,0.3)]'
               }
             `}
           >
@@ -152,7 +152,7 @@ export function GoldCheckModal() {
             GOLD CHECK
           </h2>
           <p className="font-ui text-sm text-hextech-gold-light/70">
-            Select the correct combine cost for each component
+            Select the correct cost for each component
           </p>
         </div>
 
@@ -163,8 +163,8 @@ export function GoldCheckModal() {
           </div>
         </div>
 
-        {/* Gold Check Items Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        {/* Gold Check Items - Centered */}
+        <div className="flex flex-wrap justify-center gap-4 mb-6">
           {goldCheckState.items.map((item) => (
             <GoldCheckItemCard key={item.componentIndex} item={item} />
           ))}

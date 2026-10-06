@@ -238,16 +238,16 @@ export function GameOverScreen() {
         )}
 
         {/* Share card */}
-        <div className="bg-lol-dark/50 border border-lol-border rounded-lg p-3 mb-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-lg leading-tight tracking-wider whitespace-pre text-center sm:text-left">
+        <div className="bg-lol-dark/50 border border-lol-border rounded-lg p-3 mb-4 flex flex-col items-center gap-3">
+          <p className="text-lg leading-tight tracking-wider whitespace-pre text-center">
             {outcomesToEmoji(outcomes, isDaily ? DAILY_LEVELS : undefined) || '–'}
           </p>
-          <div className="flex sm:flex-col gap-2 shrink-0">
-            <ShareButton text={shareText} />
+          <div className="grid grid-cols-2 gap-2 w-full">
+            <ShareButton text={shareText} className="w-full !px-2" />
             <button
               onClick={() => void handleSaveImage()}
               disabled={imageState === 'working'}
-              className="btn-hextech btn-hextech-secondary px-4 py-2 text-sm disabled:opacity-50"
+              className="btn-hextech btn-hextech-secondary w-full !px-2 py-2 text-sm disabled:opacity-50"
             >
               {imageState === 'working' ? '…' : 'SAVE IMAGE'}
             </button>

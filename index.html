@@ -3,9 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pathdle - LoL Item Build Path Game</title>
-    <meta name="description" content="Rebuild League of Legends items from memory. A new Daily every day, Endless runs and a Practice mode." />
+    <title>Pathdle – League of Legends Item Build Path Quiz | Daily LoL Game</title>
+    <meta name="description" content="Pathdle is a daily League of Legends item quiz. Rebuild LoL items from their components from memory: a new Daily puzzle every day, plus Endless and Practice modes." />
     <meta name="theme-color" content="#010A13" />
+
+    <!-- pathdle.com is the real address (Cloudflare also serves *.pages.dev, which must not count as a duplicate) -->
+    <link rel="canonical" href="https://pathdle.com/" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -13,20 +16,40 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Pathdle" />
 
-    <!-- Share previews (Discord, Twitter/X, iMessage...) -->
+    <!-- Share previews (Discord, Twitter/X, iMessage...): need absolute URLs -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Pathdle" />
-    <meta property="og:description" content="How well do you know League of Legends build paths? Rebuild items from memory before time runs out." />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:url" content="https://pathdle.com/" />
+    <meta property="og:site_name" content="Pathdle" />
+    <meta property="og:title" content="Pathdle – Daily League of Legends Item Quiz" />
+    <meta property="og:description" content="How well do you know League of Legends build paths? Rebuild items from memory before time runs out. New Daily every day." />
+    <meta property="og:image" content="https://pathdle.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Pathdle" />
+    <meta name="twitter:title" content="Pathdle – Daily League of Legends Item Quiz" />
     <meta name="twitter:description" content="Rebuild League of Legends items from memory. New Daily every day." />
-    <meta name="twitter:image" content="/og-image.png" />
+    <meta name="twitter:image" content="https://pathdle.com/og-image.png" />
+
+    <!-- Structured data: tells search engines this is a free browser game -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Pathdle",
+        "url": "https://pathdle.com/",
+        "description": "A daily League of Legends item quiz: rebuild items from their components from memory.",
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      Pathdle is a daily League of Legends item quiz: rebuild LoL items from their components from memory.
+      Please enable JavaScript to play.
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

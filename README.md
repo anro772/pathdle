@@ -129,7 +129,8 @@ Pathdle is a static site, so any static host works (Vercel, Netlify, Cloudflare 
 | Environment variables | `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` |
 
 - **Only** set the two `VITE_` variables on the host. Never add the Supabase secret key, `SUPABASE_DB_URL` or `RIOT_API_KEY`: anything starting with `VITE_` ends up in the browser bundle, and the others aren't needed at runtime.
-- After the first deploy, change `og:image` and `twitter:image` in `index.html` to the full URL (e.g. `https://your-domain/og-image.png`). Discord and Twitter need an absolute URL for link previews.
+- The site's address is **https://pathdle.com/**. It's set in `index.html` (canonical tag, `og:url`, share images), `public/robots.txt` and `public/sitemap.xml`; change all of them if the domain ever changes.
+- **Search engines:** `robots.txt` allows crawling and points to the sitemap. The canonical tag tells Google that `pathdle.com` is the real site, not the `*.pages.dev` copy. Submit `https://pathdle.com/sitemap.xml` in Google Search Console under **Sitemaps**.
 - The Daily resets at 00:00 UTC for everyone.
 - To refresh the Challenger stats: run `npm run fetch-meta` locally with a fresh Riot key, then commit and redeploy `public/meta-data.json`.
 

@@ -32,7 +32,7 @@ function GoldQuestion({ itemId, itemName, label, options, selectedAnswer, hotkey
   if (!dataVersion) return null;
 
   return (
-    <div className={`hextech-panel p-3 sm:p-4 flex flex-col items-center w-full sm:w-[180px] ${highlight ? 'border-2 !border-hextech-gold/60' : ''}`}>
+    <div className={`hextech-panel p-3 sm:p-4 flex flex-col items-center w-full sm:w-[13.5rem] ${highlight ? 'border-2 !border-hextech-gold/60' : ''}`}>
       <div className="flex sm:flex-col items-center gap-3 sm:gap-0 w-full sm:w-auto mb-3">
         <div className={`item-slot p-1.5 sm:mb-2 shrink-0 ${highlight ? '!border-hextech-gold' : ''}`}>
           <img src={getItemImageUrl(itemId, dataVersion)} alt={itemName} className="w-11 h-11 sm:w-14 sm:h-14" />
@@ -52,14 +52,14 @@ function GoldQuestion({ itemId, itemName, label, options, selectedAnswer, hotkey
               onSelect(gold);
             }}
             className={`
-              relative flex-1 py-2.5 px-3 rounded-lg font-ui text-base font-bold transition-all duration-200
+              relative flex-1 min-w-0 flex items-center justify-center whitespace-nowrap py-2.5 px-2 rounded-lg font-ui text-base font-bold transition-all duration-200
               ${selectedAnswer === gold
                 ? 'bg-gradient-to-b from-yellow-600/50 to-yellow-800/50 border-2 border-yellow-400 text-yellow-200 shadow-[0_0_15px_rgba(234,179,8,0.4)]'
                 : 'bg-gradient-to-b from-[#1e2328] to-[#0a0c0e] border-2 border-[#5c5b57]/60 text-hextech-gold-light/70 hover:border-hextech-gold/60 hover:text-hextech-gold'
               }
             `}
           >
-            {hotkeys && <span className="kbd absolute top-0.5 left-0.5 hidden sm:inline-block">{hotkeys[i]}</span>}
+            {hotkeys && <span className="kbd absolute -top-2 -left-2 hidden sm:inline-block">{hotkeys[i]}</span>}
             <Gold amount={gold} />
           </button>
         ))}

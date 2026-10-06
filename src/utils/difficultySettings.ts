@@ -9,6 +9,9 @@ export const EPIC_LEVELS = 3;
 /** Seconds per level in Endless and Daily (components are hidden, so players need time to think) */
 export const LEVEL_SECONDS = 30;
 
+/** Seconds added for each correctly bought component (capped at LEVEL_SECONDS) */
+export const CORRECT_ANSWER_BONUS_SECONDS = 5;
+
 /**
  * Returns difficulty configuration for a given level.
  *

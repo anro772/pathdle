@@ -15,7 +15,7 @@ const STEPS = [
   {
     icon: '🛒',
     title: 'Buy each component',
-    text: 'Pick the hidden component\'s recipe from the shop (or the item itself for a basic slot), then press Purchase.',
+    text: 'The shop only sells basic items, so you build each component from its parts. Example: for Giant\'s Belt, pick a Ruby Crystal, not the belt itself. A basic slot (like Long Sword) is bought directly.',
   },
   {
     icon: '💡',

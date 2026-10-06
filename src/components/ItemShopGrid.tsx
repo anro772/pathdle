@@ -165,6 +165,17 @@ export function ItemShopGrid() {
           )}
         </div>
 
+        {/* What to do: components can't be bought directly, only their parts */}
+        {!isBuyAllMode && (
+          <p className="build-instruction font-ui text-sm text-hextech-gold-light/85 mt-2 pl-2.5 py-0.5 leading-snug truncate">
+            {isBasicSlot ? (
+              <>🛒 <span className="font-bold text-hextech-blue">Basic item:</span> buy it directly.</>
+            ) : (
+              <>🧩 Can't be bought directly: <span className="font-bold text-hextech-blue">pick the {activeNode.children.length} item{activeNode.children.length > 1 ? 's' : ''} it's built from</span>.</>
+            )}
+          </p>
+        )}
+
         {hintsRevealed.length > 0 && (
           <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
             {hintsRevealed.map(line => (
@@ -225,7 +236,9 @@ export function ItemShopGrid() {
       {/* Cart Section (sticky at the bottom of the screen on phones) */}
       <div className="mt-auto sticky bottom-0 z-10 -mx-3 px-3 pt-2 pb-3 bg-lol-dark/95 border-t border-lol-border lg:static lg:mx-0 lg:px-0 lg:pt-0 lg:pb-0 lg:bg-transparent lg:border-0">
         <div className="flex items-center justify-between mb-1.5">
-          <h3 className="font-display text-[0.75rem] text-hextech-gold tracking-wider">CART</h3>
+          <h3 className="font-display text-[0.75rem] text-hextech-gold tracking-wider">
+            {isBuyAllMode ? 'ALL BASE ITEMS' : isBasicSlot ? 'YOUR PICK' : 'PARTS FOR THIS COMPONENT'}
+          </h3>
           <span className="font-ui text-[0.75rem] text-hextech-gold-light/70">
             {selectedItems.length} / {cartSize} · <kbd className="kbd">⌫</kbd> remove
           </span>

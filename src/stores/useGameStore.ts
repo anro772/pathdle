@@ -24,7 +24,7 @@ import {
   sameItems,
 } from '../utils/recipeEngine';
 import { generateBuyAllGrid, generateShopGrid } from '../utils/shopGridGenerator';
-import { DAILY_LEVELS, EPIC_LEVELS, getDifficultySettings } from '../utils/difficultySettings';
+import { CORRECT_ANSWER_BONUS_SECONDS, DAILY_LEVELS, EPIC_LEVELS, getDifficultySettings } from '../utils/difficultySettings';
 import { computeLevelScore, type LevelScore } from '../utils/scoring';
 import { getDailyKey, seededRng, shuffle, type Rng } from '../utils/seededRandom';
 import {
@@ -965,6 +965,10 @@ export const useGameStore = create<GameState>((set, get) => {
         unlocked.add(unlockPath.join(','));
         set({
           unlockedComponents: unlocked,
+          // Right answer: +5s, never above the level's full time (keeps the score cap valid)
+          timeRemaining: state.timerActive
+            ? Math.min(state.settings.timerDuration, state.timeRemaining + CORRECT_ANSWER_BONUS_SECONDS)
+            : state.timeRemaining,
           feedback: unlockPath !== focusedPath
             ? makeFeedback('correct', `That's ${target.children[unlockPath[0]].itemName}. Nice!`)
             : makeFeedback('correct', focusedNode.itemName),

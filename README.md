@@ -76,6 +76,30 @@ The streak multiplier grows +0.1 per consecutive perfect level (max ×2). Timed-
 - **Leaderboard**: Supabase table `scores` (see `supabase/schema.sql`). Row-level security allows public reads and inserts only. The browser uses the publishable key; the secret key is never needed.
   A `score_plausible` check rejects scores above **1,850 × level**, the most a perfect player can earn per level (30s left, all gold answers, Buy All, ×2 streak, champion bonus). If you change scoring, update that constraint together with `MAX_POINTS_PER_LEVEL` in `src/utils/scoring.ts` (a test pins the value).
 
+### Do I need a Riot API key? (patches, expiring keys)
+
+**The website never needs a Riot API key.** Pathdle uses two separate Riot data sources:
+
+| | Item data | Challenger stats |
+|---|---|---|
+| What | Recipes, gold costs, stats, icons | Pick rate, win rate, top champions per item |
+| Source | Data Dragon (Riot's public file server) | Riot API (`match-v5`, `league-v4`) |
+| Needs a key? | No, and nothing expires | Yes, but only while running `npm run fetch-meta` on your PC |
+| How it updates | Automatically: the browser loads the latest patch and re-checks every 24h; each `npm run build` also bundles a fresh copy as a fallback | Manually: re-run `npm run fetch-meta` and redeploy |
+| When the key expires | Unaffected | Nothing breaks: the saved `public/meta-data.json` keeps working, it just gets older |
+
+- **New patches:** new and changed items appear within a day on their own. No action needed.
+- **Why the site doesn't call the Riot API itself:** Riot blocks calls to its API from browsers, and a key inside a website would be public to every visitor. So the stats are fetched once, offline, and saved as a file the site reads.
+- **What gets stale over time:**
+  - Pick rates and top champions reflect the patch shown on the level-complete card (e.g. "patch 16.19") until you refresh them.
+  - Brand-new items released after the snapshot have no stats yet. Their card says "Hidden gem" (misleading for a new item) and they get no "Who builds this?" bonus question. Nothing breaks.
+- **Refreshing the stats:**
+  1. Get a key at [developer.riotgames.com](https://developer.riotgames.com). A 24h dev key is enough, since the script only takes a few minutes.
+  2. Put it in `.env` as `RIOT_API_KEY=...`.
+  3. Run `npm run fetch-meta` (about 4 minutes, rate-limited for dev keys).
+  4. Commit `public/meta-data.json` and redeploy.
+- **Prefer not to renew keys?** Apply for a **personal API key** on the same site. It doesn't expire and suits small projects like this. You still run `fetch-meta` yourself whenever you want fresh stats.
+
 ## Getting started
 
 ```bash

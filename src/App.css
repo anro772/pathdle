@@ -548,3 +548,38 @@ input:focus-visible {
   border-left: 3px solid var(--color-hextech-gold);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
+
+/* The component being built: its whole column (slot + parts) is highlighted.
+   Drawn as a layer that reaches a little above the slot, so the box has breathing
+   room without moving the slot out of line with the other columns. */
+.focus-column {
+  position: relative;
+  z-index: 0;
+}
+
+.focus-column::before {
+  content: '';
+  position: absolute;
+  inset: -0.5rem 0 0 0;
+  z-index: -1;
+  border-radius: 0.6rem;
+  background: linear-gradient(180deg, rgba(10, 200, 185, 0.1) 0%, rgba(10, 200, 185, 0.03) 100%);
+  box-shadow: inset 0 0 0 1px rgba(10, 200, 185, 0.35);
+  pointer-events: none;
+}
+
+/* Empty part slots of the component being built gently pulse */
+.part-slot-empty {
+  animation: part-slot-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes part-slot-pulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(10, 200, 185, 0); }
+  50% { box-shadow: 0 0 10px rgba(10, 200, 185, 0.55); }
+}
+
+/* Instruction line under the shop header */
+.build-instruction {
+  border-left: 3px solid var(--color-hextech-blue);
+  background: linear-gradient(90deg, rgba(10, 200, 185, 0.1), transparent 80%);
+}

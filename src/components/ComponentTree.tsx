@@ -161,6 +161,7 @@ export function ComponentTree() {
     mode,
     dataVersion,
     levelComplete,
+    selectedItems,
     focusComponent,
     toggleBuyAll,
   } = useGameStore();
@@ -285,7 +286,12 @@ export function ComponentTree() {
           const subWidth = subColumns * 4;
 
           return (
-            <div key={index} className="flex flex-col items-center min-w-0 px-0.5">
+            <div
+              key={index}
+              className={`flex flex-col items-center min-w-0 px-0.5 pb-1.5 rounded-lg transition-colors ${
+                focused && !unlocked ? 'focus-column' : ''
+              }`}
+            >
               {/* Row 2: Component Slot */}
               <button
                 onClick={() => {
@@ -332,13 +338,21 @@ export function ComponentTree() {
                           👁
                         </span>
                       </div>
+                    ) : focused && !hasSubChildren && selectedItems[0] ? (
+                      <img
+                        src={getItemImageUrl(selectedItems[0], dataVersion)}
+                        alt={allItems[selectedItems[0]]?.name ?? ''}
+                        className="w-12 h-12 sm:w-14 sm:h-14 rounded border-2 border-hextech-blue"
+                      />
                     ) : (
                       <div className={`w-12 h-12 sm:w-14 sm:h-14 bg-lol-dark border-2 rounded flex items-center justify-center ${focused ? 'border-hextech-gold/60' : 'border-lol-border'}`}>
                         <span className={`font-display text-2xl ${focused ? 'text-hextech-gold' : 'text-lol-muted'}`}>?</span>
                       </div>
                     )}
                     <p className={`font-ui text-[0.75rem] sm:text-xs mt-1 ${focused ? 'text-hextech-gold' : 'text-lol-muted'}`}>
-                      {focused ? 'Building…' : child.children.length === 0 ? 'Basic' : `${child.children.length} part${child.children.length > 1 ? 's' : ''}`}
+                      {focused
+                        ? (hasSubChildren ? 'Pick its parts ↓' : 'Buy it →')
+                        : child.children.length === 0 ? 'Basic' : `${child.children.length} part${child.children.length > 1 ? 's' : ''}`}
                     </p>
                   </div>
                 )}
@@ -347,12 +361,11 @@ export function ComponentTree() {
               {/* Stat hints revealed for this hidden component */}
               {!unlocked && hints.length > 0 && (
                 <div className="mt-1 flex flex-col items-center gap-0.5 max-w-full">
-                  {hints.slice(0, 2).map(line => (
-                    <span key={line} className="font-ui text-[0.7rem] sm:text-[0.75rem] leading-tight text-hextech-blue bg-hextech-blue/10 border border-hextech-blue/30 rounded px-1 text-center line-clamp-1 max-w-full">
+                  {hints.map(line => (
+                    <span key={line} className="font-ui text-[0.7rem] sm:text-[0.75rem] leading-tight text-hextech-blue bg-hextech-blue/10 border border-hextech-blue/30 rounded px-1 py-px text-center break-words max-w-full">
                       💡 {line}
                     </span>
                   ))}
-                  {hints.length > 2 && <span className="font-ui text-[0.7rem] text-hextech-blue/70">+{hints.length - 2} more</span>}
                 </div>
               )}
 
@@ -376,6 +389,9 @@ export function ComponentTree() {
                   >
                     {child.children.map((subChild, subIndex) => {
                       const showItem = unlocked;
+                      // While building this component, its parts fill with your shop picks
+                      const picked = focused && !unlocked ? selectedItems[subIndex] : undefined;
+                      const isPartSlot = focused && !unlocked;
 
                       return (
                         <div key={subIndex} className="flex flex-col items-center min-w-0 px-0.5">
@@ -386,7 +402,7 @@ export function ComponentTree() {
                             title={showItem ? subChild.itemName : undefined}
                             className={`
                               item-slot relative flex items-center justify-center p-1 w-full max-w-14 aspect-square cursor-default
-                              ${focused ? '!border-hextech-blue/50' : ''}
+                              ${isPartSlot ? (picked ? '!border-hextech-blue' : '!border-hextech-blue/70 part-slot-empty') : ''}
                               ${unlocked ? (failed ? '!border-error-red/50' : '!border-success-green/50') : ''}
                             `}
                           >
@@ -397,13 +413,20 @@ export function ComponentTree() {
                                 alt={subChild.itemName}
                                 className="w-full h-full"
                               />
+                            ) : picked ? (
+                              <img
+                                {...tooltipProps(picked)}
+                                src={getItemImageUrl(picked, dataVersion)}
+                                alt={allItems[picked]?.name ?? ''}
+                                className="w-full h-full"
+                              />
                             ) : (
-                              <span className="font-display text-base text-lol-muted">?</span>
+                              <span className={`font-display text-base ${isPartSlot ? 'text-hextech-blue' : 'text-lol-muted'}`}>{isPartSlot ? '+' : '?'}</span>
                             )}
                             {unlocked && <StatusBadge failed={failed} small />}
                           </motion.div>
                           <p className={`hidden sm:block font-ui text-[0.7rem] mt-0.5 text-center leading-tight line-clamp-1 w-full text-hextech-gold-light/70`}>
-                            {showItem ? subChild.itemName : ''}
+                            {showItem ? subChild.itemName : picked ? allItems[picked]?.name ?? '' : ''}
                           </p>
                         </div>
                       );

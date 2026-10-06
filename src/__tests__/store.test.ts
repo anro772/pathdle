@@ -151,6 +151,31 @@ describe('game store', () => {
     expect(goldCheckSeconds(4)).toBe(18);
   });
 
+  it('adds 5 seconds for a correct component, capped at the level time', async () => {
+    await useGameStore.getState().startGame('endless');
+    useGameStore.setState({ timeRemaining: 10 });
+    buyFocusedCorrectly();
+    expect(useGameStore.getState().timeRemaining).toBe(15);
+
+    // Never above the full 30s (keeps the leaderboard score cap valid)
+    await useGameStore.getState().startGame('endless');
+    useGameStore.setState({ timeRemaining: 28 });
+    buyFocusedCorrectly();
+    expect(useGameStore.getState().timeRemaining).toBe(30);
+
+    // Wrong answers give nothing
+    await useGameStore.getState().startGame('endless');
+    useGameStore.setState({ timeRemaining: 10 });
+    buyWrong();
+    expect(useGameStore.getState().timeRemaining).toBe(10);
+  });
+
+  it('gives no time bonus in practice (no timer)', async () => {
+    await useGameStore.getState().startGame('practice');
+    buyFocusedCorrectly();
+    expect(useGameStore.getState().timeRemaining).toBe(0);
+  });
+
   it('a failed gold check costs a life but clears the level', async () => {
     await useGameStore.getState().startGame('endless');
     for (let level = 1; level < 6; level++) {

@@ -1,0 +1,5141 @@
+{
+  "patch": "16.19",
+  "platform": "euw1",
+  "tier": "CHALLENGER",
+  "matchCount": 170,
+  "playerCount": 1700,
+  "generatedAt": "2026-10-06T01:41:22.482Z",
+  "items": {
+    "1001": {
+      "players": 71,
+      "pickRate": 0.0418,
+      "winRate": 0.3803,
+      "topChamps": [
+        {
+          "name": "Quinn",
+          "count": 18
+        },
+        {
+          "name": "Jayce",
+          "count": 5
+        },
+        {
+          "name": "Graves",
+          "count": 4
+        },
+        {
+          "name": "Fiora",
+          "count": 3
+        },
+        {
+          "name": "Rengar",
+          "count": 3
+        }
+      ]
+    },
+    "1004": {
+      "players": 6,
+      "pickRate": 0.0035,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Lulu",
+          "count": 3
+        },
+        {
+          "name": "Janna",
+          "count": 1
+        },
+        {
+          "name": "Taric",
+          "count": 1
+        },
+        {
+          "name": "Thresh",
+          "count": 1
+        }
+      ]
+    },
+    "1006": {
+      "players": 4,
+      "pickRate": 0.0024,
+      "winRate": 0.75,
+      "topChamps": [
+        {
+          "name": "Nautilus",
+          "count": 1
+        },
+        {
+          "name": "Thresh",
+          "count": 1
+        },
+        {
+          "name": "Alistar",
+          "count": 1
+        },
+        {
+          "name": "Rell",
+          "count": 1
+        }
+      ]
+    },
+    "1011": {
+      "players": 38,
+      "pickRate": 0.0224,
+      "winRate": 0.3684,
+      "topChamps": [
+        {
+          "name": "Nautilus",
+          "count": 6
+        },
+        {
+          "name": "Bard",
+          "count": 3
+        },
+        {
+          "name": "Skarner",
+          "count": 3
+        },
+        {
+          "name": "Alistar",
+          "count": 3
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 2
+        }
+      ]
+    },
+    "1018": {
+      "players": 57,
+      "pickRate": 0.0335,
+      "winRate": 0.4211,
+      "topChamps": [
+        {
+          "name": "Jhin",
+          "count": 10
+        },
+        {
+          "name": "Tristana",
+          "count": 8
+        },
+        {
+          "name": "Yunara",
+          "count": 7
+        },
+        {
+          "name": "Caitlyn",
+          "count": 5
+        },
+        {
+          "name": "Aphelios",
+          "count": 4
+        }
+      ]
+    },
+    "1026": {
+      "players": 30,
+      "pickRate": 0.0176,
+      "winRate": 0.3,
+      "topChamps": [
+        {
+          "name": "Janna",
+          "count": 3
+        },
+        {
+          "name": "Karthus",
+          "count": 3
+        },
+        {
+          "name": "Ekko",
+          "count": 3
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 2
+        },
+        {
+          "name": "Kaisa",
+          "count": 2
+        }
+      ]
+    },
+    "1027": {
+      "players": 4,
+      "pickRate": 0.0024,
+      "winRate": 0,
+      "topChamps": [
+        {
+          "name": "Ryze",
+          "count": 2
+        },
+        {
+          "name": "Anivia",
+          "count": 1
+        },
+        {
+          "name": "Swain",
+          "count": 1
+        }
+      ]
+    },
+    "1028": {
+      "players": 85,
+      "pickRate": 0.05,
+      "winRate": 0.4118,
+      "topChamps": [
+        {
+          "name": "Nautilus",
+          "count": 7
+        },
+        {
+          "name": "Alistar",
+          "count": 6
+        },
+        {
+          "name": "Gnar",
+          "count": 5
+        },
+        {
+          "name": "Camille",
+          "count": 5
+        },
+        {
+          "name": "Janna",
+          "count": 4
+        }
+      ]
+    },
+    "1029": {
+      "players": 74,
+      "pickRate": 0.0435,
+      "winRate": 0.4595,
+      "topChamps": [
+        {
+          "name": "Rell",
+          "count": 6
+        },
+        {
+          "name": "Nautilus",
+          "count": 6
+        },
+        {
+          "name": "Thresh",
+          "count": 6
+        },
+        {
+          "name": "Bard",
+          "count": 4
+        },
+        {
+          "name": "Rakan",
+          "count": 3
+        }
+      ]
+    },
+    "1031": {
+      "players": 23,
+      "pickRate": 0.0135,
+      "winRate": 0.7391,
+      "topChamps": [
+        {
+          "name": "Ornn",
+          "count": 3
+        },
+        {
+          "name": "Sion",
+          "count": 2
+        },
+        {
+          "name": "Thresh",
+          "count": 2
+        },
+        {
+          "name": "Skarner",
+          "count": 2
+        },
+        {
+          "name": "KSante",
+          "count": 2
+        }
+      ]
+    },
+    "1033": {
+      "players": 53,
+      "pickRate": 0.0312,
+      "winRate": 0.4717,
+      "topChamps": [
+        {
+          "name": "Thresh",
+          "count": 7
+        },
+        {
+          "name": "Rell",
+          "count": 3
+        },
+        {
+          "name": "LeeSin",
+          "count": 3
+        },
+        {
+          "name": "Renata",
+          "count": 2
+        },
+        {
+          "name": "Alistar",
+          "count": 2
+        }
+      ]
+    },
+    "1036": {
+      "players": 153,
+      "pickRate": 0.09,
+      "winRate": 0.3595,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 9
+        },
+        {
+          "name": "Yunara",
+          "count": 9
+        },
+        {
+          "name": "Quinn",
+          "count": 9
+        },
+        {
+          "name": "Camille",
+          "count": 7
+        },
+        {
+          "name": "Ezreal",
+          "count": 7
+        }
+      ]
+    },
+    "1037": {
+      "players": 86,
+      "pickRate": 0.0506,
+      "winRate": 0.5349,
+      "topChamps": [
+        {
+          "name": "Camille",
+          "count": 6
+        },
+        {
+          "name": "Yone",
+          "count": 6
+        },
+        {
+          "name": "Viego",
+          "count": 4
+        },
+        {
+          "name": "Jhin",
+          "count": 4
+        },
+        {
+          "name": "Yunara",
+          "count": 4
+        }
+      ]
+    },
+    "1038": {
+      "players": 68,
+      "pickRate": 0.04,
+      "winRate": 0.5735,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 6
+        },
+        {
+          "name": "Caitlyn",
+          "count": 6
+        },
+        {
+          "name": "Yone",
+          "count": 6
+        },
+        {
+          "name": "Aphelios",
+          "count": 5
+        },
+        {
+          "name": "Zeri",
+          "count": 5
+        }
+      ]
+    },
+    "1042": {
+      "players": 30,
+      "pickRate": 0.0176,
+      "winRate": 0.4667,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 7
+        },
+        {
+          "name": "TwistedFate",
+          "count": 3
+        },
+        {
+          "name": "KogMaw",
+          "count": 2
+        },
+        {
+          "name": "Kalista",
+          "count": 2
+        },
+        {
+          "name": "Caitlyn",
+          "count": 2
+        }
+      ]
+    },
+    "1043": {
+      "players": 14,
+      "pickRate": 0.0082,
+      "winRate": 0.5714,
+      "topChamps": [
+        {
+          "name": "TwistedFate",
+          "count": 3
+        },
+        {
+          "name": "Irelia",
+          "count": 2
+        },
+        {
+          "name": "Katarina",
+          "count": 2
+        },
+        {
+          "name": "KogMaw",
+          "count": 2
+        },
+        {
+          "name": "Viego",
+          "count": 1
+        }
+      ]
+    },
+    "1052": {
+      "players": 95,
+      "pickRate": 0.0559,
+      "winRate": 0.4211,
+      "topChamps": [
+        {
+          "name": "Sylas",
+          "count": 8
+        },
+        {
+          "name": "Viktor",
+          "count": 8
+        },
+        {
+          "name": "Akali",
+          "count": 6
+        },
+        {
+          "name": "Syndra",
+          "count": 5
+        },
+        {
+          "name": "Anivia",
+          "count": 5
+        }
+      ]
+    },
+    "1053": {
+      "players": 16,
+      "pickRate": 0.0094,
+      "winRate": 0.4375,
+      "topChamps": [
+        {
+          "name": "Caitlyn",
+          "count": 4
+        },
+        {
+          "name": "Zeri",
+          "count": 3
+        },
+        {
+          "name": "Tristana",
+          "count": 2
+        },
+        {
+          "name": "Draven",
+          "count": 2
+        },
+        {
+          "name": "Xayah",
+          "count": 1
+        }
+      ]
+    },
+    "1054": {
+      "players": 37,
+      "pickRate": 0.0218,
+      "winRate": 0.5405,
+      "topChamps": [
+        {
+          "name": "Camille",
+          "count": 8
+        },
+        {
+          "name": "Akali",
+          "count": 5
+        },
+        {
+          "name": "Shen",
+          "count": 3
+        },
+        {
+          "name": "Ornn",
+          "count": 3
+        },
+        {
+          "name": "Sion",
+          "count": 3
+        }
+      ]
+    },
+    "1055": {
+      "players": 106,
+      "pickRate": 0.0624,
+      "winRate": 0.434,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 17
+        },
+        {
+          "name": "Fiora",
+          "count": 13
+        },
+        {
+          "name": "Camille",
+          "count": 8
+        },
+        {
+          "name": "Gnar",
+          "count": 6
+        },
+        {
+          "name": "Riven",
+          "count": 6
+        }
+      ]
+    },
+    "1056": {
+      "players": 186,
+      "pickRate": 0.1094,
+      "winRate": 0.4624,
+      "topChamps": [
+        {
+          "name": "Viktor",
+          "count": 21
+        },
+        {
+          "name": "AurelionSol",
+          "count": 17
+        },
+        {
+          "name": "Syndra",
+          "count": 14
+        },
+        {
+          "name": "Ryze",
+          "count": 11
+        },
+        {
+          "name": "Ahri",
+          "count": 11
+        }
+      ]
+    },
+    "1057": {
+      "players": 38,
+      "pickRate": 0.0224,
+      "winRate": 0.6053,
+      "topChamps": [
+        {
+          "name": "Alistar",
+          "count": 3
+        },
+        {
+          "name": "Sion",
+          "count": 3
+        },
+        {
+          "name": "Leona",
+          "count": 3
+        },
+        {
+          "name": "JarvanIV",
+          "count": 2
+        },
+        {
+          "name": "Camille",
+          "count": 2
+        }
+      ]
+    },
+    "1058": {
+      "players": 111,
+      "pickRate": 0.0653,
+      "winRate": 0.5315,
+      "topChamps": [
+        {
+          "name": "Locke",
+          "count": 12
+        },
+        {
+          "name": "Viktor",
+          "count": 11
+        },
+        {
+          "name": "Aurora",
+          "count": 7
+        },
+        {
+          "name": "Elise",
+          "count": 7
+        },
+        {
+          "name": "Akali",
+          "count": 7
+        }
+      ]
+    },
+    "1082": {
+      "players": 309,
+      "pickRate": 0.1818,
+      "winRate": 0.4434,
+      "topChamps": [
+        {
+          "name": "Sylas",
+          "count": 24
+        },
+        {
+          "name": "Viktor",
+          "count": 20
+        },
+        {
+          "name": "Elise",
+          "count": 17
+        },
+        {
+          "name": "Syndra",
+          "count": 17
+        },
+        {
+          "name": "Locke",
+          "count": 16
+        }
+      ]
+    },
+    "1083": {
+      "players": 17,
+      "pickRate": 0.01,
+      "winRate": 0.4706,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 3
+        },
+        {
+          "name": "KogMaw",
+          "count": 2
+        },
+        {
+          "name": "Jhin",
+          "count": 2
+        },
+        {
+          "name": "Zeri",
+          "count": 2
+        },
+        {
+          "name": "Kalista",
+          "count": 1
+        }
+      ]
+    },
+    "1086": {
+      "players": 208,
+      "pickRate": 0.1224,
+      "winRate": 0.4904,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 27
+        },
+        {
+          "name": "Caitlyn",
+          "count": 19
+        },
+        {
+          "name": "Yunara",
+          "count": 19
+        },
+        {
+          "name": "Yone",
+          "count": 12
+        },
+        {
+          "name": "Kalista",
+          "count": 11
+        }
+      ]
+    },
+    "1102": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 0,
+      "topChamps": [
+        {
+          "name": "Udyr",
+          "count": 1
+        }
+      ]
+    },
+    "1120": {
+      "players": 58,
+      "pickRate": 0.0341,
+      "winRate": 0.569,
+      "topChamps": [
+        {
+          "name": "Jhin",
+          "count": 16
+        },
+        {
+          "name": "KSante",
+          "count": 8
+        },
+        {
+          "name": "Sion",
+          "count": 6
+        },
+        {
+          "name": "Ambessa",
+          "count": 3
+        },
+        {
+          "name": "DrMundo",
+          "count": 3
+        }
+      ]
+    },
+    "2003": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 0,
+      "topChamps": [
+        {
+          "name": "Gnar",
+          "count": 1
+        }
+      ]
+    },
+    "2010": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 0,
+      "topChamps": [
+        {
+          "name": "Olaf",
+          "count": 1
+        }
+      ]
+    },
+    "2019": {
+      "players": 58,
+      "pickRate": 0.0341,
+      "winRate": 0.5862,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 6
+        },
+        {
+          "name": "Yone",
+          "count": 5
+        },
+        {
+          "name": "Yasuo",
+          "count": 5
+        },
+        {
+          "name": "Fiora",
+          "count": 3
+        },
+        {
+          "name": "Renekton",
+          "count": 3
+        }
+      ]
+    },
+    "2020": {
+      "players": 10,
+      "pickRate": 0.0059,
+      "winRate": 0.6,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 5
+        },
+        {
+          "name": "Aatrox",
+          "count": 1
+        },
+        {
+          "name": "Khazix",
+          "count": 1
+        },
+        {
+          "name": "Gangplank",
+          "count": 1
+        },
+        {
+          "name": "Talon",
+          "count": 1
+        }
+      ]
+    },
+    "2021": {
+      "players": 31,
+      "pickRate": 0.0182,
+      "winRate": 0.5806,
+      "topChamps": [
+        {
+          "name": "Camille",
+          "count": 6
+        },
+        {
+          "name": "Aatrox",
+          "count": 3
+        },
+        {
+          "name": "LeeSin",
+          "count": 3
+        },
+        {
+          "name": "Jayce",
+          "count": 2
+        },
+        {
+          "name": "Jax",
+          "count": 2
+        }
+      ]
+    },
+    "2022": {
+      "players": 23,
+      "pickRate": 0.0135,
+      "winRate": 0.3913,
+      "topChamps": [
+        {
+          "name": "Lulu",
+          "count": 3
+        },
+        {
+          "name": "Karma",
+          "count": 3
+        },
+        {
+          "name": "Alistar",
+          "count": 2
+        },
+        {
+          "name": "Camille",
+          "count": 1
+        },
+        {
+          "name": "Sona",
+          "count": 1
+        }
+      ]
+    },
+    "2031": {
+      "players": 102,
+      "pickRate": 0.06,
+      "winRate": 0.4804,
+      "topChamps": [
+        {
+          "name": "Camille",
+          "count": 6
+        },
+        {
+          "name": "Thresh",
+          "count": 5
+        },
+        {
+          "name": "AurelionSol",
+          "count": 5
+        },
+        {
+          "name": "Rell",
+          "count": 4
+        },
+        {
+          "name": "Tristana",
+          "count": 4
+        }
+      ]
+    },
+    "2055": {
+      "players": 95,
+      "pickRate": 0.0559,
+      "winRate": 0.5368,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 14
+        },
+        {
+          "name": "Tristana",
+          "count": 5
+        },
+        {
+          "name": "Ryze",
+          "count": 5
+        },
+        {
+          "name": "Zoe",
+          "count": 4
+        },
+        {
+          "name": "Chogath",
+          "count": 3
+        }
+      ]
+    },
+    "2065": {
+      "players": 43,
+      "pickRate": 0.0253,
+      "winRate": 0.5349,
+      "topChamps": [
+        {
+          "name": "TwistedFate",
+          "count": 11
+        },
+        {
+          "name": "Lulu",
+          "count": 5
+        },
+        {
+          "name": "Renata",
+          "count": 4
+        },
+        {
+          "name": "Karma",
+          "count": 4
+        },
+        {
+          "name": "Janna",
+          "count": 3
+        }
+      ]
+    },
+    "2140": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 1,
+      "topChamps": [
+        {
+          "name": "Ambessa",
+          "count": 1
+        }
+      ]
+    },
+    "2420": {
+      "players": 22,
+      "pickRate": 0.0129,
+      "winRate": 0.5455,
+      "topChamps": [
+        {
+          "name": "TwistedFate",
+          "count": 3
+        },
+        {
+          "name": "Jax",
+          "count": 2
+        },
+        {
+          "name": "Mel",
+          "count": 2
+        },
+        {
+          "name": "Viktor",
+          "count": 2
+        },
+        {
+          "name": "Syndra",
+          "count": 2
+        }
+      ]
+    },
+    "2421": {
+      "players": 40,
+      "pickRate": 0.0235,
+      "winRate": 0.55,
+      "topChamps": [
+        {
+          "name": "Sylas",
+          "count": 4
+        },
+        {
+          "name": "Anivia",
+          "count": 4
+        },
+        {
+          "name": "Kaisa",
+          "count": 3
+        },
+        {
+          "name": "Locke",
+          "count": 3
+        },
+        {
+          "name": "Lillia",
+          "count": 2
+        }
+      ]
+    },
+    "2422": {
+      "players": 55,
+      "pickRate": 0.0324,
+      "winRate": 0.3091,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 7
+        },
+        {
+          "name": "Viego",
+          "count": 4
+        },
+        {
+          "name": "Olaf",
+          "count": 4
+        },
+        {
+          "name": "JarvanIV",
+          "count": 3
+        },
+        {
+          "name": "Khazix",
+          "count": 3
+        }
+      ]
+    },
+    "2501": {
+      "players": 2,
+      "pickRate": 0.0012,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Corki",
+          "count": 1
+        },
+        {
+          "name": "Sett",
+          "count": 1
+        }
+      ]
+    },
+    "2502": {
+      "players": 22,
+      "pickRate": 0.0129,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Sion",
+          "count": 8
+        },
+        {
+          "name": "Skarner",
+          "count": 7
+        },
+        {
+          "name": "Ornn",
+          "count": 3
+        },
+        {
+          "name": "Chogath",
+          "count": 1
+        },
+        {
+          "name": "KSante",
+          "count": 1
+        }
+      ]
+    },
+    "2503": {
+      "players": 99,
+      "pickRate": 0.0582,
+      "winRate": 0.4343,
+      "topChamps": [
+        {
+          "name": "Viktor",
+          "count": 31
+        },
+        {
+          "name": "Syndra",
+          "count": 14
+        },
+        {
+          "name": "Ahri",
+          "count": 10
+        },
+        {
+          "name": "Karthus",
+          "count": 8
+        },
+        {
+          "name": "AurelionSol",
+          "count": 8
+        }
+      ]
+    },
+    "2504": {
+      "players": 26,
+      "pickRate": 0.0153,
+      "winRate": 0.5385,
+      "topChamps": [
+        {
+          "name": "Ornn",
+          "count": 6
+        },
+        {
+          "name": "KSante",
+          "count": 6
+        },
+        {
+          "name": "Sion",
+          "count": 2
+        },
+        {
+          "name": "Darius",
+          "count": 2
+        },
+        {
+          "name": "Yone",
+          "count": 1
+        }
+      ]
+    },
+    "2508": {
+      "players": 10,
+      "pickRate": 0.0059,
+      "winRate": 0.1,
+      "topChamps": [
+        {
+          "name": "AurelionSol",
+          "count": 4
+        },
+        {
+          "name": "Singed",
+          "count": 1
+        },
+        {
+          "name": "Shaco",
+          "count": 1
+        },
+        {
+          "name": "Annie",
+          "count": 1
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 1
+        }
+      ]
+    },
+    "2510": {
+      "players": 26,
+      "pickRate": 0.0153,
+      "winRate": 0.4231,
+      "topChamps": [
+        {
+          "name": "Ekko",
+          "count": 14
+        },
+        {
+          "name": "Shyvana",
+          "count": 2
+        },
+        {
+          "name": "Varus",
+          "count": 2
+        },
+        {
+          "name": "Kayle",
+          "count": 1
+        },
+        {
+          "name": "Sylas",
+          "count": 1
+        }
+      ]
+    },
+    "2512": {
+      "players": 6,
+      "pickRate": 0.0035,
+      "winRate": 0.6667,
+      "topChamps": [
+        {
+          "name": "Olaf",
+          "count": 2
+        },
+        {
+          "name": "Vayne",
+          "count": 1
+        },
+        {
+          "name": "Zeri",
+          "count": 1
+        },
+        {
+          "name": "Twitch",
+          "count": 1
+        },
+        {
+          "name": "Yunara",
+          "count": 1
+        }
+      ]
+    },
+    "2517": {
+      "players": 33,
+      "pickRate": 0.0194,
+      "winRate": 0.5758,
+      "topChamps": [
+        {
+          "name": "Hecarim",
+          "count": 11
+        },
+        {
+          "name": "Ezreal",
+          "count": 8
+        },
+        {
+          "name": "Riven",
+          "count": 5
+        },
+        {
+          "name": "Fiora",
+          "count": 2
+        },
+        {
+          "name": "Khazix",
+          "count": 2
+        }
+      ]
+    },
+    "2520": {
+      "players": 73,
+      "pickRate": 0.0429,
+      "winRate": 0.4932,
+      "topChamps": [
+        {
+          "name": "Qiyana",
+          "count": 21
+        },
+        {
+          "name": "Jayce",
+          "count": 17
+        },
+        {
+          "name": "Talon",
+          "count": 14
+        },
+        {
+          "name": "Khazix",
+          "count": 7
+        },
+        {
+          "name": "Zed",
+          "count": 7
+        }
+      ]
+    },
+    "2522": {
+      "players": 15,
+      "pickRate": 0.0088,
+      "winRate": 0.5333,
+      "topChamps": [
+        {
+          "name": "Ryze",
+          "count": 14
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 1
+        }
+      ]
+    },
+    "2523": {
+      "players": 53,
+      "pickRate": 0.0312,
+      "winRate": 0.5283,
+      "topChamps": [
+        {
+          "name": "Caitlyn",
+          "count": 15
+        },
+        {
+          "name": "Tristana",
+          "count": 11
+        },
+        {
+          "name": "Aphelios",
+          "count": 11
+        },
+        {
+          "name": "Jinx",
+          "count": 3
+        },
+        {
+          "name": "Ashe",
+          "count": 3
+        }
+      ]
+    },
+    "2524": {
+      "players": 18,
+      "pickRate": 0.0106,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Skarner",
+          "count": 3
+        },
+        {
+          "name": "Nautilus",
+          "count": 3
+        },
+        {
+          "name": "Renata",
+          "count": 2
+        },
+        {
+          "name": "Nasus",
+          "count": 2
+        },
+        {
+          "name": "Braum",
+          "count": 2
+        }
+      ]
+    },
+    "2525": {
+      "players": 46,
+      "pickRate": 0.0271,
+      "winRate": 0.4783,
+      "topChamps": [
+        {
+          "name": "Rell",
+          "count": 9
+        },
+        {
+          "name": "Nautilus",
+          "count": 9
+        },
+        {
+          "name": "Alistar",
+          "count": 4
+        },
+        {
+          "name": "Poppy",
+          "count": 3
+        },
+        {
+          "name": "Leona",
+          "count": 3
+        }
+      ]
+    },
+    "2530": {
+      "players": 5,
+      "pickRate": 0.0029,
+      "winRate": 0.4,
+      "topChamps": [
+        {
+          "name": "Seraphine",
+          "count": 3
+        },
+        {
+          "name": "Sona",
+          "count": 2
+        }
+      ]
+    },
+    "3004": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 0,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 1
+        }
+      ]
+    },
+    "3006": {
+      "players": 31,
+      "pickRate": 0.0182,
+      "winRate": 0.6129,
+      "topChamps": [
+        {
+          "name": "Yone",
+          "count": 15
+        },
+        {
+          "name": "Yasuo",
+          "count": 6
+        },
+        {
+          "name": "Tryndamere",
+          "count": 5
+        },
+        {
+          "name": "Garen",
+          "count": 3
+        },
+        {
+          "name": "MasterYi",
+          "count": 1
+        }
+      ]
+    },
+    "3008": {
+      "players": 20,
+      "pickRate": 0.0118,
+      "winRate": 0.45,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 4
+        },
+        {
+          "name": "Kalista",
+          "count": 4
+        },
+        {
+          "name": "Hecarim",
+          "count": 2
+        },
+        {
+          "name": "Aatrox",
+          "count": 1
+        },
+        {
+          "name": "Vayne",
+          "count": 1
+        }
+      ]
+    },
+    "3009": {
+      "players": 154,
+      "pickRate": 0.0906,
+      "winRate": 0.4805,
+      "topChamps": [
+        {
+          "name": "Thresh",
+          "count": 19
+        },
+        {
+          "name": "Pyke",
+          "count": 14
+        },
+        {
+          "name": "Alistar",
+          "count": 13
+        },
+        {
+          "name": "Bard",
+          "count": 12
+        },
+        {
+          "name": "Jayce",
+          "count": 10
+        }
+      ]
+    },
+    "3020": {
+      "players": 81,
+      "pickRate": 0.0476,
+      "winRate": 0.5062,
+      "topChamps": [
+        {
+          "name": "Elise",
+          "count": 18
+        },
+        {
+          "name": "Nidalee",
+          "count": 9
+        },
+        {
+          "name": "Locke",
+          "count": 6
+        },
+        {
+          "name": "Akali",
+          "count": 5
+        },
+        {
+          "name": "Ekko",
+          "count": 4
+        }
+      ]
+    },
+    "3024": {
+      "players": 6,
+      "pickRate": 0.0035,
+      "winRate": 0.6667,
+      "topChamps": [
+        {
+          "name": "Neeko",
+          "count": 2
+        },
+        {
+          "name": "Jax",
+          "count": 1
+        },
+        {
+          "name": "Rell",
+          "count": 1
+        },
+        {
+          "name": "Braum",
+          "count": 1
+        },
+        {
+          "name": "Ornn",
+          "count": 1
+        }
+      ]
+    },
+    "3026": {
+      "players": 45,
+      "pickRate": 0.0265,
+      "winRate": 0.5778,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 7
+        },
+        {
+          "name": "Yone",
+          "count": 3
+        },
+        {
+          "name": "Tristana",
+          "count": 3
+        },
+        {
+          "name": "Naafiri",
+          "count": 3
+        },
+        {
+          "name": "Jayce",
+          "count": 2
+        }
+      ]
+    },
+    "3031": {
+      "players": 209,
+      "pickRate": 0.1229,
+      "winRate": 0.5694,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 40
+        },
+        {
+          "name": "Yone",
+          "count": 21
+        },
+        {
+          "name": "Caitlyn",
+          "count": 19
+        },
+        {
+          "name": "Yunara",
+          "count": 17
+        },
+        {
+          "name": "Aphelios",
+          "count": 15
+        }
+      ]
+    },
+    "3032": {
+      "players": 102,
+      "pickRate": 0.06,
+      "winRate": 0.5294,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 33
+        },
+        {
+          "name": "Yunara",
+          "count": 17
+        },
+        {
+          "name": "TwistedFate",
+          "count": 10
+        },
+        {
+          "name": "Zeri",
+          "count": 9
+        },
+        {
+          "name": "Jinx",
+          "count": 8
+        }
+      ]
+    },
+    "3033": {
+      "players": 32,
+      "pickRate": 0.0188,
+      "winRate": 0.4063,
+      "topChamps": [
+        {
+          "name": "Caitlyn",
+          "count": 6
+        },
+        {
+          "name": "Lucian",
+          "count": 4
+        },
+        {
+          "name": "Jayce",
+          "count": 2
+        },
+        {
+          "name": "Zeri",
+          "count": 2
+        },
+        {
+          "name": "Yone",
+          "count": 2
+        }
+      ]
+    },
+    "3035": {
+      "players": 47,
+      "pickRate": 0.0276,
+      "winRate": 0.4681,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 4
+        },
+        {
+          "name": "Jayce",
+          "count": 4
+        },
+        {
+          "name": "Qiyana",
+          "count": 4
+        },
+        {
+          "name": "Jhin",
+          "count": 3
+        },
+        {
+          "name": "Xayah",
+          "count": 3
+        }
+      ]
+    },
+    "3036": {
+      "players": 161,
+      "pickRate": 0.0947,
+      "winRate": 0.6149,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 24
+        },
+        {
+          "name": "Quinn",
+          "count": 11
+        },
+        {
+          "name": "Caitlyn",
+          "count": 10
+        },
+        {
+          "name": "Graves",
+          "count": 9
+        },
+        {
+          "name": "Qiyana",
+          "count": 9
+        }
+      ]
+    },
+    "3040": {
+      "players": 47,
+      "pickRate": 0.0276,
+      "winRate": 0.5745,
+      "topChamps": [
+        {
+          "name": "Ryze",
+          "count": 19
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 12
+        },
+        {
+          "name": "Sona",
+          "count": 5
+        },
+        {
+          "name": "Zilean",
+          "count": 3
+        },
+        {
+          "name": "Taliyah",
+          "count": 2
+        }
+      ]
+    },
+    "3041": {
+      "players": 47,
+      "pickRate": 0.0276,
+      "winRate": 0.8085,
+      "topChamps": [
+        {
+          "name": "Locke",
+          "count": 5
+        },
+        {
+          "name": "Vladimir",
+          "count": 4
+        },
+        {
+          "name": "Syndra",
+          "count": 4
+        },
+        {
+          "name": "Anivia",
+          "count": 4
+        },
+        {
+          "name": "Ahri",
+          "count": 4
+        }
+      ]
+    },
+    "3042": {
+      "players": 37,
+      "pickRate": 0.0218,
+      "winRate": 0.5946,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 22
+        },
+        {
+          "name": "Ezreal",
+          "count": 13
+        },
+        {
+          "name": "Ryze",
+          "count": 1
+        },
+        {
+          "name": "Corki",
+          "count": 1
+        }
+      ]
+    },
+    "3044": {
+      "players": 11,
+      "pickRate": 0.0065,
+      "winRate": 0.3636,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 2
+        },
+        {
+          "name": "Renekton",
+          "count": 1
+        },
+        {
+          "name": "Gnar",
+          "count": 1
+        },
+        {
+          "name": "JarvanIV",
+          "count": 1
+        },
+        {
+          "name": "XinZhao",
+          "count": 1
+        }
+      ]
+    },
+    "3046": {
+      "players": 32,
+      "pickRate": 0.0188,
+      "winRate": 0.5938,
+      "topChamps": [
+        {
+          "name": "Jhin",
+          "count": 14
+        },
+        {
+          "name": "Aphelios",
+          "count": 5
+        },
+        {
+          "name": "Ashe",
+          "count": 5
+        },
+        {
+          "name": "Kaisa",
+          "count": 3
+        },
+        {
+          "name": "Draven",
+          "count": 2
+        }
+      ]
+    },
+    "3047": {
+      "players": 262,
+      "pickRate": 0.1541,
+      "winRate": 0.542,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 20
+        },
+        {
+          "name": "Nautilus",
+          "count": 19
+        },
+        {
+          "name": "Camille",
+          "count": 15
+        },
+        {
+          "name": "Olaf",
+          "count": 13
+        },
+        {
+          "name": "Renekton",
+          "count": 10
+        }
+      ]
+    },
+    "3050": {
+      "players": 57,
+      "pickRate": 0.0335,
+      "winRate": 0.4561,
+      "topChamps": [
+        {
+          "name": "Rell",
+          "count": 15
+        },
+        {
+          "name": "Alistar",
+          "count": 11
+        },
+        {
+          "name": "Blitzcrank",
+          "count": 6
+        },
+        {
+          "name": "Rakan",
+          "count": 5
+        },
+        {
+          "name": "Sejuani",
+          "count": 4
+        }
+      ]
+    },
+    "3051": {
+      "players": 9,
+      "pickRate": 0.0053,
+      "winRate": 0.5556,
+      "topChamps": [
+        {
+          "name": "TwistedFate",
+          "count": 3
+        },
+        {
+          "name": "Kalista",
+          "count": 2
+        },
+        {
+          "name": "KogMaw",
+          "count": 2
+        },
+        {
+          "name": "Vayne",
+          "count": 1
+        },
+        {
+          "name": "Katarina",
+          "count": 1
+        }
+      ]
+    },
+    "3053": {
+      "players": 39,
+      "pickRate": 0.0229,
+      "winRate": 0.4615,
+      "topChamps": [
+        {
+          "name": "Camille",
+          "count": 8
+        },
+        {
+          "name": "Gnar",
+          "count": 6
+        },
+        {
+          "name": "Renekton",
+          "count": 5
+        },
+        {
+          "name": "Olaf",
+          "count": 3
+        },
+        {
+          "name": "Darius",
+          "count": 3
+        }
+      ]
+    },
+    "3057": {
+      "players": 6,
+      "pickRate": 0.0035,
+      "winRate": 0.1667,
+      "topChamps": [
+        {
+          "name": "XinZhao",
+          "count": 1
+        },
+        {
+          "name": "KSante",
+          "count": 1
+        },
+        {
+          "name": "Fiora",
+          "count": 1
+        },
+        {
+          "name": "Ekko",
+          "count": 1
+        },
+        {
+          "name": "Yorick",
+          "count": 1
+        }
+      ]
+    },
+    "3065": {
+      "players": 16,
+      "pickRate": 0.0094,
+      "winRate": 0.4375,
+      "topChamps": [
+        {
+          "name": "KSante",
+          "count": 6
+        },
+        {
+          "name": "Skarner",
+          "count": 3
+        },
+        {
+          "name": "Udyr",
+          "count": 2
+        },
+        {
+          "name": "Sion",
+          "count": 1
+        },
+        {
+          "name": "Trundle",
+          "count": 1
+        }
+      ]
+    },
+    "3066": {
+      "players": 7,
+      "pickRate": 0.0041,
+      "winRate": 0.4286,
+      "topChamps": [
+        {
+          "name": "Chogath",
+          "count": 2
+        },
+        {
+          "name": "Udyr",
+          "count": 1
+        },
+        {
+          "name": "Sylas",
+          "count": 1
+        },
+        {
+          "name": "Trundle",
+          "count": 1
+        },
+        {
+          "name": "Nasus",
+          "count": 1
+        }
+      ]
+    },
+    "3067": {
+      "players": 125,
+      "pickRate": 0.0735,
+      "winRate": 0.536,
+      "topChamps": [
+        {
+          "name": "Rell",
+          "count": 14
+        },
+        {
+          "name": "Thresh",
+          "count": 14
+        },
+        {
+          "name": "Bard",
+          "count": 13
+        },
+        {
+          "name": "Nautilus",
+          "count": 10
+        },
+        {
+          "name": "Lulu",
+          "count": 8
+        }
+      ]
+    },
+    "3068": {
+      "players": 6,
+      "pickRate": 0.0035,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Malphite",
+          "count": 3
+        },
+        {
+          "name": "Sion",
+          "count": 2
+        },
+        {
+          "name": "Ornn",
+          "count": 1
+        }
+      ]
+    },
+    "3070": {
+      "players": 13,
+      "pickRate": 0.0076,
+      "winRate": 0.1538,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 4
+        },
+        {
+          "name": "Seraphine",
+          "count": 3
+        },
+        {
+          "name": "Ryze",
+          "count": 2
+        },
+        {
+          "name": "Corki",
+          "count": 1
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 1
+        }
+      ]
+    },
+    "3071": {
+      "players": 86,
+      "pickRate": 0.0506,
+      "winRate": 0.5116,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 18
+        },
+        {
+          "name": "Senna",
+          "count": 8
+        },
+        {
+          "name": "Pantheon",
+          "count": 7
+        },
+        {
+          "name": "Renekton",
+          "count": 7
+        },
+        {
+          "name": "Naafiri",
+          "count": 7
+        }
+      ]
+    },
+    "3072": {
+      "players": 20,
+      "pickRate": 0.0118,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 6
+        },
+        {
+          "name": "Caitlyn",
+          "count": 4
+        },
+        {
+          "name": "Aphelios",
+          "count": 2
+        },
+        {
+          "name": "Ezreal",
+          "count": 2
+        },
+        {
+          "name": "Draven",
+          "count": 1
+        }
+      ]
+    },
+    "3073": {
+      "players": 15,
+      "pickRate": 0.0088,
+      "winRate": 0.4,
+      "topChamps": [
+        {
+          "name": "Olaf",
+          "count": 5
+        },
+        {
+          "name": "Vayne",
+          "count": 3
+        },
+        {
+          "name": "Camille",
+          "count": 1
+        },
+        {
+          "name": "Katarina",
+          "count": 1
+        },
+        {
+          "name": "Shyvana",
+          "count": 1
+        }
+      ]
+    },
+    "3074": {
+      "players": 42,
+      "pickRate": 0.0247,
+      "winRate": 0.5952,
+      "topChamps": [
+        {
+          "name": "Camille",
+          "count": 16
+        },
+        {
+          "name": "Fiora",
+          "count": 13
+        },
+        {
+          "name": "Tryndamere",
+          "count": 6
+        },
+        {
+          "name": "Olaf",
+          "count": 5
+        },
+        {
+          "name": "Trundle",
+          "count": 2
+        }
+      ]
+    },
+    "3075": {
+      "players": 5,
+      "pickRate": 0.0029,
+      "winRate": 0.6,
+      "topChamps": [
+        {
+          "name": "Malphite",
+          "count": 2
+        },
+        {
+          "name": "Sion",
+          "count": 1
+        },
+        {
+          "name": "Mordekaiser",
+          "count": 1
+        },
+        {
+          "name": "Ornn",
+          "count": 1
+        }
+      ]
+    },
+    "3076": {
+      "players": 16,
+      "pickRate": 0.0094,
+      "winRate": 0.625,
+      "topChamps": [
+        {
+          "name": "Ornn",
+          "count": 3
+        },
+        {
+          "name": "Gnar",
+          "count": 2
+        },
+        {
+          "name": "Sion",
+          "count": 2
+        },
+        {
+          "name": "KSante",
+          "count": 2
+        },
+        {
+          "name": "Aatrox",
+          "count": 1
+        }
+      ]
+    },
+    "3077": {
+      "players": 10,
+      "pickRate": 0.0059,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Camille",
+          "count": 3
+        },
+        {
+          "name": "DrMundo",
+          "count": 1
+        },
+        {
+          "name": "Katarina",
+          "count": 1
+        },
+        {
+          "name": "Briar",
+          "count": 1
+        },
+        {
+          "name": "Olaf",
+          "count": 1
+        }
+      ]
+    },
+    "3078": {
+      "players": 100,
+      "pickRate": 0.0588,
+      "winRate": 0.44,
+      "topChamps": [
+        {
+          "name": "Camille",
+          "count": 21
+        },
+        {
+          "name": "Jax",
+          "count": 15
+        },
+        {
+          "name": "Ezreal",
+          "count": 14
+        },
+        {
+          "name": "Gnar",
+          "count": 10
+        },
+        {
+          "name": "Vi",
+          "count": 8
+        }
+      ]
+    },
+    "3082": {
+      "players": 26,
+      "pickRate": 0.0153,
+      "winRate": 0.4231,
+      "topChamps": [
+        {
+          "name": "Poppy",
+          "count": 3
+        },
+        {
+          "name": "Pyke",
+          "count": 2
+        },
+        {
+          "name": "Sion",
+          "count": 2
+        },
+        {
+          "name": "Rell",
+          "count": 2
+        },
+        {
+          "name": "Lillia",
+          "count": 1
+        }
+      ]
+    },
+    "3083": {
+      "players": 6,
+      "pickRate": 0.0035,
+      "winRate": 0.6667,
+      "topChamps": [
+        {
+          "name": "DrMundo",
+          "count": 6
+        }
+      ]
+    },
+    "3084": {
+      "players": 24,
+      "pickRate": 0.0141,
+      "winRate": 0.625,
+      "topChamps": [
+        {
+          "name": "Skarner",
+          "count": 6
+        },
+        {
+          "name": "Chogath",
+          "count": 6
+        },
+        {
+          "name": "DrMundo",
+          "count": 6
+        },
+        {
+          "name": "Sion",
+          "count": 5
+        },
+        {
+          "name": "Sejuani",
+          "count": 1
+        }
+      ]
+    },
+    "3085": {
+      "players": 57,
+      "pickRate": 0.0335,
+      "winRate": 0.4912,
+      "topChamps": [
+        {
+          "name": "Yunara",
+          "count": 24
+        },
+        {
+          "name": "Zeri",
+          "count": 17
+        },
+        {
+          "name": "Jinx",
+          "count": 8
+        },
+        {
+          "name": "Aphelios",
+          "count": 3
+        },
+        {
+          "name": "Twitch",
+          "count": 2
+        }
+      ]
+    },
+    "3086": {
+      "players": 23,
+      "pickRate": 0.0135,
+      "winRate": 0.6522,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 7
+        },
+        {
+          "name": "TwistedFate",
+          "count": 4
+        },
+        {
+          "name": "Jinx",
+          "count": 3
+        },
+        {
+          "name": "Caitlyn",
+          "count": 2
+        },
+        {
+          "name": "Aphelios",
+          "count": 1
+        }
+      ]
+    },
+    "3087": {
+      "players": 26,
+      "pickRate": 0.0153,
+      "winRate": 0.6154,
+      "topChamps": [
+        {
+          "name": "Kalista",
+          "count": 20
+        },
+        {
+          "name": "Senna",
+          "count": 2
+        },
+        {
+          "name": "Teemo",
+          "count": 2
+        },
+        {
+          "name": "Kaisa",
+          "count": 1
+        },
+        {
+          "name": "KogMaw",
+          "count": 1
+        }
+      ]
+    },
+    "3089": {
+      "players": 100,
+      "pickRate": 0.0588,
+      "winRate": 0.48,
+      "topChamps": [
+        {
+          "name": "Viktor",
+          "count": 10
+        },
+        {
+          "name": "Syndra",
+          "count": 10
+        },
+        {
+          "name": "Ekko",
+          "count": 9
+        },
+        {
+          "name": "Vladimir",
+          "count": 6
+        },
+        {
+          "name": "Locke",
+          "count": 6
+        }
+      ]
+    },
+    "3091": {
+      "players": 9,
+      "pickRate": 0.0053,
+      "winRate": 0.4444,
+      "topChamps": [
+        {
+          "name": "Irelia",
+          "count": 3
+        },
+        {
+          "name": "Gnar",
+          "count": 2
+        },
+        {
+          "name": "Kalista",
+          "count": 2
+        },
+        {
+          "name": "Vayne",
+          "count": 1
+        },
+        {
+          "name": "Varus",
+          "count": 1
+        }
+      ]
+    },
+    "3094": {
+      "players": 36,
+      "pickRate": 0.0212,
+      "winRate": 0.5278,
+      "topChamps": [
+        {
+          "name": "TwistedFate",
+          "count": 13
+        },
+        {
+          "name": "Caitlyn",
+          "count": 11
+        },
+        {
+          "name": "Jhin",
+          "count": 9
+        },
+        {
+          "name": "Aphelios",
+          "count": 1
+        },
+        {
+          "name": "Senna",
+          "count": 1
+        }
+      ]
+    },
+    "3095": {
+      "players": 31,
+      "pickRate": 0.0182,
+      "winRate": 0.5161,
+      "topChamps": [
+        {
+          "name": "Zeri",
+          "count": 8
+        },
+        {
+          "name": "Yone",
+          "count": 6
+        },
+        {
+          "name": "Caitlyn",
+          "count": 5
+        },
+        {
+          "name": "Yasuo",
+          "count": 4
+        },
+        {
+          "name": "Jhin",
+          "count": 2
+        }
+      ]
+    },
+    "3100": {
+      "players": 95,
+      "pickRate": 0.0559,
+      "winRate": 0.4526,
+      "topChamps": [
+        {
+          "name": "Locke",
+          "count": 25
+        },
+        {
+          "name": "Ahri",
+          "count": 15
+        },
+        {
+          "name": "Elise",
+          "count": 15
+        },
+        {
+          "name": "Nidalee",
+          "count": 12
+        },
+        {
+          "name": "Viktor",
+          "count": 5
+        }
+      ]
+    },
+    "3102": {
+      "players": 11,
+      "pickRate": 0.0065,
+      "winRate": 0.2727,
+      "topChamps": [
+        {
+          "name": "Zoe",
+          "count": 3
+        },
+        {
+          "name": "Viktor",
+          "count": 2
+        },
+        {
+          "name": "Velkoz",
+          "count": 1
+        },
+        {
+          "name": "Ekko",
+          "count": 1
+        },
+        {
+          "name": "Leblanc",
+          "count": 1
+        }
+      ]
+    },
+    "3107": {
+      "players": 23,
+      "pickRate": 0.0135,
+      "winRate": 0.5217,
+      "topChamps": [
+        {
+          "name": "Janna",
+          "count": 5
+        },
+        {
+          "name": "Lulu",
+          "count": 4
+        },
+        {
+          "name": "Karma",
+          "count": 4
+        },
+        {
+          "name": "Soraka",
+          "count": 2
+        },
+        {
+          "name": "Nami",
+          "count": 1
+        }
+      ]
+    },
+    "3108": {
+      "players": 31,
+      "pickRate": 0.0182,
+      "winRate": 0.1935,
+      "topChamps": [
+        {
+          "name": "Syndra",
+          "count": 4
+        },
+        {
+          "name": "Sylas",
+          "count": 3
+        },
+        {
+          "name": "Ahri",
+          "count": 3
+        },
+        {
+          "name": "Hwei",
+          "count": 3
+        },
+        {
+          "name": "Karma",
+          "count": 2
+        }
+      ]
+    },
+    "3109": {
+      "players": 86,
+      "pickRate": 0.0506,
+      "winRate": 0.593,
+      "topChamps": [
+        {
+          "name": "Nautilus",
+          "count": 14
+        },
+        {
+          "name": "Thresh",
+          "count": 14
+        },
+        {
+          "name": "Alistar",
+          "count": 7
+        },
+        {
+          "name": "Rell",
+          "count": 7
+        },
+        {
+          "name": "Lulu",
+          "count": 7
+        }
+      ]
+    },
+    "3110": {
+      "players": 18,
+      "pickRate": 0.0106,
+      "winRate": 0.5556,
+      "topChamps": [
+        {
+          "name": "Malphite",
+          "count": 4
+        },
+        {
+          "name": "JarvanIV",
+          "count": 2
+        },
+        {
+          "name": "Chogath",
+          "count": 2
+        },
+        {
+          "name": "Pyke",
+          "count": 2
+        },
+        {
+          "name": "Thresh",
+          "count": 1
+        }
+      ]
+    },
+    "3111": {
+      "players": 135,
+      "pickRate": 0.0794,
+      "winRate": 0.5259,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 11
+        },
+        {
+          "name": "Nautilus",
+          "count": 10
+        },
+        {
+          "name": "Rell",
+          "count": 8
+        },
+        {
+          "name": "Camille",
+          "count": 5
+        },
+        {
+          "name": "Bard",
+          "count": 5
+        }
+      ]
+    },
+    "3113": {
+      "players": 11,
+      "pickRate": 0.0065,
+      "winRate": 0.2727,
+      "topChamps": [
+        {
+          "name": "Lulu",
+          "count": 2
+        },
+        {
+          "name": "Ahri",
+          "count": 2
+        },
+        {
+          "name": "Viktor",
+          "count": 1
+        },
+        {
+          "name": "Syndra",
+          "count": 1
+        },
+        {
+          "name": "Zoe",
+          "count": 1
+        }
+      ]
+    },
+    "3114": {
+      "players": 21,
+      "pickRate": 0.0124,
+      "winRate": 0.381,
+      "topChamps": [
+        {
+          "name": "Karma",
+          "count": 5
+        },
+        {
+          "name": "Lulu",
+          "count": 3
+        },
+        {
+          "name": "Seraphine",
+          "count": 3
+        },
+        {
+          "name": "Sona",
+          "count": 3
+        },
+        {
+          "name": "Nami",
+          "count": 2
+        }
+      ]
+    },
+    "3115": {
+      "players": 15,
+      "pickRate": 0.0088,
+      "winRate": 0.3333,
+      "topChamps": [
+        {
+          "name": "Kaisa",
+          "count": 7
+        },
+        {
+          "name": "Ekko",
+          "count": 3
+        },
+        {
+          "name": "Katarina",
+          "count": 2
+        },
+        {
+          "name": "Kayle",
+          "count": 1
+        },
+        {
+          "name": "Gwen",
+          "count": 1
+        }
+      ]
+    },
+    "3116": {
+      "players": 46,
+      "pickRate": 0.0271,
+      "winRate": 0.5217,
+      "topChamps": [
+        {
+          "name": "AurelionSol",
+          "count": 20
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 11
+        },
+        {
+          "name": "Singed",
+          "count": 3
+        },
+        {
+          "name": "Taliyah",
+          "count": 2
+        },
+        {
+          "name": "Swain",
+          "count": 2
+        }
+      ]
+    },
+    "3118": {
+      "players": 44,
+      "pickRate": 0.0259,
+      "winRate": 0.5682,
+      "topChamps": [
+        {
+          "name": "Ahri",
+          "count": 14
+        },
+        {
+          "name": "Anivia",
+          "count": 13
+        },
+        {
+          "name": "Annie",
+          "count": 10
+        },
+        {
+          "name": "Malphite",
+          "count": 2
+        },
+        {
+          "name": "Teemo",
+          "count": 2
+        }
+      ]
+    },
+    "3119": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 0,
+      "topChamps": [
+        {
+          "name": "Gragas",
+          "count": 1
+        }
+      ]
+    },
+    "3121": {
+      "players": 6,
+      "pickRate": 0.0035,
+      "winRate": 0.6667,
+      "topChamps": [
+        {
+          "name": "Gragas",
+          "count": 2
+        },
+        {
+          "name": "Poppy",
+          "count": 1
+        },
+        {
+          "name": "Anivia",
+          "count": 1
+        },
+        {
+          "name": "Udyr",
+          "count": 1
+        },
+        {
+          "name": "Veigar",
+          "count": 1
+        }
+      ]
+    },
+    "3123": {
+      "players": 16,
+      "pickRate": 0.0094,
+      "winRate": 0.5625,
+      "topChamps": [
+        {
+          "name": "Senna",
+          "count": 2
+        },
+        {
+          "name": "Xayah",
+          "count": 2
+        },
+        {
+          "name": "Naafiri",
+          "count": 2
+        },
+        {
+          "name": "Poppy",
+          "count": 1
+        },
+        {
+          "name": "Sivir",
+          "count": 1
+        }
+      ]
+    },
+    "3124": {
+      "players": 50,
+      "pickRate": 0.0294,
+      "winRate": 0.44,
+      "topChamps": [
+        {
+          "name": "Kalista",
+          "count": 21
+        },
+        {
+          "name": "Kaisa",
+          "count": 14
+        },
+        {
+          "name": "TwistedFate",
+          "count": 8
+        },
+        {
+          "name": "KogMaw",
+          "count": 4
+        },
+        {
+          "name": "Vayne",
+          "count": 3
+        }
+      ]
+    },
+    "3133": {
+      "players": 57,
+      "pickRate": 0.0335,
+      "winRate": 0.5263,
+      "topChamps": [
+        {
+          "name": "Fiora",
+          "count": 5
+        },
+        {
+          "name": "Jayce",
+          "count": 5
+        },
+        {
+          "name": "Ambessa",
+          "count": 5
+        },
+        {
+          "name": "Aatrox",
+          "count": 4
+        },
+        {
+          "name": "Ezreal",
+          "count": 4
+        }
+      ]
+    },
+    "3134": {
+      "players": 44,
+      "pickRate": 0.0259,
+      "winRate": 0.5227,
+      "topChamps": [
+        {
+          "name": "Pyke",
+          "count": 8
+        },
+        {
+          "name": "Qiyana",
+          "count": 7
+        },
+        {
+          "name": "Talon",
+          "count": 5
+        },
+        {
+          "name": "Jayce",
+          "count": 4
+        },
+        {
+          "name": "Viego",
+          "count": 2
+        }
+      ]
+    },
+    "3135": {
+      "players": 37,
+      "pickRate": 0.0218,
+      "winRate": 0.5135,
+      "topChamps": [
+        {
+          "name": "Viktor",
+          "count": 5
+        },
+        {
+          "name": "Akali",
+          "count": 5
+        },
+        {
+          "name": "Nidalee",
+          "count": 4
+        },
+        {
+          "name": "Aurora",
+          "count": 3
+        },
+        {
+          "name": "Locke",
+          "count": 3
+        }
+      ]
+    },
+    "3137": {
+      "players": 18,
+      "pickRate": 0.0106,
+      "winRate": 0.7778,
+      "topChamps": [
+        {
+          "name": "Syndra",
+          "count": 5
+        },
+        {
+          "name": "Aurora",
+          "count": 4
+        },
+        {
+          "name": "Leblanc",
+          "count": 2
+        },
+        {
+          "name": "Ahri",
+          "count": 2
+        },
+        {
+          "name": "Veigar",
+          "count": 2
+        }
+      ]
+    },
+    "3139": {
+      "players": 12,
+      "pickRate": 0.0071,
+      "winRate": 0.75,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 5
+        },
+        {
+          "name": "Yunara",
+          "count": 3
+        },
+        {
+          "name": "Caitlyn",
+          "count": 1
+        },
+        {
+          "name": "Qiyana",
+          "count": 1
+        },
+        {
+          "name": "Jhin",
+          "count": 1
+        }
+      ]
+    },
+    "3140": {
+      "players": 18,
+      "pickRate": 0.0106,
+      "winRate": 0.7222,
+      "topChamps": [
+        {
+          "name": "Yone",
+          "count": 6
+        },
+        {
+          "name": "Zeri",
+          "count": 2
+        },
+        {
+          "name": "Caitlyn",
+          "count": 1
+        },
+        {
+          "name": "Lucian",
+          "count": 1
+        },
+        {
+          "name": "Kalista",
+          "count": 1
+        }
+      ]
+    },
+    "3142": {
+      "players": 39,
+      "pickRate": 0.0229,
+      "winRate": 0.5385,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 21
+        },
+        {
+          "name": "Garen",
+          "count": 6
+        },
+        {
+          "name": "Pyke",
+          "count": 5
+        },
+        {
+          "name": "Darius",
+          "count": 4
+        },
+        {
+          "name": "Kayn",
+          "count": 1
+        }
+      ]
+    },
+    "3143": {
+      "players": 31,
+      "pickRate": 0.0182,
+      "winRate": 0.6129,
+      "topChamps": [
+        {
+          "name": "Kalista",
+          "count": 6
+        },
+        {
+          "name": "KSante",
+          "count": 4
+        },
+        {
+          "name": "Olaf",
+          "count": 4
+        },
+        {
+          "name": "Ornn",
+          "count": 2
+        },
+        {
+          "name": "Chogath",
+          "count": 2
+        }
+      ]
+    },
+    "3144": {
+      "players": 7,
+      "pickRate": 0.0041,
+      "winRate": 0.5714,
+      "topChamps": [
+        {
+          "name": "Jinx",
+          "count": 2
+        },
+        {
+          "name": "Kaisa",
+          "count": 1
+        },
+        {
+          "name": "Kalista",
+          "count": 1
+        },
+        {
+          "name": "Vayne",
+          "count": 1
+        },
+        {
+          "name": "Senna",
+          "count": 1
+        }
+      ]
+    },
+    "3145": {
+      "players": 34,
+      "pickRate": 0.02,
+      "winRate": 0.3824,
+      "topChamps": [
+        {
+          "name": "Aurora",
+          "count": 4
+        },
+        {
+          "name": "Viktor",
+          "count": 4
+        },
+        {
+          "name": "Syndra",
+          "count": 3
+        },
+        {
+          "name": "Lux",
+          "count": 2
+        },
+        {
+          "name": "Nidalee",
+          "count": 2
+        }
+      ]
+    },
+    "3146": {
+      "players": 25,
+      "pickRate": 0.0147,
+      "winRate": 0.48,
+      "topChamps": [
+        {
+          "name": "Akali",
+          "count": 20
+        },
+        {
+          "name": "Sylas",
+          "count": 3
+        },
+        {
+          "name": "Kennen",
+          "count": 1
+        },
+        {
+          "name": "Mel",
+          "count": 1
+        }
+      ]
+    },
+    "3147": {
+      "players": 16,
+      "pickRate": 0.0094,
+      "winRate": 0.375,
+      "topChamps": [
+        {
+          "name": "Annie",
+          "count": 2
+        },
+        {
+          "name": "Locke",
+          "count": 1
+        },
+        {
+          "name": "Zyra",
+          "count": 1
+        },
+        {
+          "name": "Shaco",
+          "count": 1
+        },
+        {
+          "name": "Viktor",
+          "count": 1
+        }
+      ]
+    },
+    "3152": {
+      "players": 128,
+      "pickRate": 0.0753,
+      "winRate": 0.5313,
+      "topChamps": [
+        {
+          "name": "Sylas",
+          "count": 23
+        },
+        {
+          "name": "Viktor",
+          "count": 16
+        },
+        {
+          "name": "TwistedFate",
+          "count": 12
+        },
+        {
+          "name": "Chogath",
+          "count": 10
+        },
+        {
+          "name": "Annie",
+          "count": 7
+        }
+      ]
+    },
+    "3153": {
+      "players": 36,
+      "pickRate": 0.0212,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Irelia",
+          "count": 9
+        },
+        {
+          "name": "Yone",
+          "count": 8
+        },
+        {
+          "name": "Katarina",
+          "count": 7
+        },
+        {
+          "name": "Fiora",
+          "count": 3
+        },
+        {
+          "name": "Yasuo",
+          "count": 3
+        }
+      ]
+    },
+    "3155": {
+      "players": 17,
+      "pickRate": 0.01,
+      "winRate": 0.5882,
+      "topChamps": [
+        {
+          "name": "Pyke",
+          "count": 3
+        },
+        {
+          "name": "LeeSin",
+          "count": 3
+        },
+        {
+          "name": "Fiora",
+          "count": 2
+        },
+        {
+          "name": "Olaf",
+          "count": 2
+        },
+        {
+          "name": "Aatrox",
+          "count": 1
+        }
+      ]
+    },
+    "3156": {
+      "players": 26,
+      "pickRate": 0.0153,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "MonkeyKing",
+          "count": 3
+        },
+        {
+          "name": "Olaf",
+          "count": 3
+        },
+        {
+          "name": "Renekton",
+          "count": 3
+        },
+        {
+          "name": "LeeSin",
+          "count": 2
+        },
+        {
+          "name": "Riven",
+          "count": 2
+        }
+      ]
+    },
+    "3157": {
+      "players": 116,
+      "pickRate": 0.0682,
+      "winRate": 0.5862,
+      "topChamps": [
+        {
+          "name": "Sylas",
+          "count": 15
+        },
+        {
+          "name": "Ahri",
+          "count": 8
+        },
+        {
+          "name": "Viktor",
+          "count": 7
+        },
+        {
+          "name": "Anivia",
+          "count": 6
+        },
+        {
+          "name": "Locke",
+          "count": 6
+        }
+      ]
+    },
+    "3158": {
+      "players": 207,
+      "pickRate": 0.1218,
+      "winRate": 0.5266,
+      "topChamps": [
+        {
+          "name": "Lulu",
+          "count": 19
+        },
+        {
+          "name": "Qiyana",
+          "count": 15
+        },
+        {
+          "name": "Karma",
+          "count": 14
+        },
+        {
+          "name": "Hecarim",
+          "count": 14
+        },
+        {
+          "name": "Rell",
+          "count": 12
+        }
+      ]
+    },
+    "3161": {
+      "players": 46,
+      "pickRate": 0.0271,
+      "winRate": 0.5652,
+      "topChamps": [
+        {
+          "name": "Hecarim",
+          "count": 14
+        },
+        {
+          "name": "Ezreal",
+          "count": 6
+        },
+        {
+          "name": "RekSai",
+          "count": 4
+        },
+        {
+          "name": "Aatrox",
+          "count": 4
+        },
+        {
+          "name": "Shyvana",
+          "count": 3
+        }
+      ]
+    },
+    "3168": {
+      "players": 9,
+      "pickRate": 0.0053,
+      "winRate": 0.5556,
+      "topChamps": [
+        {
+          "name": "Lucian",
+          "count": 3
+        },
+        {
+          "name": "Riven",
+          "count": 1
+        },
+        {
+          "name": "Irelia",
+          "count": 1
+        },
+        {
+          "name": "Naafiri",
+          "count": 1
+        },
+        {
+          "name": "Akshan",
+          "count": 1
+        }
+      ]
+    },
+    "3170": {
+      "players": 30,
+      "pickRate": 0.0176,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "TwistedFate",
+          "count": 8
+        },
+        {
+          "name": "Ryze",
+          "count": 6
+        },
+        {
+          "name": "Viktor",
+          "count": 4
+        },
+        {
+          "name": "Syndra",
+          "count": 3
+        },
+        {
+          "name": "Jayce",
+          "count": 2
+        }
+      ]
+    },
+    "3171": {
+      "players": 81,
+      "pickRate": 0.0476,
+      "winRate": 0.5309,
+      "topChamps": [
+        {
+          "name": "Ahri",
+          "count": 16
+        },
+        {
+          "name": "Syndra",
+          "count": 12
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 7
+        },
+        {
+          "name": "Zed",
+          "count": 7
+        },
+        {
+          "name": "Sylas",
+          "count": 5
+        }
+      ]
+    },
+    "3172": {
+      "players": 26,
+      "pickRate": 0.0153,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Yone",
+          "count": 12
+        },
+        {
+          "name": "Tristana",
+          "count": 7
+        },
+        {
+          "name": "Yasuo",
+          "count": 4
+        },
+        {
+          "name": "TwistedFate",
+          "count": 1
+        },
+        {
+          "name": "Vayne",
+          "count": 1
+        }
+      ]
+    },
+    "3173": {
+      "players": 44,
+      "pickRate": 0.0259,
+      "winRate": 0.4318,
+      "topChamps": [
+        {
+          "name": "Sylas",
+          "count": 5
+        },
+        {
+          "name": "Ryze",
+          "count": 5
+        },
+        {
+          "name": "Viktor",
+          "count": 4
+        },
+        {
+          "name": "Akali",
+          "count": 4
+        },
+        {
+          "name": "Jayce",
+          "count": 3
+        }
+      ]
+    },
+    "3174": {
+      "players": 19,
+      "pickRate": 0.0112,
+      "winRate": 0.6316,
+      "topChamps": [
+        {
+          "name": "Katarina",
+          "count": 3
+        },
+        {
+          "name": "Camille",
+          "count": 2
+        },
+        {
+          "name": "Jayce",
+          "count": 2
+        },
+        {
+          "name": "Galio",
+          "count": 2
+        },
+        {
+          "name": "Ryze",
+          "count": 2
+        }
+      ]
+    },
+    "3175": {
+      "players": 125,
+      "pickRate": 0.0735,
+      "winRate": 0.48,
+      "topChamps": [
+        {
+          "name": "Locke",
+          "count": 13
+        },
+        {
+          "name": "Akali",
+          "count": 13
+        },
+        {
+          "name": "Aurora",
+          "count": 12
+        },
+        {
+          "name": "Syndra",
+          "count": 12
+        },
+        {
+          "name": "Ekko",
+          "count": 10
+        }
+      ]
+    },
+    "3179": {
+      "players": 67,
+      "pickRate": 0.0394,
+      "winRate": 0.4627,
+      "topChamps": [
+        {
+          "name": "Talon",
+          "count": 19
+        },
+        {
+          "name": "Pyke",
+          "count": 16
+        },
+        {
+          "name": "Khazix",
+          "count": 14
+        },
+        {
+          "name": "Rengar",
+          "count": 5
+        },
+        {
+          "name": "Qiyana",
+          "count": 4
+        }
+      ]
+    },
+    "3181": {
+      "players": 10,
+      "pickRate": 0.0059,
+      "winRate": 0.8,
+      "topChamps": [
+        {
+          "name": "Irelia",
+          "count": 5
+        },
+        {
+          "name": "Trundle",
+          "count": 2
+        },
+        {
+          "name": "Pantheon",
+          "count": 1
+        },
+        {
+          "name": "Sion",
+          "count": 1
+        },
+        {
+          "name": "Yorick",
+          "count": 1
+        }
+      ]
+    },
+    "3190": {
+      "players": 127,
+      "pickRate": 0.0747,
+      "winRate": 0.5433,
+      "topChamps": [
+        {
+          "name": "Nautilus",
+          "count": 28
+        },
+        {
+          "name": "Thresh",
+          "count": 26
+        },
+        {
+          "name": "Bard",
+          "count": 15
+        },
+        {
+          "name": "Rell",
+          "count": 14
+        },
+        {
+          "name": "Alistar",
+          "count": 9
+        }
+      ]
+    },
+    "3211": {
+      "players": 9,
+      "pickRate": 0.0053,
+      "winRate": 0.6667,
+      "topChamps": [
+        {
+          "name": "JarvanIV",
+          "count": 3
+        },
+        {
+          "name": "Janna",
+          "count": 1
+        },
+        {
+          "name": "KSante",
+          "count": 1
+        },
+        {
+          "name": "Trundle",
+          "count": 1
+        },
+        {
+          "name": "Yone",
+          "count": 1
+        }
+      ]
+    },
+    "3222": {
+      "players": 61,
+      "pickRate": 0.0359,
+      "winRate": 0.541,
+      "topChamps": [
+        {
+          "name": "Bard",
+          "count": 9
+        },
+        {
+          "name": "Thresh",
+          "count": 9
+        },
+        {
+          "name": "Lulu",
+          "count": 7
+        },
+        {
+          "name": "Karma",
+          "count": 6
+        },
+        {
+          "name": "Rakan",
+          "count": 3
+        }
+      ]
+    },
+    "3302": {
+      "players": 27,
+      "pickRate": 0.0159,
+      "winRate": 0.4444,
+      "topChamps": [
+        {
+          "name": "Kalista",
+          "count": 14
+        },
+        {
+          "name": "Katarina",
+          "count": 5
+        },
+        {
+          "name": "Kaisa",
+          "count": 3
+        },
+        {
+          "name": "Vayne",
+          "count": 2
+        },
+        {
+          "name": "KogMaw",
+          "count": 1
+        }
+      ]
+    },
+    "3400": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 1,
+      "topChamps": [
+        {
+          "name": "Pyke",
+          "count": 1
+        }
+      ]
+    },
+    "3504": {
+      "players": 24,
+      "pickRate": 0.0141,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Lulu",
+          "count": 17
+        },
+        {
+          "name": "Yuumi",
+          "count": 3
+        },
+        {
+          "name": "Ivern",
+          "count": 2
+        },
+        {
+          "name": "Milio",
+          "count": 1
+        },
+        {
+          "name": "Soraka",
+          "count": 1
+        }
+      ]
+    },
+    "3508": {
+      "players": 20,
+      "pickRate": 0.0118,
+      "winRate": 0.4,
+      "topChamps": [
+        {
+          "name": "Lucian",
+          "count": 12
+        },
+        {
+          "name": "Gangplank",
+          "count": 4
+        },
+        {
+          "name": "Vayne",
+          "count": 2
+        },
+        {
+          "name": "Xayah",
+          "count": 1
+        },
+        {
+          "name": "Sivir",
+          "count": 1
+        }
+      ]
+    },
+    "3742": {
+      "players": 41,
+      "pickRate": 0.0241,
+      "winRate": 0.561,
+      "topChamps": [
+        {
+          "name": "Bard",
+          "count": 17
+        },
+        {
+          "name": "Chogath",
+          "count": 10
+        },
+        {
+          "name": "Poppy",
+          "count": 4
+        },
+        {
+          "name": "Trundle",
+          "count": 2
+        },
+        {
+          "name": "Darius",
+          "count": 2
+        }
+      ]
+    },
+    "3748": {
+      "players": 15,
+      "pickRate": 0.0088,
+      "winRate": 0.4,
+      "topChamps": [
+        {
+          "name": "Shen",
+          "count": 3
+        },
+        {
+          "name": "Sion",
+          "count": 3
+        },
+        {
+          "name": "RekSai",
+          "count": 2
+        },
+        {
+          "name": "Briar",
+          "count": 2
+        },
+        {
+          "name": "Viego",
+          "count": 1
+        }
+      ]
+    },
+    "3802": {
+      "players": 11,
+      "pickRate": 0.0065,
+      "winRate": 0.0909,
+      "topChamps": [
+        {
+          "name": "Gragas",
+          "count": 3
+        },
+        {
+          "name": "Ryze",
+          "count": 3
+        },
+        {
+          "name": "Orianna",
+          "count": 1
+        },
+        {
+          "name": "AurelionSol",
+          "count": 1
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 1
+        }
+      ]
+    },
+    "3814": {
+      "players": 55,
+      "pickRate": 0.0324,
+      "winRate": 0.6,
+      "topChamps": [
+        {
+          "name": "Quinn",
+          "count": 10
+        },
+        {
+          "name": "Pyke",
+          "count": 10
+        },
+        {
+          "name": "Khazix",
+          "count": 6
+        },
+        {
+          "name": "Qiyana",
+          "count": 6
+        },
+        {
+          "name": "Jayce",
+          "count": 5
+        }
+      ]
+    },
+    "3866": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 0,
+      "topChamps": [
+        {
+          "name": "Thresh",
+          "count": 1
+        }
+      ]
+    },
+    "3869": {
+      "players": 150,
+      "pickRate": 0.0882,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Nautilus",
+          "count": 23
+        },
+        {
+          "name": "Rell",
+          "count": 23
+        },
+        {
+          "name": "Alistar",
+          "count": 16
+        },
+        {
+          "name": "Pyke",
+          "count": 16
+        },
+        {
+          "name": "Thresh",
+          "count": 12
+        }
+      ]
+    },
+    "3870": {
+      "players": 53,
+      "pickRate": 0.0312,
+      "winRate": 0.434,
+      "topChamps": [
+        {
+          "name": "Lulu",
+          "count": 15
+        },
+        {
+          "name": "Karma",
+          "count": 13
+        },
+        {
+          "name": "Janna",
+          "count": 6
+        },
+        {
+          "name": "Seraphine",
+          "count": 5
+        },
+        {
+          "name": "Yuumi",
+          "count": 4
+        }
+      ]
+    },
+    "3871": {
+      "players": 12,
+      "pickRate": 0.0071,
+      "winRate": 0.6667,
+      "topChamps": [
+        {
+          "name": "Velkoz",
+          "count": 3
+        },
+        {
+          "name": "Xerath",
+          "count": 2
+        },
+        {
+          "name": "Zoe",
+          "count": 2
+        },
+        {
+          "name": "Kennen",
+          "count": 1
+        },
+        {
+          "name": "Leblanc",
+          "count": 1
+        }
+      ]
+    },
+    "3876": {
+      "players": 48,
+      "pickRate": 0.0282,
+      "winRate": 0.5417,
+      "topChamps": [
+        {
+          "name": "Thresh",
+          "count": 17
+        },
+        {
+          "name": "Nautilus",
+          "count": 5
+        },
+        {
+          "name": "Braum",
+          "count": 5
+        },
+        {
+          "name": "Anivia",
+          "count": 3
+        },
+        {
+          "name": "Janna",
+          "count": 3
+        }
+      ]
+    },
+    "3877": {
+      "players": 76,
+      "pickRate": 0.0447,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Bard",
+          "count": 27
+        },
+        {
+          "name": "Senna",
+          "count": 10
+        },
+        {
+          "name": "Camille",
+          "count": 10
+        },
+        {
+          "name": "Poppy",
+          "count": 5
+        },
+        {
+          "name": "Pyke",
+          "count": 5
+        }
+      ]
+    },
+    "3916": {
+      "players": 20,
+      "pickRate": 0.0118,
+      "winRate": 0.6,
+      "topChamps": [
+        {
+          "name": "Taliyah",
+          "count": 2
+        },
+        {
+          "name": "Karthus",
+          "count": 2
+        },
+        {
+          "name": "Bard",
+          "count": 2
+        },
+        {
+          "name": "Lux",
+          "count": 1
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 1
+        }
+      ]
+    },
+    "4005": {
+      "players": 37,
+      "pickRate": 0.0218,
+      "winRate": 0.3243,
+      "topChamps": [
+        {
+          "name": "Syndra",
+          "count": 16
+        },
+        {
+          "name": "Galio",
+          "count": 5
+        },
+        {
+          "name": "Shaco",
+          "count": 4
+        },
+        {
+          "name": "Zoe",
+          "count": 3
+        },
+        {
+          "name": "Gragas",
+          "count": 2
+        }
+      ]
+    },
+    "4401": {
+      "players": 12,
+      "pickRate": 0.0071,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Chogath",
+          "count": 6
+        },
+        {
+          "name": "Darius",
+          "count": 2
+        },
+        {
+          "name": "Nasus",
+          "count": 2
+        },
+        {
+          "name": "Gnar",
+          "count": 1
+        },
+        {
+          "name": "Trundle",
+          "count": 1
+        }
+      ]
+    },
+    "4628": {
+      "players": 14,
+      "pickRate": 0.0082,
+      "winRate": 0.5714,
+      "topChamps": [
+        {
+          "name": "Velkoz",
+          "count": 3
+        },
+        {
+          "name": "Zoe",
+          "count": 3
+        },
+        {
+          "name": "Xerath",
+          "count": 2
+        },
+        {
+          "name": "Zilean",
+          "count": 1
+        },
+        {
+          "name": "Nidalee",
+          "count": 1
+        }
+      ]
+    },
+    "4629": {
+      "players": 15,
+      "pickRate": 0.0088,
+      "winRate": 0.4,
+      "topChamps": [
+        {
+          "name": "Ahri",
+          "count": 5
+        },
+        {
+          "name": "Syndra",
+          "count": 3
+        },
+        {
+          "name": "Vladimir",
+          "count": 2
+        },
+        {
+          "name": "Zilean",
+          "count": 1
+        },
+        {
+          "name": "Vex",
+          "count": 1
+        }
+      ]
+    },
+    "4630": {
+      "players": 31,
+      "pickRate": 0.0182,
+      "winRate": 0.4194,
+      "topChamps": [
+        {
+          "name": "Syndra",
+          "count": 3
+        },
+        {
+          "name": "Vladimir",
+          "count": 3
+        },
+        {
+          "name": "Ahri",
+          "count": 2
+        },
+        {
+          "name": "Locke",
+          "count": 2
+        },
+        {
+          "name": "Akali",
+          "count": 2
+        }
+      ]
+    },
+    "4632": {
+      "players": 13,
+      "pickRate": 0.0076,
+      "winRate": 0.8462,
+      "topChamps": [
+        {
+          "name": "AurelionSol",
+          "count": 6
+        },
+        {
+          "name": "Zoe",
+          "count": 2
+        },
+        {
+          "name": "Sylas",
+          "count": 1
+        },
+        {
+          "name": "Syndra",
+          "count": 1
+        },
+        {
+          "name": "Ahri",
+          "count": 1
+        }
+      ]
+    },
+    "4633": {
+      "players": 24,
+      "pickRate": 0.0141,
+      "winRate": 0.7917,
+      "topChamps": [
+        {
+          "name": "Sylas",
+          "count": 16
+        },
+        {
+          "name": "Lillia",
+          "count": 2
+        },
+        {
+          "name": "Chogath",
+          "count": 2
+        },
+        {
+          "name": "AurelionSol",
+          "count": 1
+        },
+        {
+          "name": "Gwen",
+          "count": 1
+        }
+      ]
+    },
+    "4642": {
+      "players": 10,
+      "pickRate": 0.0059,
+      "winRate": 0.6,
+      "topChamps": [
+        {
+          "name": "Lulu",
+          "count": 3
+        },
+        {
+          "name": "Zilean",
+          "count": 2
+        },
+        {
+          "name": "Blitzcrank",
+          "count": 1
+        },
+        {
+          "name": "Seraphine",
+          "count": 1
+        },
+        {
+          "name": "Sona",
+          "count": 1
+        }
+      ]
+    },
+    "4645": {
+      "players": 123,
+      "pickRate": 0.0724,
+      "winRate": 0.5203,
+      "topChamps": [
+        {
+          "name": "Elise",
+          "count": 16
+        },
+        {
+          "name": "Locke",
+          "count": 15
+        },
+        {
+          "name": "Akali",
+          "count": 15
+        },
+        {
+          "name": "Aurora",
+          "count": 11
+        },
+        {
+          "name": "Karthus",
+          "count": 8
+        }
+      ]
+    },
+    "4646": {
+      "players": 87,
+      "pickRate": 0.0512,
+      "winRate": 0.4828,
+      "topChamps": [
+        {
+          "name": "Aurora",
+          "count": 14
+        },
+        {
+          "name": "Syndra",
+          "count": 14
+        },
+        {
+          "name": "Locke",
+          "count": 11
+        },
+        {
+          "name": "Ekko",
+          "count": 11
+        },
+        {
+          "name": "Elise",
+          "count": 5
+        }
+      ]
+    },
+    "6333": {
+      "players": 117,
+      "pickRate": 0.0688,
+      "winRate": 0.547,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 21
+        },
+        {
+          "name": "Hecarim",
+          "count": 15
+        },
+        {
+          "name": "Olaf",
+          "count": 13
+        },
+        {
+          "name": "Riven",
+          "count": 7
+        },
+        {
+          "name": "Yone",
+          "count": 5
+        }
+      ]
+    },
+    "6609": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 1,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 1
+        }
+      ]
+    },
+    "6610": {
+      "players": 51,
+      "pickRate": 0.03,
+      "winRate": 0.5686,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 11
+        },
+        {
+          "name": "Camille",
+          "count": 9
+        },
+        {
+          "name": "Olaf",
+          "count": 6
+        },
+        {
+          "name": "Pantheon",
+          "count": 5
+        },
+        {
+          "name": "JarvanIV",
+          "count": 5
+        }
+      ]
+    },
+    "6616": {
+      "players": 7,
+      "pickRate": 0.0041,
+      "winRate": 0.5714,
+      "topChamps": [
+        {
+          "name": "Nami",
+          "count": 3
+        },
+        {
+          "name": "Ivern",
+          "count": 2
+        },
+        {
+          "name": "Sona",
+          "count": 1
+        },
+        {
+          "name": "Karma",
+          "count": 1
+        }
+      ]
+    },
+    "6617": {
+      "players": 29,
+      "pickRate": 0.0171,
+      "winRate": 0.3793,
+      "topChamps": [
+        {
+          "name": "Janna",
+          "count": 9
+        },
+        {
+          "name": "Karma",
+          "count": 8
+        },
+        {
+          "name": "Sona",
+          "count": 3
+        },
+        {
+          "name": "Soraka",
+          "count": 2
+        },
+        {
+          "name": "Yuumi",
+          "count": 2
+        }
+      ]
+    },
+    "6620": {
+      "players": 23,
+      "pickRate": 0.0135,
+      "winRate": 0.5652,
+      "topChamps": [
+        {
+          "name": "Karma",
+          "count": 12
+        },
+        {
+          "name": "Seraphine",
+          "count": 5
+        },
+        {
+          "name": "Sona",
+          "count": 3
+        },
+        {
+          "name": "Nami",
+          "count": 2
+        },
+        {
+          "name": "Zilean",
+          "count": 1
+        }
+      ]
+    },
+    "6621": {
+      "players": 1,
+      "pickRate": 0.0006,
+      "winRate": 0,
+      "topChamps": [
+        {
+          "name": "Sona",
+          "count": 1
+        }
+      ]
+    },
+    "6631": {
+      "players": 41,
+      "pickRate": 0.0241,
+      "winRate": 0.3902,
+      "topChamps": [
+        {
+          "name": "Olaf",
+          "count": 14
+        },
+        {
+          "name": "Garen",
+          "count": 10
+        },
+        {
+          "name": "Jax",
+          "count": 6
+        },
+        {
+          "name": "Renekton",
+          "count": 4
+        },
+        {
+          "name": "Zaahen",
+          "count": 3
+        }
+      ]
+    },
+    "6653": {
+      "players": 52,
+      "pickRate": 0.0306,
+      "winRate": 0.5962,
+      "topChamps": [
+        {
+          "name": "AurelionSol",
+          "count": 11
+        },
+        {
+          "name": "Viktor",
+          "count": 6
+        },
+        {
+          "name": "Lillia",
+          "count": 5
+        },
+        {
+          "name": "Karthus",
+          "count": 4
+        },
+        {
+          "name": "Rumble",
+          "count": 3
+        }
+      ]
+    },
+    "6655": {
+      "players": 40,
+      "pickRate": 0.0235,
+      "winRate": 0.55,
+      "topChamps": [
+        {
+          "name": "Zoe",
+          "count": 11
+        },
+        {
+          "name": "Leblanc",
+          "count": 6
+        },
+        {
+          "name": "Mel",
+          "count": 5
+        },
+        {
+          "name": "Ziggs",
+          "count": 3
+        },
+        {
+          "name": "Lux",
+          "count": 2
+        }
+      ]
+    },
+    "6657": {
+      "players": 58,
+      "pickRate": 0.0341,
+      "winRate": 0.5,
+      "topChamps": [
+        {
+          "name": "Ryze",
+          "count": 20
+        },
+        {
+          "name": "Anivia",
+          "count": 18
+        },
+        {
+          "name": "Cassiopeia",
+          "count": 12
+        },
+        {
+          "name": "Gragas",
+          "count": 3
+        },
+        {
+          "name": "TwistedFate",
+          "count": 3
+        }
+      ]
+    },
+    "6662": {
+      "players": 10,
+      "pickRate": 0.0059,
+      "winRate": 0.6,
+      "topChamps": [
+        {
+          "name": "KSante",
+          "count": 9
+        },
+        {
+          "name": "Poppy",
+          "count": 1
+        }
+      ]
+    },
+    "6664": {
+      "players": 7,
+      "pickRate": 0.0041,
+      "winRate": 0.4286,
+      "topChamps": [
+        {
+          "name": "Sion",
+          "count": 3
+        },
+        {
+          "name": "Ornn",
+          "count": 2
+        },
+        {
+          "name": "Poppy",
+          "count": 1
+        },
+        {
+          "name": "Zac",
+          "count": 1
+        }
+      ]
+    },
+    "6665": {
+      "players": 19,
+      "pickRate": 0.0112,
+      "winRate": 0.6316,
+      "topChamps": [
+        {
+          "name": "Kalista",
+          "count": 6
+        },
+        {
+          "name": "KSante",
+          "count": 4
+        },
+        {
+          "name": "Sion",
+          "count": 2
+        },
+        {
+          "name": "Skarner",
+          "count": 2
+        },
+        {
+          "name": "Sylas",
+          "count": 1
+        }
+      ]
+    },
+    "6670": {
+      "players": 31,
+      "pickRate": 0.0182,
+      "winRate": 0.5161,
+      "topChamps": [
+        {
+          "name": "Yunara",
+          "count": 4
+        },
+        {
+          "name": "Tristana",
+          "count": 3
+        },
+        {
+          "name": "Jhin",
+          "count": 2
+        },
+        {
+          "name": "Jinx",
+          "count": 2
+        },
+        {
+          "name": "Zeri",
+          "count": 2
+        }
+      ]
+    },
+    "6672": {
+      "players": 61,
+      "pickRate": 0.0359,
+      "winRate": 0.4426,
+      "topChamps": [
+        {
+          "name": "Kaisa",
+          "count": 13
+        },
+        {
+          "name": "TwistedFate",
+          "count": 10
+        },
+        {
+          "name": "Katarina",
+          "count": 9
+        },
+        {
+          "name": "Yunara",
+          "count": 8
+        },
+        {
+          "name": "Viego",
+          "count": 4
+        }
+      ]
+    },
+    "6673": {
+      "players": 53,
+      "pickRate": 0.0312,
+      "winRate": 0.5094,
+      "topChamps": [
+        {
+          "name": "Yone",
+          "count": 27
+        },
+        {
+          "name": "Yasuo",
+          "count": 12
+        },
+        {
+          "name": "Graves",
+          "count": 5
+        },
+        {
+          "name": "Caitlyn",
+          "count": 3
+        },
+        {
+          "name": "Viego",
+          "count": 3
+        }
+      ]
+    },
+    "6675": {
+      "players": 53,
+      "pickRate": 0.0312,
+      "winRate": 0.5472,
+      "topChamps": [
+        {
+          "name": "Tristana",
+          "count": 30
+        },
+        {
+          "name": "Lucian",
+          "count": 10
+        },
+        {
+          "name": "Xayah",
+          "count": 6
+        },
+        {
+          "name": "Sivir",
+          "count": 6
+        },
+        {
+          "name": "KogMaw",
+          "count": 1
+        }
+      ]
+    },
+    "6676": {
+      "players": 58,
+      "pickRate": 0.0341,
+      "winRate": 0.5345,
+      "topChamps": [
+        {
+          "name": "Quinn",
+          "count": 16
+        },
+        {
+          "name": "Graves",
+          "count": 13
+        },
+        {
+          "name": "Draven",
+          "count": 6
+        },
+        {
+          "name": "Viego",
+          "count": 4
+        },
+        {
+          "name": "Jhin",
+          "count": 3
+        }
+      ]
+    },
+    "6690": {
+      "players": 3,
+      "pickRate": 0.0018,
+      "winRate": 1,
+      "topChamps": [
+        {
+          "name": "Senna",
+          "count": 2
+        },
+        {
+          "name": "Pyke",
+          "count": 1
+        }
+      ]
+    },
+    "6692": {
+      "players": 74,
+      "pickRate": 0.0435,
+      "winRate": 0.4595,
+      "topChamps": [
+        {
+          "name": "LeeSin",
+          "count": 33
+        },
+        {
+          "name": "Renekton",
+          "count": 8
+        },
+        {
+          "name": "Ambessa",
+          "count": 7
+        },
+        {
+          "name": "JarvanIV",
+          "count": 6
+        },
+        {
+          "name": "Aatrox",
+          "count": 5
+        }
+      ]
+    },
+    "6694": {
+      "players": 36,
+      "pickRate": 0.0212,
+      "winRate": 0.6389,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 9
+        },
+        {
+          "name": "Qiyana",
+          "count": 9
+        },
+        {
+          "name": "Khazix",
+          "count": 5
+        },
+        {
+          "name": "Talon",
+          "count": 4
+        },
+        {
+          "name": "Hecarim",
+          "count": 4
+        }
+      ]
+    },
+    "6695": {
+      "players": 47,
+      "pickRate": 0.0276,
+      "winRate": 0.6596,
+      "topChamps": [
+        {
+          "name": "Jayce",
+          "count": 14
+        },
+        {
+          "name": "Qiyana",
+          "count": 7
+        },
+        {
+          "name": "Senna",
+          "count": 4
+        },
+        {
+          "name": "Talon",
+          "count": 3
+        },
+        {
+          "name": "Khazix",
+          "count": 3
+        }
+      ]
+    },
+    "6696": {
+      "players": 2,
+      "pickRate": 0.0012,
+      "winRate": 1,
+      "topChamps": [
+        {
+          "name": "Qiyana",
+          "count": 2
+        }
+      ]
+    },
+    "6697": {
+      "players": 70,
+      "pickRate": 0.0412,
+      "winRate": 0.5429,
+      "topChamps": [
+        {
+          "name": "Jhin",
+          "count": 21
+        },
+        {
+          "name": "Quinn",
+          "count": 18
+        },
+        {
+          "name": "Graves",
+          "count": 12
+        },
+        {
+          "name": "Jayce",
+          "count": 5
+        },
+        {
+          "name": "Draven",
+          "count": 4
+        }
+      ]
+    },
+    "6698": {
+      "players": 23,
+      "pickRate": 0.0135,
+      "winRate": 0.5652,
+      "topChamps": [
+        {
+          "name": "Ambessa",
+          "count": 7
+        },
+        {
+          "name": "Rengar",
+          "count": 5
+        },
+        {
+          "name": "LeeSin",
+          "count": 4
+        },
+        {
+          "name": "Aatrox",
+          "count": 2
+        },
+        {
+          "name": "Quinn",
+          "count": 2
+        }
+      ]
+    },
+    "6699": {
+      "players": 113,
+      "pickRate": 0.0665,
+      "winRate": 0.5575,
+      "topChamps": [
+        {
+          "name": "Qiyana",
+          "count": 22
+        },
+        {
+          "name": "Jayce",
+          "count": 22
+        },
+        {
+          "name": "Khazix",
+          "count": 14
+        },
+        {
+          "name": "Talon",
+          "count": 13
+        },
+        {
+          "name": "Zed",
+          "count": 10
+        }
+      ]
+    },
+    "8010": {
+      "players": 43,
+      "pickRate": 0.0253,
+      "winRate": 0.5116,
+      "topChamps": [
+        {
+          "name": "Sylas",
+          "count": 12
+        },
+        {
+          "name": "AurelionSol",
+          "count": 9
+        },
+        {
+          "name": "Locke",
+          "count": 4
+        },
+        {
+          "name": "Anivia",
+          "count": 3
+        },
+        {
+          "name": "Nidalee",
+          "count": 3
+        }
+      ]
+    },
+    "8020": {
+      "players": 8,
+      "pickRate": 0.0047,
+      "winRate": 0.375,
+      "topChamps": [
+        {
+          "name": "Rell",
+          "count": 2
+        },
+        {
+          "name": "Galio",
+          "count": 2
+        },
+        {
+          "name": "Chogath",
+          "count": 1
+        },
+        {
+          "name": "Swain",
+          "count": 1
+        },
+        {
+          "name": "Nautilus",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

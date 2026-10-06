@@ -1,0 +1,38 @@
+/* Base reset - the theme lives in App.css */
+:root {
+  color-scheme: dark;
+  /* Slightly larger base size (everything is in rem), a bit more on big screens */
+  font-size: 106.25%;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Bigger text only where there is room for it vertically too */
+@media (min-width: 1600px) and (min-height: 900px) {
+  :root {
+    font-size: 112.5%;
+  }
+}
+
+/* Short screens (laptops): back to the default size so the game fits without scrolling */
+@media (min-width: 1024px) and (max-height: 800px) {
+  :root {
+    font-size: 100%;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 680px) {
+  :root {
+    font-size: 93.75%;
+  }
+}

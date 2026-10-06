@@ -1,0 +1,52 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build output
+dist/
+dist-ssr/
+build/
+
+# Environment (API keys, DB password)
+.env
+.env.local
+*.local
+
+# Generated at build time by scripts/fetch-items.js
+# (public/meta-data.json IS committed: it needs a Riot API key to regenerate)
+public/items-data.json
+
+# Worktrees
+.worktrees/
+
+# IDE / editors
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local planning notes and Claude settings
+docs
+.claude/settings.local.json
+
+# Old worktree pointer from another machine (kept for reference)
+.git-old-pointer
